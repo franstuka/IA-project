@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566ef82243280b14abb51fd9aa9da1dc, type: 3}
+  m_Name: MoreDamage
+  m_EditorClassIdentifier: 
+  name: MoreDamage
+  icon: {fileID: 0}
+  BuffValor: 0.3
+  stat: 2
+  prefab: {fileID: 1660284921851296, guid: a16a5bdf09d508748b2997fb6fee7e0d, type: 2}
