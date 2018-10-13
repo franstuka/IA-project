@@ -6,17 +6,18 @@ public class PlayerCombat : CombatStats
 {
     [SerializeField] private Weapon Weapon;
     [SerializeField] private WeaponHitboxDetection weaponHitbox;
-    private bool inAttack = false;
+   
     [SerializeField] private GameObject[] weaponMesh;
     [SerializeField] private Light[] playerLights;
+    [SerializeField] private float soundProduded = 25f;
 
-    // Use this for initialization
+    private bool inAttack = false;
+
     void Start() {
         SetWeaponOnAnimator();
         UpdateWeaponHitbox();
     }
 
-    // Update is called once per frame
 
     public Weapon GetWeapon()
     {
@@ -129,4 +130,15 @@ public class PlayerCombat : CombatStats
         DesactivateWeaponMesh();
         weaponMesh[anim.GetInteger("WeaponType") -1].SetActive(true);
     }
+
+    public float GetSoundlevel()
+    {
+        return soundProduded;
+    }
+
+    public void SetSoundlevel(float level)
+    {
+        soundProduded = level;
+    }
+
 }

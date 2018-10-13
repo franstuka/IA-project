@@ -21,6 +21,7 @@ public class ThirdPersonCharacter : MonoBehaviour
 	float m_CapsuleHeight;
 	Vector3 m_CapsuleCenter;
 
+
     public Interactionable target;
     bool onWater = false;
     PlayerCombat playerCombat;

@@ -41,6 +41,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1079455055057128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4348286189103056}
+  m_Layer: 11
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1079875204281384
 GameObject:
   m_ObjectHideFlags: 1
@@ -134,6 +149,8 @@ GameObject:
   - component: {fileID: 114349073393416284}
   - component: {fileID: 114197200409542316}
   - component: {fileID: 135721894651726844}
+  - component: {fileID: 114593947642587506}
+  - component: {fileID: 114033658026273220}
   m_Layer: 11
   m_Name: Skeleton IA 1
   m_TagString: Enemy
@@ -834,7 +851,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4443795171668198}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4091757758659732
 Transform:
@@ -929,7 +946,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4443795171668198}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4268224607434074
 Transform:
@@ -1012,6 +1029,19 @@ Transform:
   m_Father: {fileID: 4908447273665004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4348286189103056
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1079455055057128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4443795171668198}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4377951697480522
 Transform:
   m_ObjectHideFlags: 1
@@ -1089,9 +1119,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179774215657140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.78596, y: 0.5, z: -2.094493}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.27, y: 0.27, z: 0.27}
   m_Children:
+  - {fileID: 4348286189103056}
   - {fileID: 4924515460017690}
   - {fileID: 4250038966546820}
   - {fileID: 4073080468277792}
@@ -1362,7 +1393,7 @@ Transform:
   - {fileID: 4485555069296254}
   - {fileID: 4724625185952738}
   m_Father: {fileID: 4443795171668198}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4967424648616000
 Transform:
@@ -1581,6 +1612,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114033658026273220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1179774215657140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f251b701f91384caf0b385812f786f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastPos: {fileID: 4348286189103056}
+  viewAngle: 60
+  viewPercent: 0.75
+  soundRange: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &114197200409542316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1607,6 +1659,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852141822f7653f4dbeff855521b1ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114593947642587506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1179774215657140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a416e1c06cece0049ae6d212900eec25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alertDistance: 10
 --- !u!114 &114696649870195672
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -11,6 +11,8 @@ public class Skeleton : EnemyCombat {
     private Patrol patrol;
     private Hold hold;
     private Chase chase;
+    private Alert alert;
+    private Watch watch;
     private Vector3 target;
     private Vector2 nextAtack; //in pos 0 have the attackType, and in 1 the distance for do the attack
     private bool inAttack = false;
@@ -26,6 +28,8 @@ public class Skeleton : EnemyCombat {
         patrol = GetComponent<Patrol>();
         hold = GetComponent<Hold>();
         chase = GetComponent<Chase>();
+        alert = GetComponent<Alert>();
+        watch = GetComponent<Watch>();
     }
 
     private void Start()
@@ -203,7 +207,7 @@ public class Skeleton : EnemyCombat {
         {
             if (other.gameObject.name == "Player") // we can add inside this:  && other.gameobject.GetComponent<PlayerCombat> != null
             {
-                if (FaceAndCheckObjective(other.transform.position, detectionAngle) && ActiveState != SkeletonState.ATTACK) //in vision
+                if (watch.FindPlayer(other.gameObject) && ActiveState != SkeletonState.ATTACK) //in vision
                 {
                     if (Vector3.Distance(other.transform.position, transform.position) < nextAtack[1])
                     {
@@ -213,10 +217,10 @@ public class Skeleton : EnemyCombat {
                     else
                     {
                         if (ActiveState != SkeletonState.CHASE)
-                        {
-
+                        {                          
                             ActiveState = SkeletonState.CHASE;
                             chase.PlayerFound();
+                            Alert(this); 
                         }
                         target = other.transform.position;
                     }
@@ -237,8 +241,17 @@ public class Skeleton : EnemyCombat {
                     }
                 }
             }
-        }
-        
+            if (other.gameObject.layer == 11) //Enemy layer
+            {
+
+                if (!chase.GetplayerLost() && other.gameObject.GetComponent<Chase>().GetplayerLost())
+                {
+                    other.gameObject.GetComponent<Skeleton>().target = target;
+                    other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
+
+                }
+            }
+        } 
     }
 
     private void OnTriggerExit(Collider other)
@@ -310,5 +323,18 @@ public class Skeleton : EnemyCombat {
 
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+    }
+    private void Alert(Skeleton other)
+    {
+        if (other.ActiveState != SkeletonState.CHASE)
+        {
+            List<Skeleton> enemyList = alert.SkeletonInRange(other);
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                enemyList[i].target = other.target;
+                enemyList[i].ActiveState = SkeletonState.CHASE;
+            }
+        }
+        
     }
 }

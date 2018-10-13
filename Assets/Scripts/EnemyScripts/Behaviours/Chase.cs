@@ -17,6 +17,11 @@ public class Chase : BehaviourBase
         
     }
 
+    public bool GetplayerLost()
+    {
+        return playerLost;
+    }
+
     public void PlayerFound()
     {
         playerLost = false;
@@ -46,4 +51,5 @@ public class Chase : BehaviourBase
     {
         return waiting;
     }
+
 }

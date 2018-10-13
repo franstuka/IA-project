@@ -44,7 +44,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         cellDiameter = CellRadius * 2;
         gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
         gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
-        Debug.Log(gridSizeX);
+        //Debug.Log(gridSizeX);
         CreateGrid();
         grid[0, 1].CellType = CellTypes.chest;
         UpdateEnemyPositions();
@@ -64,7 +64,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         {
             for(int y = 0; y < gridSizeY; y++)
             {
-                Debug.Log(x + ", " + y);
+                //Debug.Log(x + ", " + y);
                 Vector3 worldPoint = gridBottonLeft + Vector3.right * (x * cellDiameter + CellRadius) + Vector3.forward * (y * cellDiameter + CellRadius);
 
                 if(Physics.CheckBox(worldPoint,Vector3.one * CellRadius,Quaternion.identity,bloquedMask)) //celltypes
