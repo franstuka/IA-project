@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION,DIED};
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING };
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
@@ -13,6 +13,7 @@ public class Skeleton : EnemyCombat {
     private Chase chase;
     private Alert alert;
     private Watch watch;
+    private Seek seek;
     private Vector3 target;
     private Vector2 nextAtack; //in pos 0 have the attackType, and in 1 the distance for do the attack
     private bool inAttack = false;
@@ -30,6 +31,7 @@ public class Skeleton : EnemyCombat {
         chase = GetComponent<Chase>();
         alert = GetComponent<Alert>();
         watch = GetComponent<Watch>();
+        seek = GetComponent<Seek>();
     }
 
     private void Start()
