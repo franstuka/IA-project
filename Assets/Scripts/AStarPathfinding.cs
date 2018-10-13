@@ -316,6 +316,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     private void InitializeHeap()
     {
         GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.visited = true;
+        UpdateAdjacentAvaibles(startNodePos.x, startNodePos.y);
 
     }
 
@@ -324,9 +325,46 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     }
 
-    private void UpdateAdjacentAvaibles()
+    private void UpdateAdjacentAvaibles(int x, int y)
     {
+        if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
+        {
 
+        }
+        else if (x == 0 && y == 0)
+        {
+
+        }
+        else if (x == 0 && y == maxY - 1)
+        {
+
+        }
+        else if (x == maxX - 1 && y == 0)
+        {
+
+        }
+        else if (x == maxX - 1 && y == maxY - 1)
+        {
+
+        }
+        else if (x == 0)
+        {
+
+        }
+        else if (y == 0)
+        {
+
+        }
+        else if (x == maxX - 1)
+        {
+
+        }
+        else if (y == maxY - 1)
+        {
+
+        }
+        else
+            Debug.LogError("No suitable solution");
     }
 
     #endregion
