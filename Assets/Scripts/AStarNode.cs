@@ -23,6 +23,21 @@ public class AStarNode  { //By default this is for a quad grid
         soon = new Vector2Int(-1, -1);
     }
 
+    public void ReduceAvaiblesNodes()
+    {
+        if (AvaibleAdjacentNodes > 0)
+            AvaibleAdjacentNodes--;
+    }
 
+    public void SetFinalCost()
+    {
+        if (!visited)
+            NodeFinalCost = FromFinalCost + FromInitialCost;
+    }
 
+    public void SetFinalCost(int FromInitialCost)
+    {
+        if(!visited)
+            NodeFinalCost = FromFinalCost + FromInitialCost;
+    }
 }

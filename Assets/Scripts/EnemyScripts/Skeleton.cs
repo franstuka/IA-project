@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING };
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING , DIED };
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
