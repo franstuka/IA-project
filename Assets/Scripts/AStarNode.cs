@@ -9,8 +9,8 @@ public class AStarNode  { //By default this is for a quad grid
     public int NodeFinalCost;
     public bool visited;
     public byte AvaibleAdjacentNodes; //0 to 255
-    Vector2Int parent = new Vector2Int(-1,-1);
-    Vector2Int soon = new Vector2Int(-1, -1);
+    Vector2Int parent;
+    Vector2Int chill;
 
     public AStarNode(int FromFinalCost)
     {    
@@ -20,7 +20,7 @@ public class AStarNode  { //By default this is for a quad grid
         AvaibleAdjacentNodes = 0;
         visited = false;
         parent = new Vector2Int(-1, -1);
-        soon = new Vector2Int(-1, -1);
+        chill = new Vector2Int(-1, -1);
     }
 
     public void ReduceAvaiblesNodes()
@@ -39,5 +39,15 @@ public class AStarNode  { //By default this is for a quad grid
     {
         if(!visited)
             NodeFinalCost = FromFinalCost + FromInitialCost;
+    }
+
+    public void SetParent(int x, int y)
+    {
+        parent = new Vector2Int(x, y);
+    }
+
+    public void SetChill(int x, int y)
+    {
+        chill = new Vector2Int(x, y);
     }
 }

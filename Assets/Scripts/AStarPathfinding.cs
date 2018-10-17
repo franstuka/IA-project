@@ -404,6 +404,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     {
         Vector3Int temporalPositionAndMin = new Vector3Int(0,0,int.MaxValue);
         Vector3Int holdedPositionAndMin = new Vector3Int(0, 0, int.MaxValue);
+        Vector2Int fromInitialNodePosition = new Vector2Int(0, 0);
         LinkedListNode<Vector2Int> i = Heap.First;
         while (i != null)
         {
@@ -431,14 +432,24 @@ public class AStarPathfinding { //By default this is for a quad grid
             if(temporalPositionAndMin.z < holdedPositionAndMin.z)//new min
             {
                 holdedPositionAndMin = temporalPositionAndMin;
+                fromInitialNodePosition = new Vector2Int(i.Value.x, i.Value.y);
             }
             i = i.Next;
         }
         
-        GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.FromInitialCost = holdedPositionAndMin.z - GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.FromFinalCost;
+        //Staff to do around the node
+        GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.FromInitialCost = 
+            holdedPositionAndMin.z - GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.FromFinalCost; //maybe the cost has changed 
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.SetFinalCost();
         UpdateAdjacentAvaibles(holdedPositionAndMin.x, holdedPositionAndMin.y);
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.visited = true;
+
+        //Staff to set nodes relationships
+        GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.SetChill(holdedPositionAndMin.x, holdedPositionAndMin.y);
+        GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.SetParent(fromInitialNodePosition.x, fromInitialNodePosition.y);
+
+
+        //Add to heap
         Heap.AddFirst(new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y));
     }
 
