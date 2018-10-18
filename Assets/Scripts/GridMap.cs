@@ -118,26 +118,45 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
 
     public Cell CellFromWorldPoint(Vector3 worldPosition)
     {
+        /*
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
         float percentY = (worldPosition.z + WorldSize.y / 2) / WorldSize.y;
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.RoundToInt((gridSizeX-1) * percentX);
-        int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
-        return grid[x, y];
+        int x = Mathf.FloorToInt((gridSizeX-1) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
+        return grid[x, y];*/
+
+        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
+        float y = worldPosition.z - transform.position.z;
+
+        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX - 1);
+        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY - 1);
+
+        return grid[Mathf.FloorToInt(x), Mathf.FloorToInt(y)];
     }
 
     public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition)
     {
+        
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
         float percentY = (worldPosition.z + WorldSize.y / 2) / WorldSize.y;
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
-        int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
+        int x = Mathf.FloorToInt((gridSizeX - 1) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
         return new Vector2Int(x, y);
+        /*
+        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
+        float y = worldPosition.z - transform.position.z;
+
+        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX -1);
+        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY -1);
+
+        return new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
+        */
     }
 
     private void OnDrawGizmos()
