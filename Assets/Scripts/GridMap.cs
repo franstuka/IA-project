@@ -21,6 +21,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     #endregion
 
     public Cell[,] grid;
+    public bool seeTypes = false;
+    public bool seePathCost = false;
+    public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
     [SerializeField] private float CellRadius;
@@ -143,37 +146,73 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
 
         if(grid != null)
         {
-            foreach (Cell n in grid)
+            if(seeTypes)
             {
-                if (n.CellType == CellTypes.emphy)
+                foreach (Cell n in grid)
                 {
-                    Gizmos.color = Color.white;
-                }
-                else if (n.CellType == CellTypes.blocked)
-                {
-                    Gizmos.color = Color.gray;
-                }
-                else if (n.CellType == CellTypes.enemy)
-                {
-                    Gizmos.color = Color.red;
-                }
-                else if (n.CellType == CellTypes.chest)
-                {
-                    Gizmos.color = Color.yellow;
-                }
-                else if (n.CellType == CellTypes.exit)
-                {
-                    Gizmos.color = Color.blue;
-                }
-                else
-                {
-                    Gizmos.color = Color.black;
-                }
+                    if (n.CellType == CellTypes.emphy)
+                    {
+                        Gizmos.color = Color.white;
+                    }
+                    else if (n.CellType == CellTypes.blocked)
+                    {
+                        Gizmos.color = Color.magenta;
+                    }
+                    else if (n.CellType == CellTypes.enemy)
+                    {
+                        Gizmos.color = Color.red;
+                    }
+                    else if (n.CellType == CellTypes.chest)
+                    {
+                        Gizmos.color = Color.yellow;
+                    }
+                    else if (n.CellType == CellTypes.exit)
+                    {
+                        Gizmos.color = Color.blue;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.black;
+                    }
 
-                Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter *19/20 ));
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
             }
-        }
+            else if (seePathCost && enemySelected != null)
+            {
+                int maxCost = int.MinValue;
+                int minCost = int.MaxValue;
+                float factor;
+                foreach (Cell n in grid)
+                {
+                    if( n.Node.NodeFinalCost != int.MaxValue)
+                    {
+                        if (maxCost < n.Node.NodeFinalCost)
+                        {
+                            maxCost = n.Node.NodeFinalCost;
+                        }
+                        else if (minCost > n.Node.NodeFinalCost)
+                        {
+                            minCost = n.Node.NodeFinalCost;
+                        } 
+                    }
+                }
+                factor = maxCost - minCost;
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.NodeFinalCost == int.MaxValue)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(n.Node.NodeFinalCost / maxCost, n.Node.NodeFinalCost / maxCost, n.Node.NodeFinalCost / maxCost, 1);
+                    }
 
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }           
+        }
     }
 
     public int GetGridSizeX()

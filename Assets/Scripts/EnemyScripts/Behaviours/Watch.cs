@@ -33,18 +33,18 @@ public class Watch : BehaviourBase
         /*transform.forward*/
         /*head.forward*/
 
-        Debug.Log("DONDE ESTAS??");
+        //Debug.Log("DONDE ESTAS??");
         Transform target = player.transform.GetChild(0).transform;
 
         Vector3 dirToTarget = (target.position - raycastPos.position).normalized;
         float disToTarget = Vector3.Distance(raycastPos.position, target.position);
 
-        Debug.Log(disToTarget);
-        Debug.Log(player.GetComponent<PlayerCombat>().GetSoundlevel());
+        //Debug.Log(disToTarget);
+        //Debug.Log(player.GetComponent<PlayerCombat>().GetSoundlevel());
         //Debug.Log(player.GetComponent<ThirdPersonCharacter>().m_soundProduced / disToTarget);
 
             //Vector3 dirToTarget = (target.position - transform.position).normalized;
-            Debug.Log("Range: " + watchRange);
+            //Debug.Log("Range: " + watchRange);
             Debug.DrawRay(raycastPos.position, raycastPos.forward * watchRange, Color.red);
 
             Vector3 vectorA = Quaternion.AngleAxis(viewAngle / 2, Vector3.up) * (raycastPos.forward * watchRange);
@@ -55,17 +55,17 @@ public class Watch : BehaviourBase
             Debug.DrawLine(raycastPos.position, target.position, Color.green);
 
             if (Vector3.Angle(raycastPos.forward, dirToTarget) < viewAngle / 2){
-                Debug.Log("dentro del aungulo de vision");
+                //Debug.Log("dentro del aungulo de vision");
                 //float disToTarget = Vector3.Distance(transform.position, target.position);
                 if(!Physics.Raycast(raycastPos.position, dirToTarget, disToTarget, obstacleMask))
                 {
-                    Debug.Log("TE VEO!");
+                    //Debug.Log("TE VEO!");
                     return true;
                 }
             }
             else if(player.GetComponent<PlayerCombat>().GetSoundlevel() / disToTarget > 7f)
             {
-                    Debug.Log("TE OIGO!!");
+                    //Debug.Log("TE OIGO!!");
                     return true;
             }
 
