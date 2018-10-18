@@ -10,13 +10,15 @@ using System.Threading;
 public class AStarPathfinding { //By default this is for a quad grid
 
     public enum TargetDistanceAdvanceDirection { UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT };
+    public enum AStarAlgorithmState { FINISHED , IN_PROCESS , LIMITED_BY_STEPS , NO_AVAILABLE_SOLUTION};
 
     private LinkedList<Vector2Int> Heap; //position in grid, in x,y
-
+    private AStarAlgorithmState state;
     private const int normalCost = 10;
     private const int diagonalCost = 14;
     private const int enemyInSameCellCost = 6;
-
+    private uint maxSteps = uint.MaxValue;
+    private Vector2Int lastStepPos;
     private Vector2Int endNodePos;
     private Vector2Int startNodePos;
 
@@ -30,6 +32,16 @@ public class AStarPathfinding { //By default this is for a quad grid
         this.startNodePos = startNodePos;
         maxX = GridMap.instance.GetGridSizeX();
         maxY = GridMap.instance.GetGridSizeY();
+    }
+
+    public AStarPathfinding(Vector2Int startNodePos, Vector2Int endNodePos , uint maxSteps)
+    {
+        Heap = new LinkedList<Vector2Int>();
+        this.endNodePos = endNodePos;
+        this.startNodePos = startNodePos;
+        maxX = GridMap.instance.GetGridSizeX();
+        maxY = GridMap.instance.GetGridSizeY();
+        this.maxSteps = maxSteps;
     }
 
     #region stage 0
@@ -319,8 +331,9 @@ public class AStarPathfinding { //By default this is for a quad grid
         GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.FromInitialCost = 0;
         GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.SetFinalCost();
         GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.visited = true;
+        GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.stepsUsed = 0;
         UpdateAdjacentAvaibles(startNodePos.x, startNodePos.y);
-        Heap.AddFirst(new Vector2Int(startNodePos.x, startNodePos.y));
+        Heap.AddFirst(new Vector2Int(startNodePos.x, startNodePos.y)); 
     }
 
     private void UpdateAdjacentAvaibles(int x, int y)
@@ -400,12 +413,19 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     #region stage 2
 
-    private void SearchMinimun()
+    private bool SearchMinimun()
     {
         Vector3Int temporalPositionAndMin = new Vector3Int(0,0,int.MaxValue);
         Vector3Int holdedPositionAndMin = new Vector3Int(0, 0, int.MaxValue);
         Vector2Int fromInitialNodePosition = new Vector2Int(0, 0);
         LinkedListNode<Vector2Int> i = Heap.First;
+
+        if(i == null)
+        {
+            state = AStarAlgorithmState.NO_AVAILABLE_SOLUTION;
+            return true;
+        }
+
         while (i != null)
         {
             if (GridMap.instance.grid[i.Value.x, i.Value.y].Node.AvaibleAdjacentNodes == 0)
@@ -443,20 +463,37 @@ public class AStarPathfinding { //By default this is for a quad grid
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.SetFinalCost();
         UpdateAdjacentAvaibles(holdedPositionAndMin.x, holdedPositionAndMin.y);
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.visited = true;
+        GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.stepsUsed =
+            GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.stepsUsed + 1;
 
         //Staff to set nodes relationships
-        GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.SetChill(holdedPositionAndMin.x, holdedPositionAndMin.y);
+        GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.AddChill(holdedPositionAndMin.x, holdedPositionAndMin.y);
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.SetParent(fromInitialNodePosition.x, fromInitialNodePosition.y);
 
-
-        //Add to heap
-        Heap.AddFirst(new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y));
+        if(holdedPositionAndMin.x == endNodePos.x && holdedPositionAndMin.y == endNodePos.y) //we reach the exit
+        {
+            state = AStarAlgorithmState.FINISHED;
+            return true;
+        }
+        else if(GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.stepsUsed <= maxSteps) //continue
+        {
+            //Add to heap
+            Heap.AddFirst(new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y));
+            return false;
+        }
+        else //limited by steps
+        {
+            lastStepPos = new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y);
+            state = AStarAlgorithmState.LIMITED_BY_STEPS;
+            return true;
+        }
+        
     }
 
-    private Vector3Int GetMinimumAroundNode(int x, int y, ref int fromLastInitialNodeCost) //THIS WILL BE THE 857 RYZE REWORK
+    private Vector3Int GetMinimumAroundNode(int x, int y, ref int fromLastInitialNodeCost) //REWORKED FUNCTION, LIKE RYZE
     { 
         #region Stage 1, SetCostAround
-
+        /*
         if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1) //Stage 1, SetCostAround
         {
             GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
@@ -528,75 +565,123 @@ public class AStarPathfinding { //By default this is for a quad grid
         {
             Debug.LogError("No suitable solution");
             return new Vector3Int(0, 0, int.MaxValue);    
-        }
+        }*/
         #endregion
         #region Stage 2, get minimum and remove cells with 0 adjacents
 
         Vector3Int positionAndMinimum = new Vector3Int(0,0,int.MaxValue);
 
-        if (x+1 >= 0 && x+1 <= maxX - 1 && y >= 0 && y <= maxY - 1 && GridMap.instance.grid[x + 1, y].Node.visited != true
-                && GridMap.instance.grid[x + 1, y].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x+1 >= 0 && x+1 <= maxX - 1 && y >= 0 && y <= maxY - 1 && GridMap.instance.grid[x + 1, y].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x + 1, y, GridMap.instance.grid[x + 1, y].Node.NodeFinalCost);
+            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x + 1, y].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x + 1, y, GridMap.instance.grid[x + 1, y].Node.NodeFinalCost);
         }
 
-        if (x-1 >= 0 && x-1 <= maxX - 1 && y >= 0 && y <= maxY - 1 && GridMap.instance.grid[x - 1, y].Node.visited != true
-                && GridMap.instance.grid[x - 1, y].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x-1 >= 0 && x-1 <= maxX - 1 && y >= 0 && y <= maxY - 1 && GridMap.instance.grid[x - 1, y].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x - 1, y, GridMap.instance.grid[x - 1, y].Node.NodeFinalCost);
+            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x - 1, y].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x - 1, y, GridMap.instance.grid[x - 1, y].Node.NodeFinalCost);
         }
 
-        if (x+1 >= 0 && x+1 <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x + 1, y+1].Node.visited != true
-                && GridMap.instance.grid[x + 1, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x+1 >= 0 && x+1 <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x + 1, y+1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x + 1, y+1, GridMap.instance.grid[x + 1, y+1].Node.NodeFinalCost);
+            GridMap.instance.grid[x + 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x + 1, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x + 1, y+1, GridMap.instance.grid[x + 1, y+1].Node.NodeFinalCost);
         }
 
-        if (x-1 >= 0 && x-1 <= maxX - 1 && y-1 >= 0 && y-1 <= maxY - 1 && GridMap.instance.grid[x -1, y-1].Node.visited != true
-                && GridMap.instance.grid[x - 1, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x-1 >= 0 && x-1 <= maxX - 1 && y-1 >= 0 && y-1 <= maxY - 1 && GridMap.instance.grid[x -1, y-1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x - 1, y-1, GridMap.instance.grid[x -1, y-1].Node.NodeFinalCost);
+            GridMap.instance.grid[x - 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x - 1, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x - 1, y-1, GridMap.instance.grid[x -1, y-1].Node.NodeFinalCost);
         }
 
-        if (x+1 >= 0 && x+1 <= maxX - 1 && y-1 >= 0 && y-1 <= maxY - 1 && GridMap.instance.grid[x + 1, y-1].Node.visited != true
-                && GridMap.instance.grid[x + 1, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x+1 >= 0 && x+1 <= maxX - 1 && y-1 >= 0 && y-1 <= maxY - 1 && GridMap.instance.grid[x + 1, y-1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x + 1, y-1, GridMap.instance.grid[x + 1, y-1].Node.NodeFinalCost);
+            GridMap.instance.grid[x + 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x + 1, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x + 1, y-1, GridMap.instance.grid[x + 1, y-1].Node.NodeFinalCost);
         }
 
-        if (x-1 >= 0 && x-1 <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x - 1, y +1].Node.visited != true
-                && GridMap.instance.grid[x - 1, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x-1 >= 0 && x-1 <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x - 1, y +1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x - 1, y + 1, GridMap.instance.grid[x - 1, y +1].Node.NodeFinalCost);
+            GridMap.instance.grid[x - 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x - 1, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x - 1, y + 1, GridMap.instance.grid[x - 1, y +1].Node.NodeFinalCost);
         }
 
-        if (x >= 0 && x <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x, y+1].Node.visited != true
-                && GridMap.instance.grid[x, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x >= 0 && x <= maxX - 1 && y+1 >= 0 && y+1 <= maxY - 1 && GridMap.instance.grid[x, y+1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x, y+1, GridMap.instance.grid[x, y+1].Node.NodeFinalCost);
+            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x, y + 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x, y+1, GridMap.instance.grid[x, y+1].Node.NodeFinalCost);
         }
 
-        if (x >= 0 && x <= maxX - 1 && y - 1 >= 0 && y - 1 <= maxY - 1 && GridMap.instance.grid[x, y - 1].Node.visited != true
-                && GridMap.instance.grid[x, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+        if (x >= 0 && x <= maxX - 1 && y - 1 >= 0 && y - 1 <= maxY - 1 && GridMap.instance.grid[x, y - 1].Node.visited != true)
         {
-            positionAndMinimum = new Vector3Int(x, y - 1, GridMap.instance.grid[x, y - 1].Node.NodeFinalCost);
+            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
+            if(GridMap.instance.grid[x, y - 1].Node.NodeFinalCost < positionAndMinimum.z)
+                positionAndMinimum = new Vector3Int(x, y - 1, GridMap.instance.grid[x, y - 1].Node.NodeFinalCost);
         }
 
         #endregion
 
         return positionAndMinimum;
-           
     }
-
-    
 
     #endregion
 
-    public void GetPath()
+    #region stage 3 , return final path
+
+    private LinkedList<Vector2Int> GetFinalPath()
     {
-        //stage 0
-        //stage 1
-        //stage 2
+        LinkedList<Vector2Int> path = new LinkedList<Vector2Int>();
+        Vector2Int point;
+
+        if(state == AStarAlgorithmState.FINISHED)
+        {
+            point = endNodePos;
+            while (point != startNodePos) //this stops before get the initial point
+            {
+                path.AddFirst(point);
+                point = GridMap.instance.grid[point.x, point.y].Node.GetParent();
+            }
+            return path;
+        }
+        else if (state == AStarAlgorithmState.LIMITED_BY_STEPS)
+        {
+            point = lastStepPos;
+            while (point != startNodePos) //this stops before get the initial point
+            {
+                path.AddFirst(point);
+                point = GridMap.instance.grid[point.x, point.y].Node.GetParent();
+            }
+            return path;
+        }
+        else // stay in position
+        {
+            path.AddFirst(startNodePos);
+            return path;
+        }
+    }
+
+    #endregion
+
+    public LinkedList<Vector2Int> GetPath()
+    {
+        bool ended = false;
+        state = AStarAlgorithmState.IN_PROCESS;
+        CalculateTargetDistance();   //stage 0
+        InitializeHeap();            //stage 1
+        while(!ended)
+        {
+            ended = SearchMinimun();             //stage 2
+        }
+
+        return GetFinalPath();
     }
 
 }

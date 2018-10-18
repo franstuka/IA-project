@@ -9,8 +9,9 @@ public class AStarNode  { //By default this is for a quad grid
     public int NodeFinalCost;
     public bool visited;
     public byte AvaibleAdjacentNodes; //0 to 255
+    public uint stepsUsed;
     Vector2Int parent;
-    Vector2Int chill;
+    LinkedList<Vector2Int> chillds;
 
     public AStarNode(int FromFinalCost)
     {    
@@ -18,9 +19,10 @@ public class AStarNode  { //By default this is for a quad grid
         this.FromFinalCost = FromFinalCost;
         NodeFinalCost = int.MaxValue;
         AvaibleAdjacentNodes = 0;
+        stepsUsed = 0;
         visited = false;
         parent = new Vector2Int(-1, -1);
-        chill = new Vector2Int(-1, -1);
+        chillds = new LinkedList<Vector2Int>();
     }
 
     public void ReduceAvaiblesNodes()
@@ -46,8 +48,13 @@ public class AStarNode  { //By default this is for a quad grid
         parent = new Vector2Int(x, y);
     }
 
-    public void SetChill(int x, int y)
+    public void AddChill(int x, int y)
     {
-        chill = new Vector2Int(x, y);
+        chillds.AddFirst(new Vector2Int(x, y));
+    }
+
+    public Vector2Int GetParent()
+    {
+        return parent;
     }
 }
