@@ -105,7 +105,9 @@ public class Navegation : MonoBehaviour {
 
         if(stoppingDistance < Vector3.Distance(transform.position,position) && savedPath.First.Next == null) //stop
         {
-
+            float correctionAccelerationX = Mathf.Abs(-velX / Time.deltaTime) > maxCorrectionAcceleration ? maxCorrectionAcceleration : -velX / Time.deltaTime;
+            float correctionAccelerationZ = Mathf.Abs(-velZ / Time.deltaTime) > acceleration ? acceleration : -velZ / Time.deltaTime;
+            rigidbody.AddForce(new Vector3(correctionAccelerationX, 0f, correctionAccelerationZ), ForceMode.Acceleration);
         }
         else
         {
