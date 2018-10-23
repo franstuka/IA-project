@@ -12,14 +12,14 @@ public class EnemyCombat : CombatStats {
     [SerializeField] protected bool staticEnemy;
 
     [SerializeField] protected float detectionAngle;
-    protected Rigidbody rigidbody;
+    //protected Rigidbody rigidbody;
     private float dropOffsetZ = 0.25f;
     private float dropOffsetY = 1f;
 
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
 
         if (DropList.Length != DropProb.Length)
         {
