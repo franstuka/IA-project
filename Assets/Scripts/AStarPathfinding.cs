@@ -11,9 +11,11 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     public enum TargetDistanceAdvanceDirection { UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT };
     public enum AStarAlgorithmState { FINISHED , IN_PROCESS , LIMITED_BY_STEPS , NO_AVAILABLE_SOLUTION};
+    public enum UpdateMode { ONLY_ON_TARGET_MOVE , ONLY_ON_TARGET_MOVE_WITH_COLLISION_DETECTER , ON_TARGET_OR_ORIGIN_MOVE, ON_TIMER, EVERY_CELL_CHANGE, EVERY_UPDATE};
 
     private LinkedList<Vector2Int> Heap; //position in grid, in x,y
     private AStarAlgorithmState state;
+    private UpdateMode updateMode;
     private const int normalCost = 10;
     private const int diagonalCost = 14;
     private const int enemyInSameCellCost = 6;
@@ -25,17 +27,37 @@ public class AStarPathfinding { //By default this is for a quad grid
     private int maxX;
     private int maxY;
 
-    public AStarPathfinding(Vector2Int startNodePos, Vector2Int endNodePos)
+    public AStarPathfinding(Vector2Int startNodePos, Vector2Int endNodePos , UpdateMode updateMode)
     {
         Heap = new LinkedList<Vector2Int>();
+        this.updateMode = updateMode;
         this.endNodePos = endNodePos;
         this.startNodePos = startNodePos;
         maxX = GridMap.instance.GetGridSizeX();
         maxY = GridMap.instance.GetGridSizeY();
     }
 
+    public AStarPathfinding(Vector2Int startNodePos, Vector2Int endNodePos)
+    {
+        Heap = new LinkedList<Vector2Int>();
+        updateMode = UpdateMode.ON_TARGET_OR_ORIGIN_MOVE;
+        this.endNodePos = endNodePos;
+        this.startNodePos = startNodePos;
+        maxX = GridMap.instance.GetGridSizeX();
+        maxY = GridMap.instance.GetGridSizeY();
+    }
+
+    public AStarPathfinding(UpdateMode updateMode)
+    {
+        this.updateMode = updateMode;
+        maxX = GridMap.instance.GetGridSizeX();
+        maxY = GridMap.instance.GetGridSizeY();
+        Reset();
+    }
+
     public AStarPathfinding()
     {
+        updateMode = UpdateMode.ON_TARGET_OR_ORIGIN_MOVE;
         maxX = GridMap.instance.GetGridSizeX();
         maxY = GridMap.instance.GetGridSizeY();
         Reset();
@@ -445,7 +467,7 @@ public class AStarPathfinding { //By default this is for a quad grid
 
         while (i != null)
         {
-            if (GridMap.instance.grid[i.Value.x, i.Value.y].Node.AvaibleAdjacentNodes == 0)
+            if (GridMap.instance.grid[i.Value.x, i.Value.y].Node.AvaibleAdjacentNodes == 0) //delete node
             {
                 if (i.Previous != null)
                 {
@@ -717,4 +739,13 @@ public class AStarPathfinding { //By default this is for a quad grid
         return GetFinalPath();
     }
 
+    public void SetUpdateMode(UpdateMode updateMode)
+    {
+        this.updateMode = updateMode;
+    }
+
+    public UpdateMode GetUpdateMode()
+    {
+        return updateMode;
+    }
 }

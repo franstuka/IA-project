@@ -353,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeTypes: 1
   seePathCost: 0
+  enemySelected: {fileID: 0}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
 --- !u!4 &756216475
