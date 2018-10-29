@@ -17,6 +17,8 @@ public class Navegation : MonoBehaviour {
     private LinkedList<Vector2Int> savedPath;
     private Rigidbody rigidbody;
     private float stoppingDistance;
+    private bool stopped = false;
+    private float setStoppedValue = 0.05f;
 
     private void Awake()
     {
@@ -25,13 +27,21 @@ public class Navegation : MonoBehaviour {
         stoppingDistance = minimunGridSize * stoppingDistanceFactor;
     }
 
+    private void Update()
+    {
+        if(!stopped) //if entity is not idle
+            UpdateActualPosition();
+    }
+
     public void SetDestination(Vector3 pos)
     {
         Vector2Int thisActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(transform.position); ;
         Vector2Int targetActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(pos); ;
-        
+
+        stopped = false; //activate movement if entity was idle.
+
         //if()
-        switch(Astar.GetUpdateMode())
+        switch (Astar.GetUpdateMode())
         {
             case AStarPathfinding.UpdateMode.ONLY_ON_TARGET_MOVE:
                 {
@@ -80,17 +90,22 @@ public class Navegation : MonoBehaviour {
 
     public void UpdateActualPosition()
     {
-        Vector2Int thisActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(transform.position); ;
+        Vector2Int thisActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(transform.position); 
         if (thisActualSquarePosition == savedPath.First.Value)
         {
             if(savedPath.First.Next == null) //end of path
             {
-
+                Move(GridMap.instance.grid[thisActualSquarePosition.x, thisActualSquarePosition.y].GlobalPosition); // move to square center
             }
             else
             {
                 savedPath.RemoveFirst();
+                Move(GridMap.instance.grid[savedPath.First.Value.x, savedPath.First.Value.y].GlobalPosition); // move to next point
             }
+        }
+        else
+        {
+            Move(GridMap.instance.grid[savedPath.First.Value.x, savedPath.First.Value.y].GlobalPosition); // move normal
         }
     }
 
@@ -100,12 +115,22 @@ public class Navegation : MonoBehaviour {
         float velX = rigidbody.velocity.x;
 
         //rotation
-        float invertedSpeed = Mathf.Sqrt( Mathf.Pow( maxSpeed , 2) - Mathf.Pow(new Vector2(velX, velZ).magnitude, 2));
+        float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Pow(new Vector2(velX, velZ).magnitude, 2));
         rigidbody.AddTorque(transform.up * angularSpeed * invertedSpeed, ForceMode.Acceleration);
 
-        if(stoppingDistance < Vector3.Distance(transform.position,position) && savedPath.First.Next == null) //stop
+        if (stoppingDistance < Vector3.Distance(transform.position, position) && savedPath.First.Next == null) //stop
         {
-
+            if (Mathf.Abs(velX) < setStoppedValue && Mathf.Abs(velZ) < setStoppedValue)
+            {
+                rigidbody.velocity.Set(0f, rigidbody.velocity.y, 0f);
+                stopped = true;
+            }
+            else
+            {
+                float correctionAccelerationX = Mathf.Abs(-velX / Time.deltaTime) > maxCorrectionAcceleration ? maxCorrectionAcceleration : -velX / Time.deltaTime;
+                float correctionAccelerationZ = Mathf.Abs(-velZ / Time.deltaTime) > acceleration ? acceleration : -velZ / Time.deltaTime;
+                rigidbody.AddForce(new Vector3(correctionAccelerationX, 0f, correctionAccelerationZ), ForceMode.Acceleration);
+            }
         }
         else
         {
@@ -142,9 +167,4 @@ public class Navegation : MonoBehaviour {
             }
         }
     }
-
-        
-
-
-
 }
