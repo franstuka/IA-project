@@ -116,7 +116,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         temporalGridObjects = new List<Vector2Int>();
     }
 
-    public Cell CellFromWorldPoint(Vector3 worldPosition)
+    public Cell CellFromWorldPoint(Vector3 worldPosition)  //LA FUNCION FUNCIONA MAL
     {
         /*
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
@@ -137,7 +137,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         return grid[Mathf.FloorToInt(x), Mathf.FloorToInt(y)];
     }
 
-    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition)
+    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition) //LA FUNCION FUNCIONA MAL
     {
         
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;

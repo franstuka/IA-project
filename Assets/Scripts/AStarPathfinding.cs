@@ -683,11 +683,19 @@ public class AStarPathfinding { //By default this is for a quad grid
         if(state == AStarAlgorithmState.FINISHED)
         {
             point = endNodePos;
-            while (point != startNodePos) //this stops before get the initial point
+            if(endNodePos == startNodePos) // trivial case
             {
                 path.AddFirst(point);
-                point = GridMap.instance.grid[point.x, point.y].Node.GetParent();
             }
+            else
+            {
+                while (point != startNodePos) //this stops before get the initial point
+                {
+                    path.AddFirst(point);
+                    point = GridMap.instance.grid[point.x, point.y].Node.GetParent();
+                }
+            }
+           
             return path;
         }
         else if (state == AStarAlgorithmState.LIMITED_BY_STEPS)
@@ -700,7 +708,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             }
             return path;
         }
-        else // stay in position
+        else // path not found, soo stay in position
         {
             path.AddFirst(startNodePos);
             return path;
@@ -711,30 +719,48 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     public LinkedList<Vector2Int> GetPath(Vector2Int start, Vector2Int end)
     {
-        bool ended = false;
-        state = AStarAlgorithmState.IN_PROCESS;
+        if(start == end)  //trivial case
+        {
+            Reset();
+            SetDestination(start, end);
+            state = AStarAlgorithmState.FINISHED;
+        }
+        else
+        {
+            bool ended = false;
+            state = AStarAlgorithmState.IN_PROCESS;
 
-        Reset();                        //stage 0
-        SetDestination(start, end);
-        CalculateTargetDistance();   
-        InitializeHeap();                //stage 1
-        while(!ended)
-            ended = SearchMinimun();      //stage 2
+            Reset();                        //stage 0
+            SetDestination(start, end);
+            CalculateTargetDistance();
+            InitializeHeap();                //stage 1
+            while (!ended)
+                ended = SearchMinimun();      //stage 2
+        }
 
         return GetFinalPath();
     }
 
     public LinkedList<Vector2Int> GetPath(Vector2Int start, Vector2Int end , uint maxSteps)
     {
-        bool ended = false;
-        state = AStarAlgorithmState.IN_PROCESS;
+        if (start == end ) //trivial case
+        {
+            Reset();
+            SetDestination(start, end);
+            state = AStarAlgorithmState.FINISHED;
+        }
+        else
+        {
+            bool ended = false;
+            state = AStarAlgorithmState.IN_PROCESS;
 
-        Reset();                        //stage 0
-        SetDestination(start, end , maxSteps);
-        CalculateTargetDistance();
-        InitializeHeap();                //stage 1
-        while (!ended)
-            ended = SearchMinimun();      //stage 2
+            Reset();                        //stage 0
+            SetDestination(start, end, maxSteps);
+            CalculateTargetDistance();
+            InitializeHeap();                //stage 1
+            while (!ended)
+                ended = SearchMinimun();      //stage 2
+        }
 
         return GetFinalPath();
     }
