@@ -23,8 +23,16 @@ public class Navegation : MonoBehaviour {
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
-        float minimunGridSize = GridMap.instance.GetGridSizeX() < GridMap.instance.GetGridSizeY()? GridMap.instance.GetGridSizeX() : GridMap.instance.GetGridSizeY();
+        savedPath = new LinkedList<Vector2Int>();
+    }
+
+    private void Start()
+    {
+        float minimunGridSize = GridMap.instance.GetGridSizeX() < GridMap.instance.GetGridSizeY() ? GridMap.instance.GetGridSizeX() : GridMap.instance.GetGridSizeY();
         stoppingDistance = minimunGridSize * stoppingDistanceFactor;
+        
+        savedPath.AddFirst(GridMap.instance.CellCordFromWorldPoint(transform.position)); // in start is the actual position
+        Astar = new AStarPathfinding(AStarPathfinding.UpdateMode.ON_TARGET_OR_ORIGIN_MOVE);
     }
 
     private void Update()
@@ -150,12 +158,12 @@ public class Navegation : MonoBehaviour {
                 factor -= 0.1f;
             }
 
-            if (velZ < 1 / 2 * maxSpeed)
+            if (velZ < 0.5 * maxSpeed)
             {
                 finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration ? Mathf.Max((maxSpeed * factor - velZ) / Time.deltaTime, -acceleration) : acceleration;
                 rigidbody.AddForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
             }
-            else if (velZ < 3 / 4 * maxSpeed)
+            else if (velZ < 0.75 * maxSpeed)
             {
                 finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 2 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / 2;
                 rigidbody.AddForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
@@ -166,5 +174,10 @@ public class Navegation : MonoBehaviour {
                 rigidbody.AddForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
             }
         }
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return rigidbody.velocity;
     }
 }

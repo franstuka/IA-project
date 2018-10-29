@@ -275,10 +275,10 @@ public class Skeleton : EnemyCombat {
 
     private void UpdateAnimator()
     {
-        if (Vector3.Magnitude(nav.velocity) >= 0.30f)
+        if (Vector3.Magnitude(nav.GetVelocity()) >= 0.30f)
         {
             anim.SetBool("Running", true);
-            anim.SetFloat("MovementSpeed", Vector3.Magnitude(nav.velocity)/2);
+            anim.SetFloat("MovementSpeed", Vector3.Magnitude(nav.GetVelocity()) /2);
         }
         else
             anim.SetBool("Running", false);

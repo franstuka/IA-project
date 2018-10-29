@@ -197,7 +197,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(i + x, y)
                 };
             }
-            if (x < maxX && y < maxY)
+            if (x < maxX -1  && y < maxY -1 )
                 CalculateTargetRecursion(baseCost + diagonalCost, x + 1, y + 1, TargetDistanceAdvanceDirection.DOWN_RIGHT);
         }
         else if (direction == TargetDistanceAdvanceDirection.DOWN_LEFT)
@@ -217,7 +217,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(i + x, y)
                 };
             }
-            if (x < maxX && y >= 0)
+            if (x < maxX -1 && y > 0)
                 CalculateTargetRecursion(baseCost + diagonalCost, x + 1, y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
         }
         else if (direction == TargetDistanceAdvanceDirection.UP_LEFT)
@@ -237,7 +237,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(i + x, y)
                 };
             }
-            if (x >= 0 && y >= 0)
+            if (x > 0 && y > 0)
                 CalculateTargetRecursion(baseCost + diagonalCost, x - 1, y - 1, TargetDistanceAdvanceDirection.UP_LEFT);
         }
         else if (direction == TargetDistanceAdvanceDirection.UP_RIGHT)
@@ -257,7 +257,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(i + x, y)
                 };
             }
-            if (x >= 0 && y < maxY)
+            if (x > 0 && y < maxY -1)
                 CalculateTargetRecursion(baseCost + diagonalCost, x - 1, y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
         }
         else

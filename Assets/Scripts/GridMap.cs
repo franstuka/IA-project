@@ -15,8 +15,17 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             Debug.LogError("More than one instance of grid is trying to active");
             return;
         }
-
         instance = this;
+        bloquedMask = LayerMask.GetMask("Unwalkable");
+        chestMask = LayerMask.GetMask("Chest");
+        exitMask = LayerMask.GetMask("Exit");
+        enemyMask = LayerMask.GetMask("Enemy");
+        temporalGridObjects = new List<Vector2Int>();
+        cellDiameter = CellRadius * 2;
+        gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
+        gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
+        //Debug.Log(gridSizeX);
+        CreateGrid();
     }
     #endregion
 
@@ -36,9 +45,10 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     private int gridSizeX;
     private int gridSizeY;
 
-
+    
     private void Start()
     {
+        /*
         bloquedMask = LayerMask.GetMask("Unwalkable");
         chestMask = LayerMask.GetMask("Chest");
         exitMask = LayerMask.GetMask("Exit");
@@ -48,8 +58,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
         gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
         //Debug.Log(gridSizeX);
-        CreateGrid();
-        grid[0, 1].CellType = CellTypes.chest;
+        CreateGrid();*/
         UpdateEnemyPositions();
     }
 

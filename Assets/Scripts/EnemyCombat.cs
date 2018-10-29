@@ -8,7 +8,8 @@ public class EnemyCombat : CombatStats {
     //[SerializeField] protected BehaviourBase[] behaviourList; // i try to made this efficiently in global terms, but i dont found the way
     [SerializeField] protected GameObject[] DropList;
     [SerializeField] protected float[] DropProb;
-    [SerializeField] protected NavMeshAgent nav;
+    //[SerializeField] protected NavMeshAgent nav;
+    [SerializeField] protected Navegation nav;
     [SerializeField] protected bool staticEnemy;
 
     [SerializeField] protected float detectionAngle;
@@ -18,7 +19,7 @@ public class EnemyCombat : CombatStats {
 
     private void Awake()
     {
-        nav = GetComponent<NavMeshAgent>();
+        nav = GetComponent<Navegation>();
         //rigidbody = GetComponent<Rigidbody>();
 
         if (DropList.Length != DropProb.Length)
