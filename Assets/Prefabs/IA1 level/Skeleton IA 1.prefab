@@ -1691,7 +1691,7 @@ MonoBehaviour:
   nav: {fileID: 195910504244373704}
   staticEnemy: 0
   watch: {fileID: 114033658026273220}
-  detectionAngle: 60
+  detectionAngle: 50
   ActiveState: 0
   weaponHitbox: {fileID: 114822773753911140}
 --- !u!114 &114750424378846968
