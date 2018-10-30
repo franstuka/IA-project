@@ -243,9 +243,9 @@ public class Skeleton : EnemyCombat {
             }
             if (other.gameObject.layer == 11) //Enemy layer
             {
-                
 
-                if (ActiveState == SkeletonState.CHASE)
+
+                if (ActiveState == SkeletonState.CHASE && !chase.GetplayerLost())
                 {
                     bool stateCompatible = false;
                     switch (other.gameObject.GetComponent<Skeleton>().ActiveState)
@@ -272,9 +272,12 @@ public class Skeleton : EnemyCombat {
                                 break;
                             }
                     }
-                    other.gameObject.GetComponent<Skeleton>().target = target;
-                    other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
-
+                    if(stateCompatible)
+                    {
+                        other.gameObject.GetComponent<Skeleton>().target = target;
+                        other.gameObject.GetComponent<Chase>().PlayerFound();
+                        other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
+                    }
                 }
             }
         } 
@@ -297,6 +300,7 @@ public class Skeleton : EnemyCombat {
                         new Vector3(1, 1, 1), gameObject.GetComponent<SphereCollider>().radius, 11, QueryTriggerInteraction.Collide);
                     foreach(RaycastHit n in raycastHit)
                     {
+                        Debug.Log("HOLII");
                         if(n.collider.gameObject.layer == 11)
                         {
                             if(chase.GetplayerLost() && !n.collider.gameObject.GetComponent<Chase>().GetplayerLost() && n.collider.gameObject.GetComponent<Skeleton>().ActiveState == SkeletonState.CHASE)
