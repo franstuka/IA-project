@@ -212,7 +212,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             {
                 int maxCost = int.MinValue;
                 int minCost = int.MaxValue;
-                float factor;
                 foreach (Cell n in grid)
                 {
                     if( n.Node.NodeFinalCost != int.MaxValue)
@@ -227,7 +226,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         } 
                     }
                 }
-                factor = maxCost - minCost;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.NodeFinalCost == int.MaxValue)
@@ -246,7 +244,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             {
                 int maxCost = int.MinValue;
                 int minCost = int.MaxValue;
-                float factor;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromInitialCost != int.MaxValue)
@@ -261,7 +258,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         }
                     }
                 }
-                factor = maxCost - minCost;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromInitialCost == int.MaxValue)
@@ -280,7 +276,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             {
                 int maxCost = int.MinValue;
                 int minCost = int.MaxValue;
-                float factor;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromFinalCost != int.MaxValue)
@@ -295,7 +290,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         }
                     }
                 }
-                factor = maxCost - minCost;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromFinalCost == int.MaxValue)

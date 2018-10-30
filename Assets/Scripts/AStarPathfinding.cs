@@ -96,10 +96,12 @@ public class AStarPathfinding { //By default this is for a quad grid
         
         for (int i = 1; i < maxY - endNodePos.y; i++)
         {
+            
             GridMap.instance.grid[endNodePos.x, i + endNodePos.y].Node = new AStarNode(i * normalCost)
             {
                 AvaibleAdjacentNodes = CheckAvaiblesPositions(endNodePos.x, i + endNodePos.y)
             };
+            Debug.Log(GridMap.instance.grid[endNodePos.x, i + endNodePos.y].Node.FromFinalCost);
 
         }
         for (int i = -1; i > -endNodePos.y - 1; i--)
@@ -181,7 +183,6 @@ public class AStarPathfinding { //By default this is for a quad grid
     {
         if (direction == TargetDistanceAdvanceDirection.DOWN_RIGHT)
         {
-
             for (int i = 0; i < maxY - y; i++)
             {
                 GridMap.instance.grid[x, i + y].Node = new AStarNode(baseCost + i * normalCost)
@@ -200,8 +201,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                 CalculateTargetRecursion(baseCost + diagonalCost, x + 1, y + 1, TargetDistanceAdvanceDirection.DOWN_RIGHT);
         }
         else if (direction == TargetDistanceAdvanceDirection.DOWN_LEFT)
-        {
-
+        {  
             for (int i = 0; i > -y - 1; i--)
             {
                 GridMap.instance.grid[x, i + y].Node = new AStarNode(baseCost + Mathf.Abs(i) * normalCost)
@@ -261,19 +261,19 @@ public class AStarPathfinding { //By default this is for a quad grid
         }
         else
             Debug.LogError("This case don't exist");
-
     }
 
     private byte CheckAvaiblesPositions(int x, int y)
     {
         byte cellsAvaible = 0;
-        /*
+        
         if (!AvaibleListPositions(x, y)) //if this is true, cell is inaccesible, so it never will be inserted in heap or visited
         {
             GridMap.instance.grid[x, y].Node.visited = true;
+            Debug.Log(GridMap.instance.grid[x, y].CellType);
             return 0;
         }
-        else */if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
+        else if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
         {
             if (AvaibleListPositions(x - 1, y - 1)) cellsAvaible++;
             if (AvaibleListPositions(x + 1, y + 1)) cellsAvaible++;
@@ -531,81 +531,6 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     private Vector3Int GetMinimumAroundNode(int x, int y, ref int fromLastInitialNodeCost) //REWORKED FUNCTION, LIKE RYZE
     { 
-        #region Stage 1, SetCostAround
-        /*
-        if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1) //Stage 1, SetCostAround
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (x == 0 && y == 0)
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (x == 0 && y == maxY - 1)
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-        }
-        else if (x == maxX - 1 && y == 0)
-        {
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (x == maxX - 1 && y == maxY - 1)
-        {
-            GridMap.instance.grid[x - 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (x == 0)
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-        }
-        else if (y == 0)
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (x == maxX - 1)
-        {
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y + 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y + 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else if (y == maxY - 1)
-        {
-            GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x - 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x + 1, y - 1].Node.SetFinalCost(diagonalCost + fromLastInitialNodeCost);
-            GridMap.instance.grid[x, y - 1].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);
-        }
-        else
-        {
-            Debug.LogError("No suitable solution");
-            return new Vector3Int(0, 0, int.MaxValue);    
-        }*/
-        #endregion
         #region Stage 2, get minimum and remove cells with 0 adjacents
 
         Vector3Int positionAndMinimum = new Vector3Int(0,0,int.MaxValue);
@@ -733,9 +658,11 @@ public class AStarPathfinding { //By default this is for a quad grid
             Reset();                        //stage 0
             SetDestination(start, end);
             CalculateTargetDistance();
+            /*
             InitializeHeap();                //stage 1
             while (!ended)
                 ended = SearchMinimun();      //stage 2
+                */
         }
 
         return GetFinalPath();

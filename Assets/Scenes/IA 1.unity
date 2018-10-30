@@ -352,7 +352,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seeTypes: 0
-  seePathCost: 1
+  seePathCost: 0
+  seePathFromStartCost: 0
+  seePathFromEndCost: 1
   enemySelected: {fileID: 1727558086}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
@@ -694,7 +696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &2045378753
 BoxCollider:
   m_ObjectHideFlags: 0
