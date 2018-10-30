@@ -6,45 +6,37 @@ public class Watch : BehaviourBase
 {
     private float triggerRange;
     private float watchRange;
-    [SerializeField] private Transform raycastPos;
+    private Transform raycastPos;
 
-    [Range(0,360)]
-    public float viewAngle;
+    //[Range(0,360)]
+    //private float viewAngle;
 
-    public float viewPercent = 0.75f;
-    public float soundRange;
+    [SerializeField] private float viewPercent = 0.75f;
+    [SerializeField] private float soundRange;
 
-    public LayerMask targetMask;
-    public LayerMask obstacleMask;
-
-    //public Transform head;
+    private LayerMask obstacleMask;
 
     private void Awake()
     {
-        triggerRange = GetComponentInParent<SphereCollider>().radius;
+        triggerRange = GetComponent<SphereCollider>().radius;
         watchRange = triggerRange * viewPercent;
-        //head = transform.GetChild(0).transform;
+        obstacleMask = LayerMask.GetMask("Unwalkable");
+        raycastPos = transform.Find("CenterView").transform;
     }
 
-    public bool FindPlayer(GameObject player)
+    public bool FindPlayer(GameObject player, float viewAngle)
     {
-        /*head.position*/
-        /*transform.position*/
-        /*transform.forward*/
-        /*head.forward*/
 
-        //Debug.Log("DONDE ESTAS??");
-        Transform target = player.transform.GetChild(0).transform;
+        Transform target = player.transform.Find("CenterView").transform;
+
+        if (target == null)
+        {
+            Debug.LogWarning("Player's CenterView not detected");
+        }
 
         Vector3 dirToTarget = (target.position - raycastPos.position).normalized;
         float disToTarget = Vector3.Distance(raycastPos.position, target.position);
 
-        //Debug.Log(disToTarget);
-        //Debug.Log(player.GetComponent<PlayerCombat>().GetSoundlevel());
-        //Debug.Log(player.GetComponent<ThirdPersonCharacter>().m_soundProduced / disToTarget);
-
-            //Vector3 dirToTarget = (target.position - transform.position).normalized;
-            //Debug.Log("Range: " + watchRange);
             Debug.DrawRay(raycastPos.position, raycastPos.forward * watchRange, Color.red);
 
             Vector3 vectorA = Quaternion.AngleAxis(viewAngle / 2, Vector3.up) * (raycastPos.forward * watchRange);
@@ -55,24 +47,17 @@ public class Watch : BehaviourBase
             Debug.DrawLine(raycastPos.position, target.position, Color.green);
 
             if (Vector3.Angle(raycastPos.forward, dirToTarget) < viewAngle / 2){
-                //Debug.Log("dentro del aungulo de vision");
-                //float disToTarget = Vector3.Distance(transform.position, target.position);
+
                 if(!Physics.Raycast(raycastPos.position, dirToTarget, disToTarget, obstacleMask))
                 {
-                    //Debug.Log("TE VEO!");
                     return true;
                 }
             }
             else if(player.GetComponent<PlayerCombat>().GetSoundlevel() / disToTarget > 7f)
             {
-                    //Debug.Log("TE OIGO!!");
                     return true;
             }
 
         return false;
-        
-        //Collider[] targetList = Physics.OverlapSphere(transform.position, watchRange, targetMask);
-        //Debug.Log(targetList[0].gameObject.name);
-        //Debug.Log(targetList);
     }
 } 
