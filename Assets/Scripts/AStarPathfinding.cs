@@ -93,7 +93,7 @@ public class AStarPathfinding { //By default this is for a quad grid
         };
 
         //set adjacent (non diagonal) cells
-
+        
         for (int i = 1; i < maxY - endNodePos.y; i++)
         {
             GridMap.instance.grid[endNodePos.x, i + endNodePos.y].Node = new AStarNode(i * normalCost)
@@ -128,7 +128,7 @@ public class AStarPathfinding { //By default this is for a quad grid
         }
         /////////////////////////////////
 
-
+        //INDICES MAL
         //expand in diagonal nodes
         if (endNodePos.x > 0 && endNodePos.x < maxX - 1 && endNodePos.y > 0 && endNodePos.y < maxY - 1)
         {
@@ -155,27 +155,26 @@ public class AStarPathfinding { //By default this is for a quad grid
         }
         else if (endNodePos.x == 0)
         {
-            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
+            CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
             CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.DOWN_RIGHT);
         }
         else if (endNodePos.y == 0)
         {
             CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.DOWN_RIGHT);
-            CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
+            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
         }
         else if (endNodePos.x == maxX - 1)
         {
             CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.UP_LEFT);
-            CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
+            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
         }
         else if (endNodePos.y == maxY - 1)
         {
-            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
+            CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
             CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.UP_LEFT);
         }
         else
             Debug.LogError("No suitable solution");
-
     }
 
     private void CalculateTargetRecursion(int baseCost, int x, int y, TargetDistanceAdvanceDirection direction)
@@ -268,12 +267,13 @@ public class AStarPathfinding { //By default this is for a quad grid
     private byte CheckAvaiblesPositions(int x, int y)
     {
         byte cellsAvaible = 0;
+        /*
         if (!AvaibleListPositions(x, y)) //if this is true, cell is inaccesible, so it never will be inserted in heap or visited
         {
             GridMap.instance.grid[x, y].Node.visited = true;
             return 0;
         }
-        else if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
+        else */if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
         {
             if (AvaibleListPositions(x - 1, y - 1)) cellsAvaible++;
             if (AvaibleListPositions(x + 1, y + 1)) cellsAvaible++;
@@ -498,7 +498,7 @@ public class AStarPathfinding { //By default this is for a quad grid
         
         //Staff to do around the node
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.FromInitialCost = 
-            holdedPositionAndMin.z - GridMap.instance.grid[startNodePos.x, startNodePos.y].Node.FromFinalCost; //maybe the cost has changed 
+            holdedPositionAndMin.z - GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.FromFinalCost; //maybe the cost has changed 
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.SetFinalCost();
         UpdateAdjacentAvaibles(holdedPositionAndMin.x, holdedPositionAndMin.y);
         GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.visited = true;

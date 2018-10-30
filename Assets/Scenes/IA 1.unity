@@ -216,7 +216,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4712337061161870, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.51
       objectReference: {fileID: 0}
     - target: {fileID: 4712337061161870, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_LocalPosition.y
@@ -224,7 +224,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4712337061161870, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -11.13
       objectReference: {fileID: 0}
     - target: {fileID: 4712337061161870, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_LocalRotation.x
@@ -252,11 +252,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4212516376136220, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4849578881505176, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d565bea7e3ec9f47b65a0da45b5fff5, type: 2}
@@ -384,7 +384,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4130299514069466, guid: 8a85d657309db044ea005acf7345c8e5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.51
       objectReference: {fileID: 0}
     - target: {fileID: 4130299514069466, guid: 8a85d657309db044ea005acf7345c8e5, type: 2}
       propertyPath: m_LocalPosition.y
@@ -392,7 +392,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4130299514069466, guid: 8a85d657309db044ea005acf7345c8e5, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -11.13
       objectReference: {fileID: 0}
     - target: {fileID: 4130299514069466, guid: 8a85d657309db044ea005acf7345c8e5, type: 2}
       propertyPath: m_LocalRotation.x
@@ -914,7 +914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &2083579027
 BoxCollider:
   m_ObjectHideFlags: 0

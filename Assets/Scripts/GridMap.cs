@@ -32,6 +32,8 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     public Cell[,] grid;
     public bool seeTypes = false;
     public bool seePathCost = false;
+    public bool seePathFromStartCost = false;
+    public bool seePathFromEndCost = false;
     public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
@@ -206,7 +208,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }
-            else if (seePathCost && enemySelected != null)
+            else if (seePathCost && enemySelected != null) //PATH COST
             {
                 int maxCost = int.MinValue;
                 int minCost = int.MaxValue;
@@ -239,7 +241,75 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
 
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
-            }           
+            }
+            else if (seePathFromStartCost && enemySelected != null) //PATH INITIAL COST
+            {
+                int maxCost = int.MinValue;
+                int minCost = int.MaxValue;
+                float factor;
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromInitialCost != int.MaxValue)
+                    {
+                        if (maxCost < n.Node.FromInitialCost)
+                        {
+                            maxCost = n.Node.FromInitialCost;
+                        }
+                        else if (minCost > n.Node.FromInitialCost)
+                        {
+                            minCost = n.Node.FromInitialCost;
+                        }
+                    }
+                }
+                factor = maxCost - minCost;
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromInitialCost == int.MaxValue)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, 1);
+                    }
+
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seePathFromEndCost && enemySelected != null) // PATH FROM FINAL COST
+            {
+                int maxCost = int.MinValue;
+                int minCost = int.MaxValue;
+                float factor;
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromFinalCost != int.MaxValue)
+                    {
+                        if (maxCost < n.Node.FromFinalCost)
+                        {
+                            maxCost = n.Node.FromFinalCost;
+                        }
+                        else if (minCost > n.Node.FromFinalCost)
+                        {
+                            minCost = n.Node.FromFinalCost;
+                        }
+                    }
+                }
+                factor = maxCost - minCost;
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromFinalCost == int.MaxValue)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, 1);
+                    }
+
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
         }
     }
 
