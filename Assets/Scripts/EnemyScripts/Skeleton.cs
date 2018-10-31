@@ -12,7 +12,6 @@ public class Skeleton : EnemyCombat {
     private Hold hold;
     private Chase chase;
     private Alert alert;
-    private Watch watch;
     private Seek seek;
     private Vector3 target;
     private Vector2 nextAtack; //in pos 0 have the attackType, and in 1 the distance for do the attack
@@ -29,8 +28,7 @@ public class Skeleton : EnemyCombat {
         patrol = GetComponent<Patrol>();
         hold = GetComponent<Hold>();
         chase = GetComponent<Chase>();
-        alert = GetComponent<Alert>();
-        watch = GetComponent<Watch>();
+        alert = GetComponent<Alert>();  
         seek = GetComponent<Seek>();
     }
 
@@ -76,7 +74,8 @@ public class Skeleton : EnemyCombat {
                             inAttack = false;
                             SetAttackID(anim.GetInteger("AttackID"));
                             nextAtack = attackList.GetNextAttack();
-                            ActiveState = SkeletonState.CHASE;
+                            ActiveState = SkeletonState.PLAYER_LOST;
+                            chase.PlayerLost(target);
                             nav.SetDestination(target);  
                         }
                         else //in attack anim
@@ -124,6 +123,13 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.CHASE:
             {
+                    //TEST ALREDEDOR CON VISION
+                    if(!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+                    {
+                        ActiveState = SkeletonState.PLAYER_LOST;
+                        chase.PlayerLost(target);
+                    }
+                    chase.SetOtherPlayerInSightFalse();
                     nav.SetDestination(target);
                     break;
             }
@@ -151,6 +157,7 @@ public class Skeleton : EnemyCombat {
                     {
                         if (!chase.GetWaiting())
                         {
+                            chase.SetOtherPlayerInSightFalse(); 
                             chase.InLastKnowPosition();
                         }
                         if(chase.GetEndChase())
@@ -209,7 +216,7 @@ public class Skeleton : EnemyCombat {
         {
             if (other.gameObject.name == "Player") // we can add inside this:  && other.gameobject.GetComponent<PlayerCombat> != null
             {
-                if (watch.FindPlayer(other.gameObject) && ActiveState != SkeletonState.ATTACK) //in vision
+                if (watch.FindPlayer(other.gameObject, detectionAngle) && ActiveState != SkeletonState.ATTACK) //in vision
                 {
                     if (Vector3.Distance(other.transform.position, transform.position) < nextAtack[1])
                     {
@@ -221,9 +228,9 @@ public class Skeleton : EnemyCombat {
                         if (ActiveState != SkeletonState.CHASE)
                         {                          
                             ActiveState = SkeletonState.CHASE;
-                            chase.PlayerFound();
-                            Alert(this); 
                         }
+                        chase.PlayerFound();
+                        Alert(this);
                         target = other.transform.position;
                     }
 
@@ -245,12 +252,39 @@ public class Skeleton : EnemyCombat {
             }
             if (other.gameObject.layer == 11) //Enemy layer
             {
-
-                if (!chase.GetplayerLost() && other.gameObject.GetComponent<Chase>().GetplayerLost())
+                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual()) //if this enemy is on chase state and player is on visual
                 {
-                    other.gameObject.GetComponent<Skeleton>().target = target;
-                    other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
+                    bool stateCompatible = false;
+                    switch (other.gameObject.GetComponent<Skeleton>().ActiveState)
+                    {
+                        case SkeletonState.PLAYER_LOST:
+                            {
+                                stateCompatible = true;
+                                break;
 
+                            }
+                        case SkeletonState.PATROL:
+                            {
+                                stateCompatible = true;
+                                break;
+                            }
+                        case SkeletonState.DIEDSPINNING:
+                            {
+                                stateCompatible = true;
+                                break;
+                            }
+                        case SkeletonState.FIRST_SEEKING:
+                            {
+                                stateCompatible = true;
+                                break;
+                            }
+                    }
+                    if(stateCompatible)
+                    {
+                        other.gameObject.GetComponent<Skeleton>().target = target;
+                        other.gameObject.GetComponent<Chase>().PlayerByOtherFound();
+                        other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
+                    }
                 }
             }
         } 
@@ -339,4 +373,5 @@ public class Skeleton : EnemyCombat {
         }
         
     }
+    
 }

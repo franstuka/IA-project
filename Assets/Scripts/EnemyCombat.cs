@@ -10,6 +10,7 @@ public class EnemyCombat : CombatStats {
     [SerializeField] protected float[] DropProb;
     [SerializeField] protected NavMeshAgent nav;
     [SerializeField] protected bool staticEnemy;
+    [SerializeField] protected Watch watch;
 
     [SerializeField] protected float detectionAngle;
     //protected Rigidbody rigidbody;
@@ -25,6 +26,7 @@ public class EnemyCombat : CombatStats {
         {
             Debug.LogError("DropList and DropProb don´t match in size");
         }
+        watch = GetComponent<Watch>();
     }
 
     protected bool FaceAndCheckObjective(Vector3 targetPos, float stoppingPrecision) //Estos 2 metodos son para girar el enemigo y hacer que mire hace cualquier sitio
@@ -70,4 +72,26 @@ public class EnemyCombat : CombatStats {
             }
         }
     }
+
+    public bool TestPlayerOnVisual()
+    {
+        GameObject playerFound = null;
+        RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius * gameObject.transform.lossyScale.x, Vector3.one);
+        foreach (RaycastHit n in raycastHit)
+        {
+            if (n.collider.gameObject.name == "Player")
+            {
+                playerFound = n.collider.gameObject;
+            }
+        }
+        if (playerFound == null)
+        {
+            return false;
+        }
+        else
+        {
+            return watch.FindPlayer(playerFound, detectionAngle);
+        }
+    }
+    
 }
