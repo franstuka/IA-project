@@ -76,7 +76,7 @@ public class EnemyCombat : CombatStats {
     public bool TestPlayerOnVisual()
     {
         GameObject playerFound = null;
-        RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius, new Vector3(1, 1, 1));
+        RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius * gameObject.transform.lossyScale.x, Vector3.one);
         foreach (RaycastHit n in raycastHit)
         {
             if (n.collider.gameObject.name == "Player")

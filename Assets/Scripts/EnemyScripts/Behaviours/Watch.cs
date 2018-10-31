@@ -55,7 +55,7 @@ public class Watch : BehaviourBase
         }
         else if(player.GetComponent<PlayerCombat>().GetSoundlevel() / disToTarget > 7f)
         {
-            Debug.Log("NO ESTOY SORDO");
+            
                 return true;
         }
 

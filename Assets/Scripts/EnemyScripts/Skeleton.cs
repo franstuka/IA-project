@@ -244,9 +244,10 @@ public class Skeleton : EnemyCombat {
             if (other.gameObject.layer == 11) //Enemy layer
             {
 
-
-                if (ActiveState == SkeletonState.CHASE && !chase.GetplayerLost())
+                //Debug.Log("SIGUELE");
+                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual())
                 {
+                    Debug.Log("PILLALE");
                     bool stateCompatible = false;
                     switch (other.gameObject.GetComponent<Skeleton>().ActiveState)
                     {
@@ -274,6 +275,7 @@ public class Skeleton : EnemyCombat {
                     }
                     if(stateCompatible)
                     {
+                        Debug.Log("A POR EL");
                         other.gameObject.GetComponent<Skeleton>().target = target;
                         other.gameObject.GetComponent<Chase>().PlayerFound();
                         other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
@@ -297,10 +299,10 @@ public class Skeleton : EnemyCombat {
                     nav.SetDestination(target);
 
                     RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius,
-                        new Vector3(1, 1, 1), gameObject.GetComponent<SphereCollider>().radius, 11, QueryTriggerInteraction.Collide);
+                        Vector3.one, gameObject.GetComponent<SphereCollider>().radius, 11, QueryTriggerInteraction.Collide);
                     foreach(RaycastHit n in raycastHit)
                     {
-                        Debug.Log("HOLII");
+                        Debug.Log("VUELVE");
                         if(n.collider.gameObject.layer == 11)
                         {
                             if(chase.GetplayerLost() && !n.collider.gameObject.GetComponent<Chase>().GetplayerLost() && n.collider.gameObject.GetComponent<Skeleton>().ActiveState == SkeletonState.CHASE)
