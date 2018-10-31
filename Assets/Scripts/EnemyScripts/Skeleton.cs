@@ -74,7 +74,8 @@ public class Skeleton : EnemyCombat {
                             inAttack = false;
                             SetAttackID(anim.GetInteger("AttackID"));
                             nextAtack = attackList.GetNextAttack();
-                            ActiveState = SkeletonState.CHASE;
+                            ActiveState = SkeletonState.PLAYER_LOST;
+                            chase.PlayerLost(target);
                             nav.SetDestination(target);  
                         }
                         else //in attack anim
@@ -156,6 +157,7 @@ public class Skeleton : EnemyCombat {
                     {
                         if (!chase.GetWaiting())
                         {
+                            chase.SetOtherPlayerInSightFalse(); 
                             chase.InLastKnowPosition();
                         }
                         if(chase.GetEndChase())
@@ -304,31 +306,7 @@ public class Skeleton : EnemyCombat {
                     ActiveState = SkeletonState.PLAYER_LOST;
                     chase.PlayerLost(target);
                     nav.SetDestination(target);
-                    /*
-                    RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius,
-                        Vector3.one, gameObject.GetComponent<SphereCollider>().radius, 11, QueryTriggerInteraction.Collide);
-                    foreach(RaycastHit n in raycastHit)
-                    {
-                        Debug.Log("VUELVE");
-                        if(n.collider.gameObject.layer == 11)
-                        {
-                            if(chase.GetplayerLost() && !n.collider.gameObject.GetComponent<Chase>().GetplayerLost() && n.collider.gameObject.GetComponent<Skeleton>().ActiveState == SkeletonState.CHASE)
-                            {
-                                bool playerOnSight = n.collider.gameObject.GetComponent<EnemyCombat>().TestPlayerOnVisual();
-                                /*if(n.collider.gameObject.GetComponent<EnemyCombat()...) //for other enemies we need a cast 
-                                 * {
-                                 * }
-                                 * *//*
-                                 if(!playerOnSight)
-                                 {
-                                    n.collider.gameObject.GetComponent<Chase>().PlayerLost(target);
-                                    n.collider.gameObject.GetComponent<Skeleton>().target = target;
-                                    n.collider.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.PLAYER_LOST;
-                                }
-                                    
-                            }
-                        }
-                    }*/
+                    
                 }
             }
         }

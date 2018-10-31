@@ -6,11 +6,11 @@ public class Chase : BehaviourBase
 {
     private Vector3 lastKnowPosition;
     private float waitTime = 3f;
-    private bool playerLost = true;
-    private bool endChase = true;
-    private bool waiting = true;
-    private bool hasPlayerInSight = false;
-    private bool otherHasPlayerInSight = false;
+    public bool playerLost = true;
+    public bool endChase = true;
+    public bool waiting = true;
+    public bool hasPlayerInSight = false;
+    public bool otherHasPlayerInSight = false;
 
     public void PlayerLost(Vector3 lastKnowPosition)
     {
