@@ -122,6 +122,13 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.CHASE:
             {
+                    //TEST ALREDEDOR CON VISION
+                    if(chase.GetOtherPlayerInSight())
+                    {
+                        ActiveState = SkeletonState.PLAYER_LOST;
+                        chase.PlayerLost(target);
+                    }
+                    chase.SetOtherPlayerInSightFalse();
                     nav.SetDestination(target);
                     break;
             }
@@ -219,9 +226,9 @@ public class Skeleton : EnemyCombat {
                         if (ActiveState != SkeletonState.CHASE)
                         {                          
                             ActiveState = SkeletonState.CHASE;
-                            chase.PlayerFound();
-                            Alert(this); 
                         }
+                        chase.PlayerFound();
+                        Alert(this);
                         target = other.transform.position;
                     }
 
@@ -245,7 +252,7 @@ public class Skeleton : EnemyCombat {
             {
 
                 //Debug.Log("SIGUELE");
-                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual())
+                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual()) //if this enemy is on chase state and player is on visual
                 {
                     Debug.Log("PILLALE");
                     bool stateCompatible = false;
