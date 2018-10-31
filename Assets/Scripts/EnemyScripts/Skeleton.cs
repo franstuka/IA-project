@@ -122,6 +122,13 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.CHASE:
             {
+                    //TEST ALREDEDOR CON VISION
+                    if(!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+                    {
+                        ActiveState = SkeletonState.PLAYER_LOST;
+                        chase.PlayerLost(target);
+                    }
+                    chase.SetOtherPlayerInSightFalse();
                     nav.SetDestination(target);
                     break;
             }
@@ -219,9 +226,9 @@ public class Skeleton : EnemyCombat {
                         if (ActiveState != SkeletonState.CHASE)
                         {                          
                             ActiveState = SkeletonState.CHASE;
-                            chase.PlayerFound();
-                            Alert(this); 
                         }
+                        chase.PlayerFound();
+                        Alert(this);
                         target = other.transform.position;
                     }
 
@@ -245,7 +252,7 @@ public class Skeleton : EnemyCombat {
             {
 
                 //Debug.Log("SIGUELE");
-                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual())
+                if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual()) //if this enemy is on chase state and player is on visual
                 {
                     Debug.Log("PILLALE");
                     bool stateCompatible = false;
@@ -277,7 +284,7 @@ public class Skeleton : EnemyCombat {
                     {
                         Debug.Log("A POR EL");
                         other.gameObject.GetComponent<Skeleton>().target = target;
-                        other.gameObject.GetComponent<Chase>().PlayerFound();
+                        other.gameObject.GetComponent<Chase>().PlayerByOtherFound();
                         other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
                     }
                 }
@@ -297,7 +304,7 @@ public class Skeleton : EnemyCombat {
                     ActiveState = SkeletonState.PLAYER_LOST;
                     chase.PlayerLost(target);
                     nav.SetDestination(target);
-
+                    /*
                     RaycastHit[] raycastHit = Physics.SphereCastAll(transform.position, gameObject.GetComponent<SphereCollider>().radius,
                         Vector3.one, gameObject.GetComponent<SphereCollider>().radius, 11, QueryTriggerInteraction.Collide);
                     foreach(RaycastHit n in raycastHit)
@@ -311,7 +318,7 @@ public class Skeleton : EnemyCombat {
                                 /*if(n.collider.gameObject.GetComponent<EnemyCombat()...) //for other enemies we need a cast 
                                  * {
                                  * }
-                                 * */
+                                 * *//*
                                  if(!playerOnSight)
                                  {
                                     n.collider.gameObject.GetComponent<Chase>().PlayerLost(target);
@@ -321,7 +328,7 @@ public class Skeleton : EnemyCombat {
                                     
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }
