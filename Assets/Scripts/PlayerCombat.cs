@@ -9,7 +9,7 @@ public class PlayerCombat : CombatStats
    
     [SerializeField] private GameObject[] weaponMesh;
     [SerializeField] private Light[] playerLights;
-    [SerializeField] private float soundProduded = 25f;
+    [SerializeField] private float maxSoundProduded = 20f;
 
     private bool inAttack = false;
 
@@ -133,12 +133,12 @@ public class PlayerCombat : CombatStats
 
     public float GetSoundlevel()
     {
-        return soundProduded;
+        return maxSoundProduded * gameObject.GetComponent<ThirdPersonCharacter>().GetPlayerSpeedZ();
     }
 
-    public void SetSoundlevel(float level)
+    public void SetMaxSoundlevel(float level)
     {
-        soundProduded = level;
+        maxSoundProduded = level;
     }
 
 }
