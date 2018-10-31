@@ -358,6 +358,11 @@ public class ThirdPersonCharacter : MonoBehaviour
         }
     }
 
+    public float GetPlayerSpeedZ()
+    {
+        return m_ForwardAmount;
+    }
+
     
 }
 

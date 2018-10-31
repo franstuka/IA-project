@@ -50,7 +50,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4348286189103056}
   m_Layer: 11
-  m_Name: GameObject (1)
+  m_Name: CenterView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1623,16 +1623,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f251b701f91384caf0b385812f786f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastPos: {fileID: 4348286189103056}
-  viewAngle: 60
   viewPercent: 0.75
   soundRange: 10
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 16384
 --- !u!114 &114197200409542316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1698,7 +1690,8 @@ MonoBehaviour:
   DropProb: []
   nav: {fileID: 195910504244373704}
   staticEnemy: 0
-  detectionAngle: 60
+  watch: {fileID: 114033658026273220}
+  detectionAngle: 50
   ActiveState: 0
   weaponHitbox: {fileID: 114822773753911140}
 --- !u!114 &114750424378846968
