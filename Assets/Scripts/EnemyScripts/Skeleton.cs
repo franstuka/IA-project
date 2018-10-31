@@ -252,11 +252,8 @@ public class Skeleton : EnemyCombat {
             }
             if (other.gameObject.layer == 11) //Enemy layer
             {
-
-                //Debug.Log("SIGUELE");
                 if (ActiveState == SkeletonState.CHASE && TestPlayerOnVisual()) //if this enemy is on chase state and player is on visual
                 {
-                    Debug.Log("PILLALE");
                     bool stateCompatible = false;
                     switch (other.gameObject.GetComponent<Skeleton>().ActiveState)
                     {
@@ -284,7 +281,6 @@ public class Skeleton : EnemyCombat {
                     }
                     if(stateCompatible)
                     {
-                        Debug.Log("A POR EL");
                         other.gameObject.GetComponent<Skeleton>().target = target;
                         other.gameObject.GetComponent<Chase>().PlayerByOtherFound();
                         other.gameObject.GetComponent<Skeleton>().ActiveState = SkeletonState.CHASE;
@@ -306,7 +302,6 @@ public class Skeleton : EnemyCombat {
                     ActiveState = SkeletonState.PLAYER_LOST;
                     chase.PlayerLost(target);
                     nav.SetDestination(target);
-                    
                 }
             }
         }
