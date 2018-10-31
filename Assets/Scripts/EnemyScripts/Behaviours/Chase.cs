@@ -9,10 +9,13 @@ public class Chase : BehaviourBase
     private bool playerLost = true;
     private bool endChase = true;
     private bool waiting = true;
+    private bool hasPlayerInSight = false;
+    private bool otherHasPlayerInSight = false;
 
     public void PlayerLost(Vector3 lastKnowPosition)
     {
         playerLost = true;
+        hasPlayerInSight = false;
         this.lastKnowPosition = lastKnowPosition;
         
     }
@@ -27,6 +30,16 @@ public class Chase : BehaviourBase
         playerLost = false;
         endChase = false;
         waiting = false;
+        hasPlayerInSight = true;
+        StopAllCoroutines();
+    }
+
+    public void PlayerByOtherFound()
+    {
+        playerLost = false;
+        endChase = false;
+        waiting = false;
+        hasPlayerInSight = false;
         StopAllCoroutines();
     }
 
@@ -50,6 +63,20 @@ public class Chase : BehaviourBase
     public bool GetWaiting()
     {
         return waiting;
+    }
+
+    public bool GetPlayerInSight()
+    {
+        return hasPlayerInSight;
+    }
+
+    public bool GetOtherPlayerInSight()
+    {
+        return otherHasPlayerInSight;
+    }
+    public void SetOtherPlayerInSightFalse()
+    {
+        otherHasPlayerInSight = false;
     }
 
 }
