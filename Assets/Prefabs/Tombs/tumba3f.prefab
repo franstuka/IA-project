@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4905380403350406}
   - component: {fileID: 33696415584051790}
   - component: {fileID: 23694232069843664}
+  - component: {fileID: 65397665253753920}
   m_Layer: 0
   m_Name: tumba3f
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988465515259824}
   m_Mesh: {fileID: 4300000, guid: bffcacff7a2928647aa9feb4dbd79ddd, type: 3}
+--- !u!65 &65397665253753920
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1988465515259824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.052849434, y: 0.025319306, z: 0.028717533}
+  m_Center: {x: 9.313225e-10, y: 1.8286704e-11, z: -0.00024437014}

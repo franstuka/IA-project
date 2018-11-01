@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4172946268383304}
   - component: {fileID: 33760286766820324}
   - component: {fileID: 23209891573133212}
+  - component: {fileID: 65837600467548552}
   m_Layer: 0
   m_Name: Tumba1f
   m_TagString: Untagged
@@ -34,9 +35,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1789877660166620}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 14.734785, y: 1.2022803, z: -1.6655018}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0.7573781, y: 2.727109, z: -0.8387852}
+  m_LocalScale: {x: 50, y: 49.999985, z: 49.999985}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1789877660166620}
   m_Mesh: {fileID: 4300000, guid: 1089a939ca6a0614da9f98e5420787a0, type: 3}
+--- !u!65 &65837600467548552
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1789877660166620}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.025128596, y: 0.025128592, z: 0.032987718}
+  m_Center: {x: -4.656613e-10, y: -9.3132246e-10, z: 0.009471058}
