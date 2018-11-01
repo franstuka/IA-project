@@ -184,6 +184,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
     type: 2}
   m_PrefabInternal: {fileID: 1727558085}
+--- !u!114 &27583680 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1727558085}
+  m_Script: {fileID: 11500000, guid: 08efc3d3f3e1afc45b78cb90903e7be6, type: 3}
 --- !u!114 &27583686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,11 +445,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341018abb0d1f504f8fdf121cbb2bae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeTypes: 1
+  seeTypes: 0
   seePathCost: 0
   seePathFromStartCost: 0
-  seePathFromEndCost: 0
-  enemySelected: {fileID: 0}
+  seePathFromEndCost: 1
+  enemySelected: {fileID: 27583680}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
 --- !u!4 &756216475
@@ -700,7 +706,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.22
+      value: 0.57
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.z
