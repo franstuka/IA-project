@@ -34,6 +34,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     public bool seePathCost = false;
     public bool seePathFromStartCost = false;
     public bool seePathFromEndCost = false;
+    public bool seeVisitedCells = false;
     public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
@@ -174,9 +175,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(WorldSize.x, 1, WorldSize.y));
 
-        if(grid != null)
+        if (grid != null)
         {
-            if(seeTypes)
+            if (seeTypes)
             {
                 foreach (Cell n in grid)
                 {
@@ -214,7 +215,8 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 int minCost = int.MaxValue;
                 foreach (Cell n in grid)
                 {
-                    if( n.Node.NodeFinalCost != int.MaxValue)
+
+                    if (n.Node.NodeFinalCost != int.MaxValue)
                     {
                         if (maxCost < n.Node.NodeFinalCost)
                         {
@@ -223,7 +225,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         else if (minCost > n.Node.NodeFinalCost)
                         {
                             minCost = n.Node.NodeFinalCost;
-                        } 
+                        }
                     }
                 }
                 foreach (Cell n in grid)
@@ -246,6 +248,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 int minCost = int.MaxValue;
                 foreach (Cell n in grid)
                 {
+
                     if (n.Node.FromInitialCost != int.MaxValue)
                     {
                         if (maxCost < n.Node.FromInitialCost)
@@ -278,6 +281,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 int minCost = int.MaxValue;
                 foreach (Cell n in grid)
                 {
+
                     if (n.Node.FromFinalCost != int.MaxValue)
                     {
                         if (maxCost < n.Node.FromFinalCost)
@@ -301,6 +305,21 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         Gizmos.color = new Color(n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, 1);
                     }
 
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seeVisitedCells && enemySelected != null) // PATH FROM FINAL COST
+            {
+                foreach (Cell n in grid)
+                {
+                    if(n.Node.visited)
+                    {
+                        Gizmos.color = Color.green;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.white;
+                    }
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }

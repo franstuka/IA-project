@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using System.Threading;
 
 
 
@@ -20,9 +17,11 @@ public class AStarPathfinding { //By default this is for a quad grid
     private const int diagonalCost = 14;
     private const int enemyInSameCellCost = 6;
     private uint maxSteps;
+    private uint maxAllowedSteps = 100;
     private Vector2Int lastStepPos;
     private Vector2Int endNodePos;
     private Vector2Int startNodePos;
+    
 
     private int maxX;
     private int maxY;
@@ -68,7 +67,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     private void Reset()
     {
         Heap = new LinkedList<Vector2Int>();
-        maxSteps = uint.MaxValue;
+        maxSteps = maxAllowedSteps;
     }
     
     private void SetDestination(Vector2Int startNodePos, Vector2Int endNodePos)
@@ -128,9 +127,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             };
 
         }
-        /////////////////////////////////
 
-        //INDICES MAL
         //expand in diagonal nodes
         if (endNodePos.x > 0 && endNodePos.x < maxX - 1 && endNodePos.y > 0 && endNodePos.y < maxY - 1)
         {
@@ -658,11 +655,11 @@ public class AStarPathfinding { //By default this is for a quad grid
             Reset();                        //stage 0
             SetDestination(start, end);
             CalculateTargetDistance();
-            /*
+            
             InitializeHeap();                //stage 1
             while (!ended)
                 ended = SearchMinimun();      //stage 2
-                */
+                
         }
 
         return GetFinalPath();

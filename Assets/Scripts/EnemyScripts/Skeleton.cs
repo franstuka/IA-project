@@ -34,6 +34,7 @@ public class Skeleton : EnemyCombat {
 
     private void Start()
     {
+        /*
         if(!staticEnemy)
         {
             ActiveState = SkeletonState.PATROL;
@@ -46,9 +47,11 @@ public class Skeleton : EnemyCombat {
             target = hold.ReturnToPosition();
             nav.SetDestination(target);
         }
+        */
         angularSpeedBase = nav.angularSpeed;
         nextAtack = attackList.GetNextAttack();
         destructionTime += Random.value * destructionTime; //randomice the destrucction time;
+        StartCoroutine(WaitEndFrameToStartIA());
     }
 
     public void SkeletonStateMachine()
@@ -371,7 +374,23 @@ public class Skeleton : EnemyCombat {
                 enemyList[i].ActiveState = SkeletonState.CHASE;
             }
         }
-        
+    }
+    
+    IEnumerator WaitEndFrameToStartIA()
+    {
+        yield return new WaitForEndOfFrame();
+        if (!staticEnemy)
+        {
+            ActiveState = SkeletonState.PATROL;
+            target = patrol.GetNewWaipoint(new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity));
+            nav.SetDestination(target);
+        }
+        else
+        {
+            ActiveState = SkeletonState.RETURNING_TO_POSITION;
+            target = hold.ReturnToPosition();
+            nav.SetDestination(target);
+        }
     }
     
 }
