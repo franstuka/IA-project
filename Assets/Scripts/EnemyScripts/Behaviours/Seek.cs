@@ -2,95 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seek : BehaviourBase {
+public class Seek : BehaviourBase{
 
-    public enum State {  }
     [SerializeField] private Transform[] chaseWaypoints;
-
-    private bool timeToSpin = false;   
-    private int index = 0;
-    private bool endSeek = true;
-    private float waitTime = 3f;
-    private bool waiting = false;
-    private bool first = true;
-    private bool second = true;
-    private bool firstSeektWaiting = false;
-    private bool secondSeekWaiting = false;
-
-
-    public void PlayerFound()
-    {
-        endSeek = false;
-        waiting = false;
-        first = true;
-        second = true;
-        firstSeektWaiting = false;
-        secondSeekWaiting = false;
-        StopAllCoroutines();
-    }
-
-    public void InicializeSearch()
-    {
-        endSeek = false;
-        timeToSpin = true;
-    }
-    public void ChangeEndSeek()
-    {
-        endSeek = false;
-    }
-
-    public void ChangeTimeToSpin()
-    {
-        timeToSpin = true;
-    }
-
-    public void SpinTimer()
-    {
-        waiting = true;
-        StartCoroutine(SpinTime());
-    }
-
-    IEnumerator SpinTime()
-    {
-        yield return new WaitForSeconds(waitTime);        
-        waiting = false;
-        timeToSpin = false;
-    }
-
-    public void FirstSeekTimer()
-    {
-        first = false;
-        firstSeektWaiting = true;
-        StartCoroutine(FirstSeekTime());
-    }
-
-    IEnumerator FirstSeekTime()
-    {
-        yield return new WaitForSeconds(waitTime);
-        firstSeektWaiting = false;        
-    }
-
-    public void SecondSeekTimer()
-    {
-        second = false;
-        secondSeekWaiting = true;
-        StartCoroutine(SecondSeekTime());
-    }
-
-    IEnumerator SecondSeekTime()
-    {
-        yield return new WaitForSeconds(waitTime);
-        secondSeekWaiting = false;
-    }
-
+    [SerializeField] private Transform[] seekWaypoints;
+    private int firstindex;
+    private int first = 1;
+    private bool timeToSpin = true;
+    private bool spinning = false;
 
     // Use this for initialization
+    void Start () {
+		
+	}
+
+    public Vector3 SeekPlace()
+    {
+        if (first == 1)
+        {
+            return SeekFirstPlace();
+        }
+        else 
+        {
+            return SeekSecondPlace(firstindex);
+        }
+
+    }
+
     public Vector3 SeekFirstPlace()
     {
         //Coge el primero más cercano
         float min = Mathf.Infinity;
-        index = 0;
         float aux;
+        Vector3 firstPlace = new Vector3();
 
         for (int i = 0; i < chaseWaypoints.Length; i++)
         {
@@ -98,11 +42,14 @@ public class Seek : BehaviourBase {
             if (aux < min)
             {
                 min = aux;
-                index = i;
+                firstindex = i;
+                firstPlace = chaseWaypoints[i].position;
             }
         }
+        first = 2;
 
-        return chaseWaypoints[index].position;
+        
+        return firstPlace;
     }
 
     public Vector3 SeekSecondPlace(int index)
@@ -111,6 +58,7 @@ public class Seek : BehaviourBase {
         float min = Mathf.Infinity;
         int secondIndex = 0;
         float aux;
+        Vector3 secondPlace = new Vector3();
 
         for (int i = 0; i < chaseWaypoints.Length; i++)
         {
@@ -121,50 +69,60 @@ public class Seek : BehaviourBase {
                 {
                     min = aux;
                     secondIndex = i;
+                    secondPlace = chaseWaypoints[i].position;
                 }
             }
 
         }
-        return chaseWaypoints[secondIndex].position;
+
+        first = 3;
+
+        return secondPlace;
     }
 
-    public int GetIndex()
+    public Vector3 GetSeekPoints()
     {
-        return index;
-    }
+        if( seekWaypoints.Length != 0)
+        {
+            int valor = Mathf.RoundToInt(Random.Range(0f,0.9999f) * seekWaypoints.Length);
+            return seekWaypoints[valor].position;
+        }
 
-    public bool GetendSeek()
-    {
-        return endSeek;
-    }
+        else
+        {
+            Debug.LogError("Waypoints Length = 0");
+            return new Vector3(0, 0, 0);
+        }
 
-    public bool GetTimeToSpin()
+
+    }
+    
+    public bool GetTimeSpin()
     {
         return timeToSpin;
     }
 
-    public bool GetWaiting()
+    public bool GetSpinning()
     {
-        return waiting;
+        return spinning;
     }
 
-    public bool GetFirstSeekWaiting()
-    {
-        return firstSeektWaiting;
-    }
-
-    public bool GetSecondSeekWaiting()
-    {
-        return secondSeekWaiting;
-    }
-
-    public bool GetFirst()
+    public int GetFirst()
     {
         return first;
     }
-
-    public bool GetSecond()
+    public void SetTimeToSpin(bool active)
     {
-        return second;
+        timeToSpin = active;
+    }
+
+    public void Setspinning(bool active)
+    {
+        spinning = active;
+    }
+
+    public void SetFirst()
+    {
+        first = 1;
     }
 }
