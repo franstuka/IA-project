@@ -202,12 +202,13 @@ public class Skeleton : EnemyCombat {
 
             case SkeletonState.SEEK:
                 {
-                    Debug.Log(seek.GetFirst());
+                    
                     if (seek.GetTimeSpin() == true && transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
                     {
-                            StartCoroutine(Spinning());
-                            seek.SetTimeToSpin(false);
-                            seek.Setspinning(true);
+                        Debug.Log(seek.GetFirst());
+                        StartCoroutine(Spinning());
+                        seek.SetTimeToSpin(false);
+                        seek.Setspinning(true);
                     }
 
                     else if (seek.GetSpinning() == false)
@@ -419,11 +420,31 @@ public class Skeleton : EnemyCombat {
     IEnumerator Spinning()
     {
         Vector3 direction = seek.GetSeekPoints();
-        for (; FaceAndCheckObjective(direction, 2f);) {
-
+        for (; !FaceAndCheckObjective(direction, 2f);) {
+            Debug.Log("AAAAAAA");
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
+
+        yield return new WaitForSeconds(1.5f);
+
+        direction = seek.GetSeekPoints();
+        for (; !FaceAndCheckObjective(direction, 2f);)
+        {
+            Debug.Log("AAAAAAA");
+            FaceObjective(direction);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1.5f);
+
+        direction = seek.GetSeekPoints();
+        for (; !FaceAndCheckObjective(direction, 2f);)
+        {
+            Debug.Log("AAAAAAA");
+            FaceObjective(direction);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1.5f);
 
         seek.Setspinning(false);
 

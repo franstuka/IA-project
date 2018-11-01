@@ -84,7 +84,7 @@ public class Seek : BehaviourBase{
     {
         if( seekWaypoints.Length != 0)
         {
-            int valor = Mathf.RoundToInt(Random.Range(0f,0.9999f) * seekWaypoints.Length);
+            int valor = Mathf.RoundToInt(Random.value * (seekWaypoints.Length -1));
             return seekWaypoints[valor].position;
         }
 
