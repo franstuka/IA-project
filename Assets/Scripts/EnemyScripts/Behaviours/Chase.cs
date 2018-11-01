@@ -43,17 +43,17 @@ public class Chase : BehaviourBase
         StopAllCoroutines();
     }
 
-    public void InLastKnowPosition()
-    {
-        waiting = true;
-        StartCoroutine(LostWaitTime());
-    }
+    //public void InLastKnowPosition()
+    //{
+    //    waiting = true;
+    //    StartCoroutine(LostWaitTime());
+    //}
 
-    IEnumerator LostWaitTime()
-    {
-        yield return new WaitForSeconds(waitTime);
-        endChase = true;
-    }
+    //IEnumerator LostWaitTime()
+    //{
+    //    yield return new WaitForSeconds(waitTime);
+    //    endChase = true;
+    //}
 
     public bool GetEndChase()
     {
@@ -77,6 +77,11 @@ public class Chase : BehaviourBase
     public void SetOtherPlayerInSightFalse()
     {
         otherHasPlayerInSight = false;
+    } 
+
+    public void SetEndChase()
+    {
+        endChase = true;
     }
 
 }
