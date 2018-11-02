@@ -17,7 +17,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     private const int diagonalCost = 14;
     private const int enemyInSameCellCost = 6;
     private uint maxSteps;
-    private uint maxAllowedSteps = 100;
+    private uint maxAllowedSteps = 5;
     private Vector2Int lastStepPos;
     private Vector2Int endNodePos;
     private Vector2Int startNodePos;
@@ -127,7 +127,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             };
 
         }
-
+        Debug.Log(updateMode);
         //expand in diagonal nodes
         if (endNodePos.x > 0 && endNodePos.x < maxX - 1 && endNodePos.y > 0 && endNodePos.y < maxY - 1)
         {
@@ -657,8 +657,10 @@ public class AStarPathfinding { //By default this is for a quad grid
             CalculateTargetDistance();
             
             InitializeHeap();                //stage 1
+            /*
             while (!ended)
                 ended = SearchMinimun();      //stage 2
+                */
                 
         }
 

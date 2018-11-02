@@ -35,6 +35,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     public bool seePathFromStartCost = false;
     public bool seePathFromEndCost = false;
     public bool seeVisitedCells = false;
+    public bool seeNumberOfAdjacents = false;
     public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
@@ -319,6 +320,66 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     else
                     {
                         Gizmos.color = Color.white;
+                    }
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seeNumberOfAdjacents && enemySelected != null) // PATH FROM FINAL COST
+            {
+                foreach (Cell n in grid)
+                {
+                    switch(n.Node.AvaibleAdjacentNodes)
+                    {
+                        case 0:
+                            {
+                                Gizmos.color = Color.black;
+                                break;
+                            }
+                        case 1:
+                            {
+                                Gizmos.color = Color.red;
+                                break;
+                            }
+                        case 2:
+                            {
+                                Gizmos.color = Color.yellow;
+                                break;
+                            }
+                        case 3:
+                            {
+                                Gizmos.color = Color.green;
+                                break;
+                            }
+                        case 4:
+                            {
+                                Gizmos.color = Color.cyan;
+                                break;
+                            }
+                        case 5:
+                            {
+                                Gizmos.color = Color.blue;
+                                break;
+                            }
+                        case 6:
+                            {
+                                Gizmos.color = Color.magenta;
+                                break;
+                            }
+                        case 7:
+                            {
+                                Gizmos.color = Color.grey;
+                                break;
+                            }
+                        case 8:
+                            {
+                                Gizmos.color = Color.clear;
+                                break;
+                            }
+                        default:
+                            {
+                                Gizmos.color = Color.white;
+                                break;
+                            }
                     }
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
