@@ -202,14 +202,15 @@ public class Skeleton : EnemyCombat {
 
             case SkeletonState.SEEK:
                 {
-                    
-                    if (seek.GetTimeSpin() == true && transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+
+                    if (seek.GetTimeSpin() == true)
                     {
                         Debug.Log(seek.GetFirst());
                         StartCoroutine(Spinning());
                         seek.SetTimeToSpin(false);
                         seek.Setspinning(true);
                     }
+
 
                     else if (seek.GetSpinning() == false)
                     {
@@ -269,11 +270,11 @@ public class Skeleton : EnemyCombat {
                     else
                     {
                         if (ActiveState != SkeletonState.CHASE)
-                        {                          
+                        {
+                            Alert(this);
                             ActiveState = SkeletonState.CHASE;
                         }
                         chase.PlayerFound();
-                        Alert(this);
                         target = other.transform.position;
                     }
 
@@ -405,13 +406,17 @@ public class Skeleton : EnemyCombat {
     }
     private void Alert(Skeleton other)
     {
-        if (other.ActiveState != SkeletonState.CHASE)
+        if (other.ActiveState != SkeletonState.CHASE && other.ActiveState != SkeletonState.ATTACK && other.ActiveState != SkeletonState.PLAYER_LOST)
         {
             List<Skeleton> enemyList = alert.SkeletonInRange(other);
             for (int i = 0; i < enemyList.Count; i++)
             {
-                enemyList[i].target = other.target;
-                enemyList[i].ActiveState = SkeletonState.CHASE;
+                if (!enemyList[i].staticEnemy)
+                {
+                    enemyList[i].target = other.target;
+                    enemyList[i].ActiveState = SkeletonState.CHASE;
+
+                }
             }
         }
         
@@ -421,7 +426,6 @@ public class Skeleton : EnemyCombat {
     {
         Vector3 direction = seek.GetSeekPoints();
         for (; !FaceAndCheckObjective(direction, 2f);) {
-            Debug.Log("AAAAAAA");
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
@@ -431,7 +435,6 @@ public class Skeleton : EnemyCombat {
         direction = seek.GetSeekPoints();
         for (; !FaceAndCheckObjective(direction, 2f);)
         {
-            Debug.Log("AAAAAAA");
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
@@ -440,7 +443,6 @@ public class Skeleton : EnemyCombat {
         direction = seek.GetSeekPoints();
         for (; !FaceAndCheckObjective(direction, 2f);)
         {
-            Debug.Log("AAAAAAA");
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
