@@ -203,8 +203,10 @@ public class Skeleton : EnemyCombat {
             case SkeletonState.SEEK:
                 {
 
-                    if (seek.GetTimeSpin() == true)
+                    if (seek.GetTimeSpin() == true && transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
                     {
+                        target = transform.position;
+                        nav.SetDestination(target);
                         Debug.Log(seek.GetFirst());
                         StartCoroutine(Spinning());
                         seek.SetTimeToSpin(false);
