@@ -189,7 +189,7 @@ public class Navegation : MonoBehaviour {
                 finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 4 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / (Time.deltaTime * 4);
                 rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration ), ForceMode.Acceleration);
             }
-        Debug.Log(finalAcceleration);
+        //Debug.Log(finalAcceleration);
         }
     }
 

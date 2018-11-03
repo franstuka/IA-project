@@ -201,9 +201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angularSpeed: 120
+  angularSpeed: 360
   maxSpeed: 3.5
-  acceleration: 4
+  acceleration: 2
   stoppingDistanceFactor: 0.5
   maxCorrectionAcceleration: 15
 --- !u!1 &31998519
