@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23392115173375196}
   - component: {fileID: 135928677760794572}
   - component: {fileID: 54993659087382172}
+  - component: {fileID: 114495380356392738}
   - component: {fileID: 82897739962049804}
   m_Layer: 0
   m_Name: Stone
@@ -196,6 +197,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114495380356392738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292733472744882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df643fba3a2194a41af97b9efcef51b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: 6f745e639c8cac84bac71104d502a1f6, type: 3}
 --- !u!135 &135928677760794572
 SphereCollider:
   m_ObjectHideFlags: 1

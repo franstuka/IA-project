@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Weapon
   - Stone
+  - Scenario
   layers:
   - Default
   - TransparentFX

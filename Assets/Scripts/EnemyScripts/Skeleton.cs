@@ -21,6 +21,7 @@ public class Skeleton : EnemyCombat {
     private Coroutine boostCoroutine;
     [SerializeField]private WeaponHitboxDetection weaponHitbox;
     private float destructionTime = 5f;
+    public static bool soundHeard = false;
     
 
     private void Awake()
@@ -353,11 +354,12 @@ public class Skeleton : EnemyCombat {
                 }
             }
 
-            if (other.gameObject.tag =="Stone" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION))
+            if (other.gameObject.tag =="Stone" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION) && soundHeard)
             {
                 FaceObjective(other.transform.position);
                 target = other.transform.position;
                 ActiveState = SkeletonState.CHECK;
+                soundHeard = false;
             }
 
 

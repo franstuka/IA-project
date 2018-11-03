@@ -6,6 +6,7 @@ public class StoneSound : MonoBehaviour {
 
     private AudioSource audioSource;
     public AudioClip sound;
+    private bool ballCollided = false;
 
     void Start()
     {
@@ -14,10 +15,12 @@ public class StoneSound : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 14)
+        if (collision.gameObject.tag == "Scenario" && !ballCollided)
         {
             audioSource.clip = sound;
             audioSource.Play();
+            ballCollided = true;
+            Skeleton.soundHeard = true;
         }
     }
 }
