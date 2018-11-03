@@ -130,14 +130,14 @@ public class Navegation : MonoBehaviour {
         float spinDirection = correctionSpin < 0 ? -1 : 1;
         //Debug.Log(spinDirection);
         //Debug.Log(Vector3.SignedAngle(transform.forward, position - transform.position, transform.up));
-        if(Mathf.Abs(correctionSpin) < 90f)
+        /*if(Mathf.Abs(correctionSpin) < 180f)
         {
             float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
             transform.Rotate(0, spin * spinDirection, 0);
-        }
+        }*/
 
         //transform.Rotate(0,  Vector3.SignedAngle(transform.forward, position - transform.position, transform.up)/2, 0);
-        //transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
+        transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
         Debug.DrawRay(transform.position, transform.forward);
         Debug.DrawLine(transform.position, position, Color.red);
         //float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
