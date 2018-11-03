@@ -123,16 +123,19 @@ public class Navegation : MonoBehaviour {
         float velX = rigidbody.velocity.x;
 
         //rotation
-        
+
         float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Min(Mathf.Pow(new Vector2(velX, velZ).magnitude, 2), Mathf.Pow(maxSpeed, 2)));
-       
+        //float invertedSpeed = 
         float correctionSpin = Vector3.SignedAngle(transform.forward, position - transform.position, transform.up);
         float spinDirection = correctionSpin < 0 ? -1 : 1;
         //Debug.Log(spinDirection);
         //Debug.Log(Vector3.SignedAngle(transform.forward, position - transform.position, transform.up));
+        if(Mathf.Abs(correctionSpin) < 90f)
+        {
+            float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
+            transform.Rotate(0, spin * spinDirection, 0);
+        }
 
-        float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : angularSpeed * Time.deltaTime;
-        transform.Rotate(0, spin * spinDirection, 0);
         //transform.Rotate(0,  Vector3.SignedAngle(transform.forward, position - transform.position, transform.up)/2, 0);
         //transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
         Debug.DrawRay(transform.position, transform.forward);
