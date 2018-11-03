@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING , DIED, SEEK };
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING , DIED, SEEK, CHECK };
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
@@ -243,11 +243,20 @@ public class Skeleton : EnemyCombat {
 
                     break;
                 }
-
+            
             case SkeletonState.DIED:
             {
                     break;
             }
+
+            case SkeletonState.CHECK:
+                {
+                    nav.SetDestination(target);
+                    break;
+                }
+
+
+
         }
     }
 
@@ -338,6 +347,14 @@ public class Skeleton : EnemyCombat {
                     }
                 }
             }
+
+            if (other.gameObject.name == "Stone(Clone)")
+            {
+                FaceObjective(other.transform.position);
+                ActiveState = SkeletonState.CHECK;
+            }
+
+
         } 
     }
 
