@@ -253,7 +253,7 @@ public class Skeleton : EnemyCombat {
             case SkeletonState.CHECK:
                 {
                     nav.SetDestination(target);
-                    if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+                    if (transform.position.x <= target.x + 2f && transform.position.x >= target.x - 2f && transform.position.z <= target.z + 2f && transform.position.z >= target.z - 2f)
                     {
                         ActiveState = SkeletonState.PLAYER_LOST;
                         seek.SetFirst();
