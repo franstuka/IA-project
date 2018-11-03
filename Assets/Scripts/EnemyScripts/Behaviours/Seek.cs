@@ -8,7 +8,7 @@ public class Seek : BehaviourBase{
     [SerializeField] private Transform[] seekWaypoints;
     private int firstindex;
     private int first = 1;
-    private bool timeToSpin = true;
+    private bool timeToSpin = false;
     private bool spinning = false;
 
     // Use this for initialization

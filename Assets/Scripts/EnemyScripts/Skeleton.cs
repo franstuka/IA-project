@@ -124,8 +124,9 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.CHASE:
             {
+                    StopCoroutine(Spinning());
                     //TEST ALREDEDOR CON VISION
-                    if(!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+                    if (!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
                     {
                         ActiveState = SkeletonState.PLAYER_LOST;
                         chase.PlayerLost(target);
@@ -160,11 +161,17 @@ public class Skeleton : EnemyCombat {
                         if (!chase.GetWaiting())
                         {
                             chase.SetOtherPlayerInSightFalse();
-                            seek.SetFirst();
-                            seek.SetTimeToSpin(true);
-                            ActiveState = SkeletonState.SEEK;
-                            //Debug.Log(ActiveState);
-                            //chase.InLastKnowPosition();
+                            chase.InLastKnowPosition();
+
+                            if (!staticEnemy)
+                            {
+                                seek.SetFirst();
+                                target = transform.position;
+                                nav.SetDestination(target);
+                                ActiveState = SkeletonState.SEEK;
+
+                            }
+
                         }
                         if(chase.GetEndChase())
                         {
@@ -205,9 +212,7 @@ public class Skeleton : EnemyCombat {
 
                     if (seek.GetTimeSpin() == true && transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
                     {
-                        target = transform.position;
-                        nav.SetDestination(target);
-                        Debug.Log(seek.GetFirst());
+
                         StartCoroutine(Spinning());
                         seek.SetTimeToSpin(false);
                         seek.Setspinning(true);
@@ -225,7 +230,7 @@ public class Skeleton : EnemyCombat {
                             {
                                 StopCoroutine(Spinning());
                                 ActiveState = SkeletonState.PLAYER_LOST;
-                                chase.SetEndChase();
+
                             }
 
                             else
@@ -427,28 +432,30 @@ public class Skeleton : EnemyCombat {
     IEnumerator Spinning()
     {
         Vector3 direction = seek.GetSeekPoints();
-        for (; !FaceAndCheckObjective(direction, 2f);) {
+        for (; !FaceAndCheckObjective(direction, 3f);) {
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
 
-        yield return new WaitForSeconds(1.5f);
+
+        yield return new WaitForSeconds(1f);
 
         direction = seek.GetSeekPoints();
-        for (; !FaceAndCheckObjective(direction, 2f);)
+        for (; !FaceAndCheckObjective(direction, 3f);)
         {
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         direction = seek.GetSeekPoints();
-        for (; !FaceAndCheckObjective(direction, 2f);)
+        for (; !FaceAndCheckObjective(direction, 3f);)
         {
             FaceObjective(direction);
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
+
 
         seek.Setspinning(false);
 
