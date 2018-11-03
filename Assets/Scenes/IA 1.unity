@@ -3708,24 +3708,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4905380403350406, guid: 0680dd7a931c16c438bc54206785a812,
     type: 2}
   m_PrefabInternal: {fileID: 570401597}
---- !u!1 &580850954 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1475095754806338, guid: 0d565bea7e3ec9f47b65a0da45b5fff5,
-    type: 2}
-  m_PrefabInternal: {fileID: 233604004}
---- !u!114 &580850962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 580850954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d75ad52fed77c4f4dbf831be10444b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vel: 10
-  stone: {fileID: 1292733472744882, guid: 90c64eec82e13d340bb39f6e4929f569, type: 2}
 --- !u!1 &593225539
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,6 +7009,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 317cac6f4371f5043965f434c06ba12a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1240643750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1240643751}
+  - component: {fileID: 1240643752}
+  m_Layer: 9
+  m_Name: ThrowBall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1240643751
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1240643750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.287, y: 0.867, z: 0.039}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 233604005}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240643752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1240643750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75ad52fed77c4f4dbf831be10444b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vel: 10
+  stone: {fileID: 1292733472744882, guid: 90c64eec82e13d340bb39f6e4929f569, type: 2}
 --- !u!1001 &1243928099
 Prefab:
   m_ObjectHideFlags: 0

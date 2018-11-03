@@ -12,9 +12,9 @@ public class Throw : MonoBehaviour {
 
         if (Input.GetKeyDown("e"))
         {
-            GameObject clone2 = Instantiate(stone, transform.position + new Vector3(1, 1, 0), transform.rotation);
-            clone2.GetComponent<Rigidbody>().AddForce(transform.forward * 500 * vel);
-            Destroy(clone2, 5);
+            GameObject clone = Instantiate(stone, transform.position, transform.rotation);
+            clone.GetComponent<Rigidbody>().AddForce(transform.forward * 500 * vel);
+            Destroy(clone, 5);
         }
 
     }

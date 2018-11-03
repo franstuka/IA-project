@@ -252,6 +252,11 @@ public class Skeleton : EnemyCombat {
             case SkeletonState.CHECK:
                 {
                     nav.SetDestination(target);
+                    if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+                    {
+                        ActiveState = SkeletonState.SEEK;
+                        seek.SetFirst();
+                    }
                     break;
                 }
 
@@ -348,9 +353,10 @@ public class Skeleton : EnemyCombat {
                 }
             }
 
-            if (other.gameObject.name == "Stone(Clone)")
+            if (other.gameObject.name == "Stone(Clone)" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION))
             {
                 FaceObjective(other.transform.position);
+                target = other.transform.position;
                 ActiveState = SkeletonState.CHECK;
             }
 
