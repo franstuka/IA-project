@@ -14,7 +14,7 @@ public class StoneSound : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.layer == 14)
         {
             audioSource.clip = sound;
             audioSource.Play();

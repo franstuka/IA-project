@@ -10,6 +10,7 @@ TagManager:
   - Water
   - Enemy
   - Weapon
+  - Stone
   layers:
   - Default
   - TransparentFX

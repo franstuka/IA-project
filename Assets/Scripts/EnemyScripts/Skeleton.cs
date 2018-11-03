@@ -353,7 +353,7 @@ public class Skeleton : EnemyCombat {
                 }
             }
 
-            if (other.gameObject.name == "Stone(Clone)" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION))
+            if (other.gameObject.tag =="Stone" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION))
             {
                 FaceObjective(other.transform.position);
                 target = other.transform.position;
