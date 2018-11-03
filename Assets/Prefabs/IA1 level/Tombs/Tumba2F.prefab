@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65878284978977846}
   m_Layer: 0
   m_Name: Tumba2F
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

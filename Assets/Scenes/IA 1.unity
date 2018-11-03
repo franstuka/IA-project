@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 46713450}
   m_Layer: 14
   m_Name: tumba3f (21)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -699,6 +699,10 @@ Prefab:
     - target: {fileID: 4764675908639570, guid: fbc1894e8bd971840ba74af5c9ecb005, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1181656133148434, guid: fbc1894e8bd971840ba74af5c9ecb005, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbc1894e8bd971840ba74af5c9ecb005, type: 2}
@@ -1147,6 +1151,10 @@ Prefab:
       propertyPath: m_Center.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -1394,6 +1402,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.27000007
       objectReference: {fileID: 0}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
@@ -1482,6 +1494,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1409186899672574, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
   m_IsPrefabParent: 0
@@ -1543,6 +1559,10 @@ Prefab:
     - target: {fileID: 1789877660166620, guid: 2119b39f30ecdd84c8471ce28d4207c4, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789877660166620, guid: 2119b39f30ecdd84c8471ce28d4207c4, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2119b39f30ecdd84c8471ce28d4207c4, type: 2}
@@ -1868,6 +1888,10 @@ Prefab:
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalScale.z
       value: 0.26999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
@@ -2257,6 +2281,10 @@ Prefab:
       propertyPath: m_Center.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -2350,7 +2378,7 @@ GameObject:
   - component: {fileID: 326068420}
   m_Layer: 14
   m_Name: Tumba2F (19)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2526,6 +2554,10 @@ Prefab:
         type: 2}
       propertyPath: m_Center.z
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
@@ -2739,7 +2771,7 @@ GameObject:
   - component: {fileID: 399484401}
   m_Layer: 14
   m_Name: Tumba2F (4)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2890,6 +2922,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
   m_IsPrefabParent: 0
@@ -2995,6 +3031,10 @@ Prefab:
       propertyPath: chaseWaypoints.Array.data[5]
       value: 
       objectReference: {fileID: 1614362764}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
@@ -3072,6 +3112,10 @@ Prefab:
     - target: {fileID: 100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
@@ -3209,6 +3253,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.123
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
   m_IsPrefabParent: 0
@@ -3305,6 +3353,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 1789877660166620, guid: 2119b39f30ecdd84c8471ce28d4207c4, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2119b39f30ecdd84c8471ce28d4207c4, type: 2}
   m_IsPrefabParent: 0
@@ -3362,6 +3414,10 @@ Prefab:
     - target: {fileID: 4885164264919766, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
@@ -3446,6 +3502,10 @@ Prefab:
         type: 2}
       propertyPath: m_Center.z
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
@@ -3857,6 +3917,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
   m_IsPrefabParent: 0
@@ -3874,7 +3938,7 @@ GameObject:
   - component: {fileID: 626956866}
   m_Layer: 14
   m_Name: Tumba2F (1)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -3950,7 +4014,7 @@ GameObject:
   - component: {fileID: 629949753}
   m_Layer: 14
   m_Name: Tumba2F (12)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4212,6 +4276,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1.0399995
       objectReference: {fileID: 0}
+    - target: {fileID: 1452944679398370, guid: b91934557117aaa46848729048451b0d, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b91934557117aaa46848729048451b0d, type: 2}
   m_IsPrefabParent: 0
@@ -4246,6 +4314,7 @@ Transform:
   - {fileID: 1267885649}
   - {fileID: 1163577514}
   - {fileID: 196452627}
+  - {fileID: 1051907827}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4263,7 +4332,7 @@ GameObject:
   - component: {fileID: 680689410}
   m_Layer: 14
   m_Name: Tumba2F (4)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -4733,6 +4802,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1409186899672574, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
   m_IsPrefabParent: 0
@@ -4912,6 +4985,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -5001,6 +5078,10 @@ Prefab:
       propertyPath: m_Center.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -5018,60 +5099,6 @@ Transform:
   m_Father: {fileID: 1145924248}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 89.09901}
---- !u!1001 &875916564
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-      propertyPath: m_TagString
-      value: Scenario
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
-  m_IsPrefabParent: 0
 --- !u!1001 &879618986
 Prefab:
   m_ObjectHideFlags: 0
@@ -5122,6 +5149,10 @@ Prefab:
     - target: {fileID: 4117691028491530, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409186899672574, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bfc20c28886895b48b4f86f3d45405a1, type: 2}
@@ -5577,6 +5608,10 @@ Prefab:
       propertyPath: chaseWaypoints.Array.data[7]
       value: 
       objectReference: {fileID: 157227844}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
@@ -5745,6 +5780,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4905380403350406, guid: 0680dd7a931c16c438bc54206785a812,
     type: 2}
   m_PrefabInternal: {fileID: 1044638640}
+--- !u!4 &1051907827 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1802043899}
 --- !u!114 &1054990264 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114720919717233568, guid: 8a85d657309db044ea005acf7345c8e5,
@@ -5943,7 +5983,7 @@ GameObject:
   - component: {fileID: 1099277415}
   m_Layer: 14
   m_Name: Tumba2F (9)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -6135,6 +6175,10 @@ Prefab:
       propertyPath: m_Center.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -6224,7 +6268,7 @@ GameObject:
   - component: {fileID: 1126099396}
   m_Layer: 14
   m_Name: Tumba2F (8)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -6514,7 +6558,7 @@ GameObject:
   - component: {fileID: 1168124936}
   m_Layer: 14
   m_Name: Tumba2F (7)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7102,7 +7146,7 @@ GameObject:
   - component: {fileID: 1252393906}
   m_Layer: 14
   m_Name: Tumba1f
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7295,6 +7339,10 @@ Prefab:
       propertyPath: m_Name
       value: Tumba2F (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -7358,7 +7406,7 @@ GameObject:
   - component: {fileID: 1315356116}
   m_Layer: 14
   m_Name: Tumba2F (5)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7505,8 +7553,8 @@ GameObject:
   - component: {fileID: 1340087550}
   - component: {fileID: 1340087549}
   m_Layer: 14
-  m_Name: Tumba2F (18)
-  m_TagString: Untagged
+  m_Name: Tumba2F (4)
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7596,7 +7644,7 @@ GameObject:
   - component: {fileID: 1343618378}
   m_Layer: 14
   m_Name: Tumba2F (2)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7788,7 +7836,7 @@ GameObject:
   - component: {fileID: 1438579197}
   m_Layer: 14
   m_Name: Tumba2F (2)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -7959,6 +8007,52 @@ Transform:
   m_Father: {fileID: 2021457572}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1457759822
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 55f28922f035ba84b8e364d9513f6a69, type: 3}
+  m_IsPrefabParent: 0
 --- !u!1001 &1470641389
 Prefab:
   m_ObjectHideFlags: 0
@@ -8155,6 +8249,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.27000007
       objectReference: {fileID: 0}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
@@ -8273,6 +8371,10 @@ Prefab:
     - target: {fileID: 4885164264919766, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
@@ -8441,7 +8543,7 @@ GameObject:
   - component: {fileID: 1599050384}
   m_Layer: 14
   m_Name: Tumba2F (3)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -8597,7 +8699,7 @@ GameObject:
   - component: {fileID: 1633309306}
   m_Layer: 14
   m_Name: Tumba2F
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -8767,7 +8869,7 @@ GameObject:
   - component: {fileID: 1639837185}
   m_Layer: 14
   m_Name: Tumba1f (1)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -8843,7 +8945,7 @@ GameObject:
   - component: {fileID: 1653684298}
   m_Layer: 14
   m_Name: Tumba2F (6)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -9199,6 +9301,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -9207,7 +9313,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 679817999}
     m_Modifications:
     - target: {fileID: 114182675879265896, guid: 189f897b469e0314898b31355639735b,
         type: 2}
@@ -9216,27 +9322,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -17.435556
+      value: -4.2109003
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.5000026
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -7.749378
+      value: 8.810621
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalRotation.w
@@ -9244,7 +9350,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114750424378846968, guid: 189f897b469e0314898b31355639735b,
         type: 2}
@@ -9276,6 +9382,10 @@ Prefab:
       propertyPath: chaseWaypoints.Array.data[3]
       value: 
       objectReference: {fileID: 900833413}
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
@@ -9385,6 +9495,10 @@ Prefab:
       propertyPath: m_Name
       value: Tumba2F (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -9416,7 +9530,7 @@ GameObject:
   - component: {fileID: 1823857915}
   m_Layer: 14
   m_Name: Tumba2F (4)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -9721,6 +9835,76 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0680dd7a931c16c438bc54206785a812, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1892864320
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -17.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.6778815
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.2011886
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.20118858
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.67788136
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_Name
+      value: ataud (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8971e0b8f21635c4abaa6f6a5d797514, type: 2}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -33.061
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 872ee4d258f873b4597ca346b0ba9ad0, type: 3}
   m_IsPrefabParent: 0
 --- !u!4 &1893566759 stripped
 Transform:
@@ -10183,6 +10367,10 @@ Prefab:
       propertyPath: m_Center.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1818991157044242, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 53dd30132c800b2438d6cb93487e7227, type: 2}
   m_IsPrefabParent: 0
@@ -10487,6 +10675,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 1452944679398370, guid: b91934557117aaa46848729048451b0d, type: 2}
+      propertyPath: m_TagString
+      value: Scenario
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b91934557117aaa46848729048451b0d, type: 2}
   m_IsPrefabParent: 0
@@ -10504,7 +10696,7 @@ GameObject:
   - component: {fileID: 2048911926}
   m_Layer: 14
   m_Name: tumba3f (3)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -10847,7 +11039,7 @@ GameObject:
   - component: {fileID: 2088753128}
   m_Layer: 14
   m_Name: Tumba2F (2)
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

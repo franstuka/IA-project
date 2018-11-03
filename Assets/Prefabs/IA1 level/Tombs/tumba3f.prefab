@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65548676492369716}
   m_Layer: 14
   m_Name: tumba3f
-  m_TagString: Untagged
+  m_TagString: Scenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

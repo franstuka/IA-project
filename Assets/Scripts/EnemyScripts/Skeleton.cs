@@ -177,7 +177,7 @@ public class Skeleton : EnemyCombat {
                         if(chase.GetEndChase())
                         {
                             if(staticEnemy)
-                            {
+                            {                                
                                 target = hold.ReturnToPosition();
                                 nav.SetDestination(target);
                                 ActiveState = SkeletonState.RETURNING_TO_POSITION;
@@ -255,7 +255,7 @@ public class Skeleton : EnemyCombat {
                     nav.SetDestination(target);
                     if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
                     {
-                        ActiveState = SkeletonState.SEEK;
+                        ActiveState = SkeletonState.PLAYER_LOST;
                         seek.SetFirst();
                     }
                     break;
