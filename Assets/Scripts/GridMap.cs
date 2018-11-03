@@ -105,6 +105,8 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 }
             }
         }
+        grid[0, 0].CellType = CellTypes.chest;
+        grid[0, gridSizeX-1].CellType = CellTypes.exit;
     }
 
     private void UpdateEnemyPositions()
@@ -158,8 +160,8 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.FloorToInt((gridSizeX - 1) * percentX);
-        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
+        int x = Mathf.FloorToInt((gridSizeX) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY) * percentY);
         return new Vector2Int(x, y);
         /*
         float x = worldPosition.x - transform.position.x; // pointPos - center of grid

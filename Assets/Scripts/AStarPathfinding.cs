@@ -17,7 +17,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     private const int diagonalCost = 14;
     private const int enemyInSameCellCost = 6;
     private uint maxSteps;
-    private uint maxAllowedSteps = 5;
+    private uint maxAllowedSteps = 50;
     private Vector2Int lastStepPos;
     private Vector2Int endNodePos;
     private Vector2Int startNodePos;
@@ -100,7 +100,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             {
                 AvaibleAdjacentNodes = CheckAvaiblesPositions(endNodePos.x, i + endNodePos.y)
             };
-            Debug.Log(GridMap.instance.grid[endNodePos.x, i + endNodePos.y].Node.FromFinalCost);
+            //Debug.Log(GridMap.instance.grid[endNodePos.x, i + endNodePos.y].Node.FromFinalCost);
 
         }
         for (int i = -1; i > -endNodePos.y - 1; i--)
@@ -131,7 +131,7 @@ public class AStarPathfinding { //By default this is for a quad grid
         //expand in diagonal nodes
         if (endNodePos.x > 0 && endNodePos.x < maxX - 1 && endNodePos.y > 0 && endNodePos.y < maxY - 1)
         {
-            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT);
+            CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.UP_RIGHT); //media
             CalculateTargetRecursion(diagonalCost, endNodePos.x - 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.UP_LEFT);
             CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y + 1, TargetDistanceAdvanceDirection.DOWN_RIGHT);
             CalculateTargetRecursion(diagonalCost, endNodePos.x + 1, endNodePos.y - 1, TargetDistanceAdvanceDirection.DOWN_LEFT);
@@ -219,14 +219,14 @@ public class AStarPathfinding { //By default this is for a quad grid
         else if (direction == TargetDistanceAdvanceDirection.UP_LEFT)
         {
 
-            for (int i = 0; i < -y - 1; i--)
+            for (int i = 0; i > -y - 1; i--)
             {
                 GridMap.instance.grid[x, i + y].Node = new AStarNode(baseCost + Mathf.Abs(i) * normalCost)
                 {
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(x, i + y)
                 };
             }
-            for (int i = -1; i < -x - 1; i--)
+            for (int i = -1; i > -x - 1; i--)
             {
                 GridMap.instance.grid[i + x, y].Node = new AStarNode(baseCost + Mathf.Abs(i) * normalCost)
                 {
@@ -246,7 +246,7 @@ public class AStarPathfinding { //By default this is for a quad grid
                     AvaibleAdjacentNodes = CheckAvaiblesPositions(x, i + y)
                 };
             }
-            for (int i = -1; i < -x - 1; i--)
+            for (int i = -1; i > -x - 1; i--)
             {
                 GridMap.instance.grid[i + x, y].Node = new AStarNode(baseCost + Mathf.Abs(i) * normalCost)
                 {
@@ -657,10 +657,10 @@ public class AStarPathfinding { //By default this is for a quad grid
             CalculateTargetDistance();
             
             InitializeHeap();                //stage 1
-            /*
+            
             while (!ended)
                 ended = SearchMinimun();      //stage 2
-                */
+                
                 
         }
 
