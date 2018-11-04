@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING , DIED };
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, FIRST_SEEKING , DIED, SEEK, CHECK };
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
@@ -21,6 +21,8 @@ public class Skeleton : EnemyCombat {
     private Coroutine boostCoroutine;
     [SerializeField]private WeaponHitboxDetection weaponHitbox;
     private float destructionTime = 5f;
+    public static bool soundHeard = false;
+    
 
     private void Awake()
     {
@@ -126,8 +128,10 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.CHASE:
             {
+                    StopCoroutine(Spinning());
                     //TEST ALREDEDOR CON VISION
-                    if(!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+                    if (!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+
                     {
                         ActiveState = SkeletonState.PLAYER_LOST;
                         chase.PlayerLost(target);
@@ -163,17 +167,28 @@ public class Skeleton : EnemyCombat {
                 }
             case SkeletonState.PLAYER_LOST:
             {
-                    if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+
+                    if (transform.position.x <= target.x + 1f && transform.position.x >= target.x - 1f && transform.position.z <= target.z + 1f && transform.position.z >= target.z - 1f)
                     {
                         if (!chase.GetWaiting())
                         {
                             chase.SetOtherPlayerInSightFalse(); 
                             chase.InLastKnowPosition();
+
+                            if (!staticEnemy)
+                            {
+                                seek.SetFirst();
+                                target = transform.position;
+                                nav.SetDestination(target);
+                                ActiveState = SkeletonState.SEEK;
+
+                            }
+
                         }
                         if(chase.GetEndChase())
                         {
                             if(staticEnemy)
-                            {
+                            {                                
                                 target = hold.ReturnToPosition();
                                 nav.SetDestination(target);
                                 ActiveState = SkeletonState.RETURNING_TO_POSITION;
@@ -203,10 +218,63 @@ public class Skeleton : EnemyCombat {
                     }
                     break;
             }
+
+            case SkeletonState.SEEK:
+                {
+
+                    if (seek.GetTimeSpin() == true && transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+                    {
+
+                        StartCoroutine(Spinning());
+                        seek.SetTimeToSpin(false);
+                        seek.Setspinning(true);
+                    }
+
+
+                    else if (seek.GetSpinning() == false)
+                    {
+
+                        if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+                        {
+                            seek.SetTimeToSpin(true);
+
+                            if (seek.GetFirst() == 3)
+                            {
+                                StopCoroutine(Spinning());
+                                ActiveState = SkeletonState.PLAYER_LOST;
+
+                            }
+
+                            else
+                            {
+                                target = seek.SeekPlace();
+                                nav.SetDestination(target);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            
             case SkeletonState.DIED:
             {
                     break;
             }
+
+            case SkeletonState.CHECK:
+                {
+                    nav.SetDestination(target);
+                    if (transform.position.x <= target.x + 1f && transform.position.x >= target.x - 1f && transform.position.z <= target.z + 1f && transform.position.z >= target.z - 1f)
+                    {
+                        chase.PlayerByOtherFound();
+                        seek.SetFirst();
+                        ActiveState = SkeletonState.CHASE;
+                    }
+                    break;
+                }
+
+
+
         }
     }
 
@@ -236,11 +304,11 @@ public class Skeleton : EnemyCombat {
                     else
                     {
                         if (ActiveState != SkeletonState.CHASE)
-                        {                          
+                        {
+                            Alert(this);
                             ActiveState = SkeletonState.CHASE;
                         }
                         chase.PlayerFound();
-                        Alert(this);
                         target = other.transform.position;
                     }
 
@@ -278,11 +346,6 @@ public class Skeleton : EnemyCombat {
                                 stateCompatible = true;
                                 break;
                             }
-                        case SkeletonState.DIEDSPINNING:
-                            {
-                                stateCompatible = true;
-                                break;
-                            }
                         case SkeletonState.FIRST_SEEKING:
                             {
                                 stateCompatible = true;
@@ -297,6 +360,16 @@ public class Skeleton : EnemyCombat {
                     }
                 }
             }
+
+            if (other.gameObject.tag =="Stone" && (ActiveState == SkeletonState.PATROL || ActiveState == SkeletonState.HOLD || ActiveState == SkeletonState.SEEK || ActiveState == SkeletonState.RETURNING_TO_POSITION) && soundHeard)
+            {
+                FaceObjective(other.transform.position);
+                target = other.transform.position;
+                ActiveState = SkeletonState.CHECK;
+                soundHeard = false;
+            }
+
+
         } 
     }
 
@@ -372,16 +445,21 @@ public class Skeleton : EnemyCombat {
     }
     private void Alert(Skeleton other)
     {
-        if (other.ActiveState != SkeletonState.CHASE)
+        if (other.ActiveState != SkeletonState.CHASE && other.ActiveState != SkeletonState.ATTACK && other.ActiveState != SkeletonState.PLAYER_LOST)
         {
             List<Skeleton> enemyList = alert.SkeletonInRange(other);
             for (int i = 0; i < enemyList.Count; i++)
             {
-                enemyList[i].target = other.target;
-                enemyList[i].ActiveState = SkeletonState.CHASE;
+                if (!enemyList[i].staticEnemy)
+                {
+                    enemyList[i].target = other.target;
+                    enemyList[i].ActiveState = SkeletonState.CHASE;
+
+                }
             }
         }
     }
+
     
     IEnumerator WaitEndFrameToStartIA()
     {
@@ -399,5 +477,35 @@ public class Skeleton : EnemyCombat {
             nav.SetDestination(target);
         }
     }
-    
+    IEnumerator Spinning()
+    {
+        Vector3 direction = seek.GetSeekPoints();
+        for (; !FaceAndCheckObjective(direction, 3f);) {
+            FaceObjective(direction);
+            yield return new WaitForEndOfFrame();
+        }
+
+
+        yield return new WaitForSeconds(1f);
+
+        direction = seek.GetSeekPoints();
+        for (; !FaceAndCheckObjective(direction, 3f);)
+        {
+            FaceObjective(direction);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1f);
+
+        direction = seek.GetSeekPoints();
+        for (; !FaceAndCheckObjective(direction, 3f);)
+        {
+            FaceObjective(direction);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1f);
+
+
+        seek.Setspinning(false);
+
+    }
 }

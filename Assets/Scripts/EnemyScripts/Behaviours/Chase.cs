@@ -41,6 +41,15 @@ public class Chase : BehaviourBase
         waiting = false;
         hasPlayerInSight = false;
         StopAllCoroutines();
+    }
+
+    public void PlayerByOtherFound()
+    {
+        playerLost = false;
+        endChase = false;
+        waiting = false;
+        hasPlayerInSight = false;
+        StopAllCoroutines();
 
     }
 
@@ -84,5 +93,4 @@ public class Chase : BehaviourBase
     {
         endChase = true;
     }
-
 }

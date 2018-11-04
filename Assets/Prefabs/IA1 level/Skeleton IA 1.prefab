@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 135721894651726844}
   - component: {fileID: 114593947642587506}
   - component: {fileID: 114033658026273220}
+  - component: {fileID: 114182675879265896}
   m_Layer: 11
   m_Name: Skeleton IA 1
   m_TagString: Enemy
@@ -1625,6 +1626,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewPercent: 0.75
   soundRange: 10
+--- !u!114 &114182675879265896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1179774215657140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7adf763bb49dc0345b52a3dfd7058974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseWaypoints:
+  - {fileID: 4220897151147992, guid: a9e991fafdf1a914eb3edc2c8ee28b53, type: 2}
+  - {fileID: 4912105077125316, guid: a9e991fafdf1a914eb3edc2c8ee28b53, type: 2}
+  - {fileID: 4226981309758008, guid: a9e991fafdf1a914eb3edc2c8ee28b53, type: 2}
+  seekWaypoints:
+  - {fileID: 4608522663006080, guid: 317cac6f4371f5043965f434c06ba12a, type: 2}
+  - {fileID: 4583231946702438, guid: 317cac6f4371f5043965f434c06ba12a, type: 2}
+  - {fileID: 4147977452148938, guid: 317cac6f4371f5043965f434c06ba12a, type: 2}
+  - {fileID: 4403536911412128, guid: 317cac6f4371f5043965f434c06ba12a, type: 2}
 --- !u!114 &114197200409542316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1651,6 +1672,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852141822f7653f4dbeff855521b1ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLost: 1
+  endChase: 1
+  waiting: 1
+  hasPlayerInSight: 0
+  otherHasPlayerInSight: 0
 --- !u!114 &114593947642587506
 MonoBehaviour:
   m_ObjectHideFlags: 1
