@@ -157,7 +157,7 @@ public class Skeleton : EnemyCombat {
             case SkeletonState.PLAYER_LOST:
             {
 
-                    if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
+                    if (transform.position.x <= target.x + 1f && transform.position.x >= target.x - 1f && transform.position.z <= target.z + 1f && transform.position.z >= target.z - 1f)
                     {
                         if (!chase.GetWaiting())
                         {
@@ -253,10 +253,11 @@ public class Skeleton : EnemyCombat {
             case SkeletonState.CHECK:
                 {
                     nav.SetDestination(target);
-                    if (transform.position.x <= target.x + 2f && transform.position.x >= target.x - 2f && transform.position.z <= target.z + 2f && transform.position.z >= target.z - 2f)
+                    if (transform.position.x <= target.x + 1f && transform.position.x >= target.x - 1f && transform.position.z <= target.z + 1f && transform.position.z >= target.z - 1f)
                     {
-                        ActiveState = SkeletonState.PLAYER_LOST;
+                        chase.PlayerByOtherFound();
                         seek.SetFirst();
+                        ActiveState = SkeletonState.CHASE;
                     }
                     break;
                 }
