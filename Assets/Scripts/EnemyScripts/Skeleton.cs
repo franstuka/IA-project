@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, DIEDSPINNING, FIRST_SEEKING , DIED, SEEK, CHECK };
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, FIRST_SEEKING , DIED, SEEK, CHECK };
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
@@ -331,11 +331,6 @@ public class Skeleton : EnemyCombat {
 
                             }
                         case SkeletonState.PATROL:
-                            {
-                                stateCompatible = true;
-                                break;
-                            }
-                        case SkeletonState.DIEDSPINNING:
                             {
                                 stateCompatible = true;
                                 break;
