@@ -16,5 +16,6 @@ public class Cell {
         this.CellType = CellType;
         this.GlobalPosition = GlobalPosition;
         this.Cost = Cost;
+        Node = new AStarNode(int.MaxValue);
     }
 }

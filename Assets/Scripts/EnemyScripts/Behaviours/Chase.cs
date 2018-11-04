@@ -43,6 +43,16 @@ public class Chase : BehaviourBase
         StopAllCoroutines();
     }
 
+    public void PlayerByOtherFound()
+    {
+        playerLost = false;
+        endChase = false;
+        waiting = false;
+        hasPlayerInSight = false;
+        StopAllCoroutines();
+
+    }
+
     public void InLastKnowPosition()
     {
         waiting = true;
@@ -77,11 +87,10 @@ public class Chase : BehaviourBase
     public void SetOtherPlayerInSightFalse()
     {
         otherHasPlayerInSight = false;
-    } 
+    }
 
     public void SetEndChase()
     {
         endChase = true;
     }
-
 }

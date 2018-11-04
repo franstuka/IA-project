@@ -15,14 +15,27 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             Debug.LogError("More than one instance of grid is trying to active");
             return;
         }
-
         instance = this;
+        bloquedMask = LayerMask.GetMask("Unwalkable");
+        chestMask = LayerMask.GetMask("Chest");
+        exitMask = LayerMask.GetMask("Exit");
+        enemyMask = LayerMask.GetMask("Enemy");
+        temporalGridObjects = new List<Vector2Int>();
+        cellDiameter = CellRadius * 2;
+        gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
+        gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
+        //Debug.Log(gridSizeX);
+        CreateGrid();
     }
     #endregion
 
     public Cell[,] grid;
     public bool seeTypes = false;
     public bool seePathCost = false;
+    public bool seePathFromStartCost = false;
+    public bool seePathFromEndCost = false;
+    public bool seeVisitedCells = false;
+    public bool seeNumberOfAdjacents = false;
     public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
@@ -36,20 +49,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     private int gridSizeX;
     private int gridSizeY;
 
-
+    
     private void Start()
     {
-        bloquedMask = LayerMask.GetMask("Unwalkable");
-        chestMask = LayerMask.GetMask("Chest");
-        exitMask = LayerMask.GetMask("Exit");
-        enemyMask = LayerMask.GetMask("Enemy");
-        temporalGridObjects = new List<Vector2Int>();
-        cellDiameter = CellRadius * 2;
-        gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
-        gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
-        //Debug.Log(gridSizeX);
-        CreateGrid();
-        grid[0, 1].CellType = CellTypes.chest;
         UpdateEnemyPositions();
     }
 
@@ -67,7 +69,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         {
             for(int y = 0; y < gridSizeY; y++)
             {
-                //Debug.Log(x + ", " + y);
                 Vector3 worldPoint = gridBottonLeft + Vector3.right * (x * cellDiameter + CellRadius) + Vector3.forward * (y * cellDiameter + CellRadius);
 
                 if(Physics.CheckBox(worldPoint,Vector3.one * CellRadius,Quaternion.identity,bloquedMask)) //celltypes
@@ -82,10 +83,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 {
                     grid[x, y] = new Cell(CellTypes.exit, worldPoint, 0);
                 }
-                /*else if (Physics.CheckBox(worldPoint, Vector3.one * CellRadius, Quaternion.identity, enemyMask, QueryTriggerInteraction.Ignore))
-                {
-                    grid[x, y] = new Cell(CellTypes.enemy, worldPoint, 0 );
-                }*/
                 else//last else
                 {
                     grid[x, y] = new Cell(CellTypes.emphy, worldPoint, 0);
@@ -103,10 +100,14 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         for (int i = 0; i<enemies.Length; i++)
         {
             pos = CellCordFromWorldPoint(enemies[i].collider.gameObject.transform.position);
-            grid[pos.x, pos.y].CellType = CellTypes.enemy;
-            temporalGridObjects.Add(new Vector2Int(pos.x, pos.y));
+            if(grid[pos.x, pos.y].CellType == CellTypes.emphy)
+            {
+                grid[pos.x, pos.y].CellType = CellTypes.enemy;
+                temporalGridObjects.Add(new Vector2Int(pos.x, pos.y));
+            }   
         }
     }
+
     private void CleanNonStaticElementsOnGrid()
     {
         for(int i = 0; i< temporalGridObjects.Count; i++)
@@ -116,28 +117,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         temporalGridObjects = new List<Vector2Int>();
     }
 
-    public Cell CellFromWorldPoint(Vector3 worldPosition)  //LA FUNCION FUNCIONA MAL
-    {
-        /*
-        float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
-        float percentY = (worldPosition.z + WorldSize.y / 2) / WorldSize.y;
-        percentX = Mathf.Clamp01(percentX);
-        percentY = Mathf.Clamp01(percentY);
-
-        int x = Mathf.FloorToInt((gridSizeX-1) * percentX);
-        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
-        return grid[x, y];*/
-
-        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
-        float y = worldPosition.z - transform.position.z;
-
-        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX - 1);
-        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY - 1);
-
-        return grid[Mathf.FloorToInt(x), Mathf.FloorToInt(y)];
-    }
-
-    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition) //LA FUNCION FUNCIONA MAL
+    public Cell CellFromWorldPoint(Vector3 worldPosition) 
     {
         
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
@@ -145,27 +125,31 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.FloorToInt((gridSizeX - 1) * percentX);
-        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
+        int x = Mathf.FloorToInt((gridSizeX) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY) * percentY);
+        return grid[x, y];
+    }
+
+    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition) 
+    {
+        
+        float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
+        float percentY = (worldPosition.z + WorldSize.y / 2) / WorldSize.y;
+        percentX = Mathf.Clamp01(percentX);
+        percentY = Mathf.Clamp01(percentY);
+
+        int x = Mathf.FloorToInt((gridSizeX) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY) * percentY);
         return new Vector2Int(x, y);
-        /*
-        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
-        float y = worldPosition.z - transform.position.z;
-
-        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX -1);
-        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY -1);
-
-        return new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
-        */
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(WorldSize.x, 1, WorldSize.y));
 
-        if(grid != null)
+        if (grid != null)
         {
-            if(seeTypes)
+            if (seeTypes)
             {
                 foreach (Cell n in grid)
                 {
@@ -197,14 +181,14 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }
-            else if (seePathCost && enemySelected != null)
+            else if (seePathCost && enemySelected != null) //PATH COST
             {
                 int maxCost = int.MinValue;
                 int minCost = int.MaxValue;
-                float factor;
                 foreach (Cell n in grid)
                 {
-                    if( n.Node.NodeFinalCost != int.MaxValue)
+
+                    if (n.Node.NodeFinalCost != int.MaxValue)
                     {
                         if (maxCost < n.Node.NodeFinalCost)
                         {
@@ -213,10 +197,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         else if (minCost > n.Node.NodeFinalCost)
                         {
                             minCost = n.Node.NodeFinalCost;
-                        } 
+                        }
                     }
                 }
-                factor = maxCost - minCost;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.NodeFinalCost == int.MaxValue)
@@ -230,7 +213,148 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
 
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
-            }           
+            }
+            else if (seePathFromStartCost && enemySelected != null) //PATH INITIAL COST
+            {
+                int maxCost = int.MinValue;
+                int minCost = int.MaxValue;
+                foreach (Cell n in grid)
+                {
+
+                    if (n.Node.FromInitialCost != int.MaxValue)
+                    {
+                        if (maxCost < n.Node.FromInitialCost)
+                        {
+                            maxCost = n.Node.FromInitialCost;
+                        }
+                        else if (minCost > n.Node.FromInitialCost)
+                        {
+                            minCost = n.Node.FromInitialCost;
+                        }
+                    }
+                }
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromInitialCost == int.MaxValue)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, 1);
+                    }
+
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seePathFromEndCost && enemySelected != null) // PATH FROM FINAL COST
+            {
+                int maxCost = int.MinValue;
+                int minCost = int.MaxValue;
+                foreach (Cell n in grid)
+                {
+
+                    if (n.Node.FromFinalCost != int.MaxValue)
+                    {
+                        if (maxCost < n.Node.FromFinalCost)
+                        {
+                            maxCost = n.Node.FromFinalCost;
+                        }
+                        else if (minCost > n.Node.FromFinalCost)
+                        {
+                            minCost = n.Node.FromFinalCost;
+                        }
+                    }
+                }
+                foreach (Cell n in grid)
+                {
+                    if (n.Node.FromFinalCost == int.MaxValue)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, 1);
+                    }
+
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seeVisitedCells && enemySelected != null) // PATH FROM FINAL COST
+            {
+                foreach (Cell n in grid)
+                {
+                    if(n.Node.visited)
+                    {
+                        Gizmos.color = Color.green;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.white;
+                    }
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
+            else if (seeNumberOfAdjacents && enemySelected != null) // PATH FROM FINAL COST
+            {
+                foreach (Cell n in grid)
+                {
+                    switch(n.Node.AvaibleAdjacentNodes)
+                    {
+                        case 0:
+                            {
+                                Gizmos.color = Color.black;
+                                break;
+                            }
+                        case 1:
+                            {
+                                Gizmos.color = Color.red;
+                                break;
+                            }
+                        case 2:
+                            {
+                                Gizmos.color = Color.yellow;
+                                break;
+                            }
+                        case 3:
+                            {
+                                Gizmos.color = Color.green;
+                                break;
+                            }
+                        case 4:
+                            {
+                                Gizmos.color = Color.cyan;
+                                break;
+                            }
+                        case 5:
+                            {
+                                Gizmos.color = Color.blue;
+                                break;
+                            }
+                        case 6:
+                            {
+                                Gizmos.color = Color.magenta;
+                                break;
+                            }
+                        case 7:
+                            {
+                                Gizmos.color = Color.grey;
+                                break;
+                            }
+                        case 8:
+                            {
+                                Gizmos.color = Color.clear;
+                                break;
+                            }
+                        default:
+                            {
+                                Gizmos.color = Color.white;
+                                break;
+                            }
+                    }
+                    Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                }
+            }
         }
     }
 
@@ -242,5 +366,10 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     public int GetGridSizeY()
     {
         return gridSizeY;
+    }
+
+    public float GetCellRadius()
+    {
+        return CellRadius;
     }
 }
