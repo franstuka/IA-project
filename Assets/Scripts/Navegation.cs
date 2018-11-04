@@ -44,8 +44,8 @@ public class Navegation : MonoBehaviour {
 
     public void SetDestination(Vector3 pos)
     {
-        Vector2Int thisActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(transform.position); ;
-        Vector2Int targetActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(pos); ;
+        Vector2Int thisActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(transform.position); 
+        Vector2Int targetActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(pos); 
 
         stopped = false; //activate movement if entity was idle.
         stopSpin = false;
