@@ -147,7 +147,13 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.PATROL:
             {
+                    /*
                     if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z +0.4f && transform.position.z >= target.z - 0.4f)
+                    {
+                        target = patrol.GetNewWaipoint(target);
+                        nav.SetDestination(target);
+                    }*/
+                    if(nav.GetStopped())
                     {
                         target = patrol.GetNewWaipoint(target);
                         nav.SetDestination(target);
