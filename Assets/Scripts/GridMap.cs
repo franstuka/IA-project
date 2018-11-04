@@ -52,17 +52,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     
     private void Start()
     {
-        /*
-        bloquedMask = LayerMask.GetMask("Unwalkable");
-        chestMask = LayerMask.GetMask("Chest");
-        exitMask = LayerMask.GetMask("Exit");
-        enemyMask = LayerMask.GetMask("Enemy");
-        temporalGridObjects = new List<Vector2Int>();
-        cellDiameter = CellRadius * 2;
-        gridSizeX = Mathf.RoundToInt(WorldSize.x / cellDiameter);
-        gridSizeY = Mathf.RoundToInt(WorldSize.y / cellDiameter);
-        //Debug.Log(gridSizeX);
-        CreateGrid();*/
         UpdateEnemyPositions();
     }
 
@@ -80,7 +69,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         {
             for(int y = 0; y < gridSizeY; y++)
             {
-                //Debug.Log(x + ", " + y);
                 Vector3 worldPoint = gridBottonLeft + Vector3.right * (x * cellDiameter + CellRadius) + Vector3.forward * (y * cellDiameter + CellRadius);
 
                 if(Physics.CheckBox(worldPoint,Vector3.one * CellRadius,Quaternion.identity,bloquedMask)) //celltypes
@@ -95,18 +83,12 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                 {
                     grid[x, y] = new Cell(CellTypes.exit, worldPoint, 0);
                 }
-                /*else if (Physics.CheckBox(worldPoint, Vector3.one * CellRadius, Quaternion.identity, enemyMask, QueryTriggerInteraction.Ignore))
-                {
-                    grid[x, y] = new Cell(CellTypes.enemy, worldPoint, 0 );
-                }*/
                 else//last else
                 {
                     grid[x, y] = new Cell(CellTypes.emphy, worldPoint, 0);
                 }
             }
         }
-        grid[0, 0].CellType = CellTypes.chest;
-        grid[0, gridSizeX-1].CellType = CellTypes.exit;
     }
 
     private void UpdateEnemyPositions()
@@ -118,10 +100,14 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         for (int i = 0; i<enemies.Length; i++)
         {
             pos = CellCordFromWorldPoint(enemies[i].collider.gameObject.transform.position);
-            grid[pos.x, pos.y].CellType = CellTypes.enemy;
-            temporalGridObjects.Add(new Vector2Int(pos.x, pos.y));
+            if(grid[pos.x, pos.y].CellType == CellTypes.emphy)
+            {
+                grid[pos.x, pos.y].CellType = CellTypes.enemy;
+                temporalGridObjects.Add(new Vector2Int(pos.x, pos.y));
+            }   
         }
     }
+
     private void CleanNonStaticElementsOnGrid()
     {
         for(int i = 0; i< temporalGridObjects.Count; i++)
@@ -131,28 +117,20 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         temporalGridObjects = new List<Vector2Int>();
     }
 
-    public Cell CellFromWorldPoint(Vector3 worldPosition)  //LA FUNCION FUNCIONA MAL
+    public Cell CellFromWorldPoint(Vector3 worldPosition) 
     {
-        /*
+        
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
         float percentY = (worldPosition.z + WorldSize.y / 2) / WorldSize.y;
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.FloorToInt((gridSizeX-1) * percentX);
-        int y = Mathf.FloorToInt((gridSizeY - 1) * percentY);
-        return grid[x, y];*/
-
-        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
-        float y = worldPosition.z - transform.position.z;
-
-        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX - 1);
-        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY - 1);
-
-        return grid[Mathf.FloorToInt(x), Mathf.FloorToInt(y)];
+        int x = Mathf.FloorToInt((gridSizeX) * percentX);
+        int y = Mathf.FloorToInt((gridSizeY) * percentY);
+        return grid[x, y];
     }
 
-    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition) //LA FUNCION FUNCIONA MAL
+    public Vector2Int CellCordFromWorldPoint(Vector3 worldPosition) 
     {
         
         float percentX = (worldPosition.x + WorldSize.x / 2) / WorldSize.x;
@@ -163,15 +141,6 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
         int x = Mathf.FloorToInt((gridSizeX) * percentX);
         int y = Mathf.FloorToInt((gridSizeY) * percentY);
         return new Vector2Int(x, y);
-        /*
-        float x = worldPosition.x - transform.position.x; // pointPos - center of grid
-        float y = worldPosition.z - transform.position.z;
-
-        x = Mathf.Clamp(x, -WorldSize.x / 2, WorldSize.x / 2) / (gridSizeX -1);
-        y = Mathf.Clamp(y, -WorldSize.y / 2, WorldSize.y / 2) / (gridSizeY -1);
-
-        return new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
-        */
     }
 
     private void OnDrawGizmos()

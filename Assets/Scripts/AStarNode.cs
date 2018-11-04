@@ -9,6 +9,7 @@ public class AStarNode  { //By default this is for a quad grid
     public int NodeFinalCost;
     public bool visited;
     public byte AvaibleAdjacentNodes; //0 to 255
+    public byte MaxAdjacentNodes;
     public uint stepsUsed;
     Vector2Int parent;
     LinkedList<Vector2Int> chillds;
@@ -19,6 +20,7 @@ public class AStarNode  { //By default this is for a quad grid
         this.FromFinalCost = FromFinalCost;
         NodeFinalCost = int.MaxValue;
         AvaibleAdjacentNodes = 0;
+        MaxAdjacentNodes = 0;
         stepsUsed = 0;
         visited = false;
         parent = new Vector2Int(-1, -1);
@@ -55,6 +57,8 @@ public class AStarNode  { //By default this is for a quad grid
 
     public Vector2Int GetParent()
     {
+        if(parent == new Vector2Int(-1,-1))
+            Debug.LogError("parent is grong");
         return parent;
     }
 }

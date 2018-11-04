@@ -83,6 +83,16 @@ public class AStarPathfinding { //By default this is for a quad grid
         this.maxSteps = maxSteps;
     }
 
+    private void InicialiceGridNodes()
+    {
+
+    }
+
+    private void CalculateTargetManhattan()
+    {
+
+    }
+
     private void CalculateTargetDistance()
     {
         //initial node setup
@@ -267,7 +277,6 @@ public class AStarPathfinding { //By default this is for a quad grid
         if (!AvaibleListPositions(x, y)) //if this is true, cell is inaccesible, so it never will be inserted in heap or visited
         {
             GridMap.instance.grid[x, y].Node.visited = true;
-            Debug.Log(GridMap.instance.grid[x, y].CellType);
             return 0;
         }
         else if (x > 0 && x < maxX - 1 && y > 0 && y < maxY - 1)
@@ -654,6 +663,7 @@ public class AStarPathfinding { //By default this is for a quad grid
 
             Reset();                        //stage 0
             SetDestination(start, end);
+            
             CalculateTargetDistance();
             
             InitializeHeap();                //stage 1
