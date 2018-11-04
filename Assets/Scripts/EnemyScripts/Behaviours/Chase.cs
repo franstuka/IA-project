@@ -77,11 +77,10 @@ public class Chase : BehaviourBase
     public void SetOtherPlayerInSightFalse()
     {
         otherHasPlayerInSight = false;
-    } 
+    }
 
     public void SetEndChase()
     {
         endChase = true;
     }
-
 }

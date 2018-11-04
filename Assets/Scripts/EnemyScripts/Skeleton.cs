@@ -36,21 +36,10 @@ public class Skeleton : EnemyCombat {
 
     private void Start()
     {
-        if(!staticEnemy)
-        {
-            ActiveState = SkeletonState.PATROL;
-            target = patrol.GetNewWaipoint(new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity));
-            nav.SetDestination(target);
-        }
-        else
-        {
-            ActiveState = SkeletonState.RETURNING_TO_POSITION;
-            target = hold.ReturnToPosition();
-            nav.SetDestination(target);
-        }
         angularSpeedBase = nav.angularSpeed;
         nextAtack = attackList.GetNextAttack();
         destructionTime += Random.value * destructionTime; //randomice the destrucction time;
+        StartCoroutine(WaitEndFrameToStartIA());
     }
 
     public void SkeletonStateMachine()
@@ -128,6 +117,7 @@ public class Skeleton : EnemyCombat {
                     StopCoroutine(Spinning());
                     //TEST ALREDEDOR CON VISION
                     if (!chase.GetOtherPlayerInSight() && !chase.GetPlayerInSight())
+
                     {
                         ActiveState = SkeletonState.PLAYER_LOST;
                         chase.PlayerLost(target);
@@ -147,13 +137,21 @@ public class Skeleton : EnemyCombat {
             }
             case SkeletonState.PATROL:
             {
+                    /*
                     if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z +0.4f && transform.position.z >= target.z - 0.4f)
                     {
                         target = patrol.GetNewWaipoint(target);
                         nav.SetDestination(target);
+                    }*/
+                    if(nav.GetStopped())
+                    {
+                        target = patrol.GetNewWaipoint(target);
+                        nav.SetDestination(target);
+
                     }
+
                     break;
-            }
+                }
             case SkeletonState.PLAYER_LOST:
             {
 
@@ -161,7 +159,7 @@ public class Skeleton : EnemyCombat {
                     {
                         if (!chase.GetWaiting())
                         {
-                            chase.SetOtherPlayerInSightFalse();
+                            chase.SetOtherPlayerInSightFalse(); 
                             chase.InLastKnowPosition();
 
                             if (!staticEnemy)
@@ -241,7 +239,6 @@ public class Skeleton : EnemyCombat {
                             }
                         }
                     }
-
                     break;
                 }
             
@@ -261,9 +258,6 @@ public class Skeleton : EnemyCombat {
                     }
                     break;
                 }
-
-
-
         }
     }
 
@@ -274,7 +268,6 @@ public class Skeleton : EnemyCombat {
             SkeletonStateMachine();
             UpdateAnimator();
         }
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -381,10 +374,10 @@ public class Skeleton : EnemyCombat {
 
     private void UpdateAnimator()
     {
-        if (Vector3.Magnitude(nav.velocity) >= 0.30f)
+        if (Vector3.Magnitude(nav.GetVelocity()) >= 0.30f)
         {
             anim.SetBool("Running", true);
-            anim.SetFloat("MovementSpeed", Vector3.Magnitude(nav.velocity)/2);
+            anim.SetFloat("MovementSpeed", Vector3.Magnitude(nav.GetVelocity()) /2);
         }
         else
             anim.SetBool("Running", false);
@@ -447,9 +440,25 @@ public class Skeleton : EnemyCombat {
                 }
             }
         }
-        
     }
 
+    
+    IEnumerator WaitEndFrameToStartIA()
+    {
+        yield return new WaitForEndOfFrame();
+        if (!staticEnemy)
+        {
+            ActiveState = SkeletonState.PATROL;
+            target = patrol.GetNewWaipoint(new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity));
+            nav.SetDestination(target);
+        }
+        else
+        {
+            ActiveState = SkeletonState.RETURNING_TO_POSITION;
+            target = hold.ReturnToPosition();
+            nav.SetDestination(target);
+        }
+    }
     IEnumerator Spinning()
     {
         Vector3 direction = seek.GetSeekPoints();
@@ -458,7 +467,6 @@ public class Skeleton : EnemyCombat {
             yield return new WaitForEndOfFrame();
         }
 
-
         yield return new WaitForSeconds(1f);
 
         direction = seek.GetSeekPoints();
@@ -476,18 +484,7 @@ public class Skeleton : EnemyCombat {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(1f);
-
 
         seek.Setspinning(false);
-
-
     }
-
-    
-    
-
-    
-
-
-
 }

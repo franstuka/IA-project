@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1444,9 +1444,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 134651331}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &134651330 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 134651329}
+--- !u!114 &134651331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 134651330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!4 &141396378 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 325bbfd10943bed4798b7d3d73685921, type: 3}
@@ -1941,9 +1968,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 201734868}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &201734867 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 201734866}
+--- !u!114 &201734868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 201734867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!4 &211193361 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4865167989675774, guid: 55d9fcd1bb4b18d4eaf5d8a99228bc6d,
@@ -3073,9 +3127,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 474847273}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &474847272 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 474847271}
+--- !u!114 &474847273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 474847272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!1001 &475835833
 Prefab:
   m_ObjectHideFlags: 0
@@ -4821,6 +4902,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seeTypes: 1
   seePathCost: 0
+  seePathFromStartCost: 0
+  seePathFromEndCost: 0
+  seeVisitedCells: 0
+  seeNumberOfAdjacents: 0
   enemySelected: {fileID: 0}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
@@ -5781,9 +5866,40 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_Name
+      value: Skeleton IA 1 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 995062011}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &995062010 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 995062009}
+--- !u!114 &995062011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 995062010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!4 &1010345657 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4905380403350406, guid: 0680dd7a931c16c438bc54206785a812,
@@ -7063,9 +7179,40 @@ Prefab:
       propertyPath: staticEnemy
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_Name
+      value: Skeleton IA 1 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 1208263176}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1208263175 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1208263174}
+--- !u!114 &1208263176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1208263175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!4 &1215224398 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4905380403350406, guid: 0680dd7a931c16c438bc54206785a812,
@@ -8485,9 +8632,36 @@ Prefab:
       propertyPath: waiting
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 1511890727}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1511890726 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1511890725}
+--- !u!114 &1511890727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1511890726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!1 &1529713631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9576,9 +9750,40 @@ Prefab:
       propertyPath: waipoints.Array.data[3]
       value: 
       objectReference: {fileID: 543307578}
-    m_RemovedComponents: []
+    - target: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b, type: 2}
+      propertyPath: m_Name
+      value: Skeleton IA 1 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: nav
+      value: 
+      objectReference: {fileID: 1802043901}
+    m_RemovedComponents:
+    - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1802043900 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179774215657140, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1802043899}
+--- !u!114 &1802043901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802043900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f9ddde95e46934aa8ae35b7c5d32d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angularSpeed: 120
+  maxSpeed: 3.5
+  acceleration: 4
+  stoppingDistanceFactor: 0.75
+  maxCorrectionAcceleration: 15
 --- !u!1001 &1806030713
 Prefab:
   m_ObjectHideFlags: 0
