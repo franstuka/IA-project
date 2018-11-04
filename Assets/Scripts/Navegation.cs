@@ -8,7 +8,7 @@ public class Navegation : MonoBehaviour {
     public float angularSpeed = 120f;
     public float maxSpeed = 3.5f;
     public float acceleration = 4f;
-    [Range (0f , 1f)] public float stoppingDistanceFactor = 0.5f;
+    [Range (0f , 1f)] public float stoppingDistanceFactor = 0.75f;
     public float maxCorrectionAcceleration = 15f;
 
     private Vector2Int thisLastSquarePosition;
@@ -18,7 +18,8 @@ public class Navegation : MonoBehaviour {
     private Rigidbody rigidbody;
     private float stoppingDistance;
     private bool stopped = false;
-    private float setStoppedValue = 0.05f;
+    private bool stopSpin = false;
+    private float setStoppedValue = 0.15f;
 
     private void Awake()
     {
@@ -28,8 +29,7 @@ public class Navegation : MonoBehaviour {
 
     private void Start()
     {
-        float minimunGridSize = GridMap.instance.GetGridSizeX() < GridMap.instance.GetGridSizeY() ? GridMap.instance.GetGridSizeX() : GridMap.instance.GetGridSizeY();
-        stoppingDistance = minimunGridSize * stoppingDistanceFactor;
+        stoppingDistance = GridMap.instance.GetCellRadius() * stoppingDistanceFactor;
         
         savedPath.AddFirst(GridMap.instance.CellCordFromWorldPoint(transform.position)); // in start is the actual position
         Astar = new AStarPathfinding(AStarPathfinding.UpdateMode.ON_TARGET_OR_ORIGIN_MOVE);
@@ -47,7 +47,7 @@ public class Navegation : MonoBehaviour {
         Vector2Int targetActualSquarePosition = GridMap.instance.CellCordFromWorldPoint(pos); ;
 
         stopped = false; //activate movement if entity was idle.
-
+        stopSpin = false;
         //if()
         switch (Astar.GetUpdateMode())
         {
@@ -123,30 +123,35 @@ public class Navegation : MonoBehaviour {
         float velX = rigidbody.velocity.x;
 
         //rotation
-
-        float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Min(Mathf.Pow(new Vector2(velX, velZ).magnitude, 2), Mathf.Pow(maxSpeed, 2)));
-        //float invertedSpeed = 
-        float correctionSpin = Vector3.SignedAngle(transform.forward, position - transform.position, transform.up);
-        float spinDirection = correctionSpin < 0 ? -1 : 1;
-        //Debug.Log(spinDirection);
-        //Debug.Log(Vector3.SignedAngle(transform.forward, position - transform.position, transform.up));
-        /*if(Mathf.Abs(correctionSpin) < 180f)
+        if(!stopSpin)
         {
-            float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
-            transform.Rotate(0, spin * spinDirection, 0);
-        }*/
+            float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Min(Mathf.Pow(new Vector2(velX, velZ).magnitude, 2), Mathf.Pow(maxSpeed, 2)));
+            //float invertedSpeed = 
+            float correctionSpin = Vector3.SignedAngle(transform.forward, position - transform.position, transform.up);
+            float spinDirection = correctionSpin < 0 ? -1 : 1;
+            //Debug.Log(spinDirection);
+            //Debug.Log(Vector3.SignedAngle(transform.forward, position - transform.position, transform.up));
+            /*if(Mathf.Abs(correctionSpin) < 180f)
+            {
+                float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
+                transform.Rotate(0, spin * spinDirection, 0);
+            }*/
 
-        //transform.Rotate(0,  Vector3.SignedAngle(transform.forward, position - transform.position, transform.up)/2, 0);
-        transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
-        Debug.DrawRay(transform.position, transform.forward);
-        Debug.DrawLine(transform.position, position, Color.red);
-        //float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
-        //transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
-        
-        if (stoppingDistance < Vector3.Distance(transform.position, position) && savedPath.First.Next == null) //stop
+            //transform.Rotate(0,  Vector3.SignedAngle(transform.forward, position - transform.position, transform.up)/2, 0);
+            transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
+            Debug.DrawRay(transform.position, transform.forward);
+            Debug.DrawLine(transform.position, position, Color.red);
+            //float turnSpeed = Mathf.Lerp(m_StationaryTurnSpeed, m_MovingTurnSpeed, m_ForwardAmount);
+            //transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
+        }
+
+        if (stoppingDistance > new Vector2(transform.position.x - position.x, transform.position.z - position.z).magnitude && savedPath.First.Next == null) //stop
         {
+            Debug.Log("1a");
+            stopSpin = true;
             if (Mathf.Abs(velX) < setStoppedValue && Mathf.Abs(velZ) < setStoppedValue)
             {
+                Debug.Log("2a");
                 rigidbody.velocity.Set(0f, rigidbody.velocity.y, 0f);
                 stopped = true;
             }

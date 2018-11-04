@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class AStarPathfinding { //By default this is for a quad grid
 
     public enum TargetDistanceAdvanceDirection { UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT };
@@ -21,7 +19,7 @@ public class AStarPathfinding { //By default this is for a quad grid
     private Vector2Int lastStepPos;
     private Vector2Int endNodePos;
     private Vector2Int startNodePos;
-    
+    private Vector2Int lastfinalPos;
 
     private int maxX;
     private int maxY;
@@ -85,12 +83,22 @@ public class AStarPathfinding { //By default this is for a quad grid
 
     private void InicialiceGridNodes()
     {
-
+        for (int x = 0; x < maxX; x++)
+        {
+            for (int y = 0; y < maxY; y++)
+            {
+                GridMap.instance.grid[x,y].Node.MaxAdjacentNodes = CheckAvaiblesPositions(x,y);
+                GridMap.instance.grid[x, y].Node.AvaibleAdjacentNodes = GridMap.instance.grid[x, y].Node.MaxAdjacentNodes;
+            }
+        }
     }
 
     private void CalculateTargetManhattan()
     {
+        if(lastfinalPos == endNodePos) //final cost are correct, just reset some node values
+        {
 
+        }
     }
 
     private void CalculateTargetDistance()

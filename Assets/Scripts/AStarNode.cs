@@ -61,4 +61,15 @@ public class AStarNode  { //By default this is for a quad grid
             Debug.LogError("parent is grong");
         return parent;
     }
+
+    public void ResetExceptFromFinalCost()
+    {
+        AvaibleAdjacentNodes = MaxAdjacentNodes;
+        FromInitialCost = int.MaxValue;
+        NodeFinalCost = int.MaxValue;
+        stepsUsed = 0;
+        visited = false;
+        parent = new Vector2Int(-1, -1);
+        chillds = new LinkedList<Vector2Int>();
+    }
 }

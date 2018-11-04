@@ -367,4 +367,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     {
         return gridSizeY;
     }
+
+    public float GetCellRadius()
+    {
+        return CellRadius;
+    }
 }
