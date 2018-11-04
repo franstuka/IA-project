@@ -19,6 +19,7 @@ public class Navegation : MonoBehaviour {
     private float stoppingDistance;
     private bool stopped = false;
     private bool stopSpin = false;
+    private bool stopMove = false;
     private float setStoppedValue = 0.15f;
 
     private void Awake()
@@ -116,7 +117,7 @@ public class Navegation : MonoBehaviour {
             Move(GridMap.instance.grid[savedPath.First.Value.x, savedPath.First.Value.y].GlobalPosition); // move normal
         }
     }
-
+    /*
     public void Move(Vector3 position)
     {
         float velZ = rigidbody.velocity.z;
@@ -199,6 +200,124 @@ public class Navegation : MonoBehaviour {
             }
         //Debug.Log(finalAcceleration);
         }
+    }
+    */
+
+    public void Move(Vector3 position)
+    {
+        float velZ = rigidbody.velocity.z;
+        float velX = rigidbody.velocity.x;
+        float correctionSpin = Vector3.SignedAngle(transform.forward, position - transform.position, transform.up);
+        
+        if (!stopSpin)
+        {
+            /*
+            float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Min(Mathf.Pow(new Vector2(velX, velZ).magnitude, 2), Mathf.Pow(maxSpeed, 2)));
+            float spinDirection = correctionSpin < 0 ? -1 : 1;
+            float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
+
+            transform.Rotate(0, spin * spinDirection, 0);
+            */
+            transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
+        }
+        /*
+        if (correctionSpin > 45f || correctionSpin < -45f || stopMove)
+        {
+            Debug.Log("3a");
+            stopMove = true;
+            Brake(position, ref velX, ref velZ);
+        }
+        else if(correctionSpin < 2f && correctionSpin > -2f)
+        {
+            
+            stopMove = false;
+        }
+        */
+       
+        if (!stopMove)
+        {
+            if (stoppingDistance > new Vector2(transform.position.x - position.x, transform.position.z - position.z).magnitude && savedPath.First.Next == null) //stop
+            {
+                Debug.Log("1a");
+                stopSpin = true;
+                if (Mathf.Abs(velX) < setStoppedValue && Mathf.Abs(velZ) < setStoppedValue)
+                {
+                    Debug.Log("2a");
+                    rigidbody.velocity.Set(0f, rigidbody.velocity.y, 0f);
+                    stopped = true;
+                }
+                else
+                {
+                    float correctionAccelerationX = Mathf.Abs(-velX / Time.deltaTime) > maxCorrectionAcceleration ? maxCorrectionAcceleration : -velX / Time.deltaTime;
+                    float correctionAccelerationZ = Mathf.Abs(-velZ / Time.deltaTime) > acceleration ? acceleration : -velZ / Time.deltaTime;
+                    rigidbody.AddRelativeForce(new Vector3(correctionAccelerationX, 0f, correctionAccelerationZ), ForceMode.Acceleration);
+                }
+            }
+            else
+            {
+
+                //movement
+                float correctionAcceleration = Mathf.Abs(-velX / Time.deltaTime) > maxCorrectionAcceleration ? maxCorrectionAcceleration : -velX / Time.deltaTime;
+                Vector2 toTarget = new Vector2(position.x - transform.position.x, position.z - transform.position.z).normalized;
+                Vector2 toSpeed = new Vector2(velX, velZ).normalized;
+
+                float finalAcceleration;
+                float factor = Vector2.Dot(toTarget, toSpeed) * 0.9f;
+                if (factor >= 0)
+                {
+                    factor += 0.1f;
+                }
+                else
+                {
+                    factor -= 0.1f;
+                }
+
+
+                if (velZ < 0.5 * maxSpeed)
+                {
+                    finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration ? Mathf.Max((maxSpeed * factor - velZ) / Time.deltaTime, -acceleration) : acceleration / Time.deltaTime;
+                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                }
+                else if (velZ < 0.75 * maxSpeed)
+                {
+                    finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 2 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / (Time.deltaTime * 2);
+                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                }
+                else
+                {
+                    finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 4 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / (Time.deltaTime * 4);
+                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                }
+            }
+        }
+    }
+
+    private void Brake(Vector3 position, ref float velX, ref float velZ)
+    {
+        
+        if (stoppingDistance > new Vector2(transform.position.x - position.x, transform.position.z - position.z).magnitude && savedPath.First.Next == null) //stop
+        {
+            if (Mathf.Abs(velX) < setStoppedValue && Mathf.Abs(velZ) < setStoppedValue)
+            {
+                rigidbody.velocity.Set(0f, rigidbody.velocity.y, 0f);
+            }
+            else
+            {
+                float correctionAccelerationX = Mathf.Abs(-velX / Time.deltaTime) > maxCorrectionAcceleration ? maxCorrectionAcceleration : -velX / Time.deltaTime;
+                float correctionAccelerationZ = Mathf.Abs(-velZ / Time.deltaTime) > acceleration ? acceleration : -velZ / Time.deltaTime;
+                rigidbody.AddRelativeForce(new Vector3(correctionAccelerationX, 0f, correctionAccelerationZ), ForceMode.Acceleration);
+            }
+        }
+    }
+
+    private void Accelerate()
+    {
+
+    }
+
+    private void Turn()
+    {
+
     }
 
     public Vector3 GetVelocity()

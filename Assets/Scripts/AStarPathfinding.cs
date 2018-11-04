@@ -145,7 +145,6 @@ public class AStarPathfinding { //By default this is for a quad grid
             };
 
         }
-        Debug.Log(updateMode);
         //expand in diagonal nodes
         if (endNodePos.x > 0 && endNodePos.x < maxX - 1 && endNodePos.y > 0 && endNodePos.y < maxY - 1)
         {

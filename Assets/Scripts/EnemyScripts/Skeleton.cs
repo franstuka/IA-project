@@ -156,10 +156,11 @@ public class Skeleton : EnemyCombat {
                     if(nav.GetStopped())
                     {
                         target = patrol.GetNewWaipoint(target);
-                        nav.SetDestination(target);
+                        
                     }
+                    nav.SetDestination(target);
                     break;
-            }
+                }
             case SkeletonState.PLAYER_LOST:
             {
                     if (transform.position.x <= target.x + 0.4f && transform.position.x >= target.x - 0.4f && transform.position.z <= target.z + 0.4f && transform.position.z >= target.z - 0.4f)
