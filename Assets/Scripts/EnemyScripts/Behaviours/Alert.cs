@@ -26,6 +26,7 @@ public class Alert : BehaviourBase
         {
             if(enemyList[i].collider.gameObject.tag == "Enemy")
             {
+               
                if( enemyList[i].collider.gameObject.GetComponent<Skeleton>() != null)
                 {
                     skeletonList.Add(enemyList[i].collider.gameObject.GetComponent<Skeleton>());
