@@ -15,7 +15,7 @@ public class Navegation : MonoBehaviour {
     private Vector2Int targetLastSquarePosition;
     public static AStarPathfinding Astar;
     private LinkedList<Vector2Int> savedPath;
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
     private float stoppingDistance;
     private bool stopped = false;
     private bool stopSpin = false;

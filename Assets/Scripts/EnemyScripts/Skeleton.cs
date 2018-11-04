@@ -36,20 +36,6 @@ public class Skeleton : EnemyCombat {
 
     private void Start()
     {
-        /*
-        if(!staticEnemy)
-        {
-            ActiveState = SkeletonState.PATROL;
-            target = patrol.GetNewWaipoint(new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity));
-            nav.SetDestination(target);
-        }
-        else
-        {
-            ActiveState = SkeletonState.RETURNING_TO_POSITION;
-            target = hold.ReturnToPosition();
-            nav.SetDestination(target);
-        }
-        */
         angularSpeedBase = nav.angularSpeed;
         nextAtack = attackList.GetNextAttack();
         destructionTime += Random.value * destructionTime; //randomice the destrucction time;
@@ -160,9 +146,10 @@ public class Skeleton : EnemyCombat {
                     if(nav.GetStopped())
                     {
                         target = patrol.GetNewWaipoint(target);
-                        
+                        nav.SetDestination(target);
+
                     }
-                    nav.SetDestination(target);
+
                     break;
                 }
             case SkeletonState.PLAYER_LOST:
@@ -252,7 +239,6 @@ public class Skeleton : EnemyCombat {
                             }
                         }
                     }
-
                     break;
                 }
             
@@ -272,9 +258,6 @@ public class Skeleton : EnemyCombat {
                     }
                     break;
                 }
-
-
-
         }
     }
 
@@ -285,7 +268,6 @@ public class Skeleton : EnemyCombat {
             SkeletonStateMachine();
             UpdateAnimator();
         }
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -485,7 +467,6 @@ public class Skeleton : EnemyCombat {
             yield return new WaitForEndOfFrame();
         }
 
-
         yield return new WaitForSeconds(1f);
 
         direction = seek.GetSeekPoints();
@@ -503,9 +484,7 @@ public class Skeleton : EnemyCombat {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(1f);
-
 
         seek.Setspinning(false);
-
     }
 }
