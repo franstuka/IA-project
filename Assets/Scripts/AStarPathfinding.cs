@@ -469,11 +469,9 @@ public class AStarPathfinding { //By default this is for a quad grid
         LinkedListNode<Vector2Int> i = Heap.First;
         if (GridMap.instance.grid[i.Value.x, i.Value.y].Node.AvaibleAdjacentNodes == 0)
         {
+            Debug.LogWarning("initial node in a non valid position");
             Vector3Int temporalPositionAndMin = new Vector3Int(-1, -1, int.MaxValue);
             temporalPositionAndMin = GetMinimumAroundNode(i.Value.x, i.Value.y, ref GridMap.instance.grid[i.Value.x, i.Value.y].Node.FromInitialCost);
-            Debug.Log(temporalPositionAndMin.z);
-            Debug.Log(GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].CellType);
-            Debug.Log(GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.visited);
             if (temporalPositionAndMin.z == int.MaxValue) // node is surrounded
             {
                 state = AStarAlgorithmState.NO_AVAILABLE_SOLUTION;
@@ -484,10 +482,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             {
                 GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.FromInitialCost =
                     temporalPositionAndMin.z - GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.FromFinalCost; //maybe the cost has changed 
-                Debug.Log(GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.FromInitialCost);
-                Debug.Log(GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.FromFinalCost);
                 GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.SetFinalCost();
-                Debug.Log(GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.NodeFinalCost);
                 GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.visited = true;
                 GridMap.instance.grid[temporalPositionAndMin.x, temporalPositionAndMin.y].Node.stepsUsed =
                     GridMap.instance.grid[i.Value.x, i.Value.y].Node.stepsUsed + 1;
@@ -509,13 +504,6 @@ public class AStarPathfinding { //By default this is for a quad grid
         Vector2Int fromInitialNodePosition = new Vector2Int(0, 0);
         LinkedListNode<Vector2Int> i = Heap.First;
 
-        if(i == null)
-        {
-            state = AStarAlgorithmState.NO_AVAILABLE_SOLUTION;
-            Debug.LogError("No solve in path");
-            return true;
-        }
-
         while (i != null)
         {
             if (GridMap.instance.grid[i.Value.x, i.Value.y].Node.AvaibleAdjacentNodes == 0) //delete node
@@ -535,9 +523,23 @@ public class AStarPathfinding { //By default this is for a quad grid
                 }
             }
             temporalPositionAndMin = GetMinimumAroundNode(i.Value.x, i.Value.y, ref GridMap.instance.grid[i.Value.x, i.Value.y].Node.FromInitialCost);
-            if (temporalPositionAndMin.z == int.MaxValue)//never has to enter here because adjacence valor dont allow it
+            if (temporalPositionAndMin.z == int.MaxValue)//never has to enter here because adjacence valor dont allow it, but doe to some error on planification
+                // can enter here with a node with all exits with max cost, so in this happens we elimitate the node in the heap and advance next
             {
-                Debug.LogError("min search arround this node has maximun int value");
+                //Debug.LogWarning("min search arround this node has maximun int value");
+                if (i.Previous != null)
+                {
+                    i = i.Previous;
+                    Heap.Remove(i.Next);
+                    i = i.Next;
+                    continue;
+                }
+                else
+                {
+                    i = i.Next; //if null, bucle ends
+                    Heap.RemoveFirst();
+                    continue;
+                }  
             }
             if(temporalPositionAndMin.z < holdedPositionAndMin.z)//new min
             {
@@ -546,13 +548,12 @@ public class AStarPathfinding { //By default this is for a quad grid
             }
             i = i.Next;
         }
-        if (holdedPositionAndMin.x == -1 || holdedPositionAndMin.y == -1)
+
+        if (Heap.Count == 0)
         {
-            Debug.Log("( " + holdedPositionAndMin.x + " , " + holdedPositionAndMin.y + ") " + holdedPositionAndMin.z + " " +
-                GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.visited + " " 
-                + GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.AvaibleAdjacentNodes + " " +
-                GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.FromFinalCost + " " +
-                GridMap.instance.grid[fromInitialNodePosition.x, fromInitialNodePosition.y].Node.FromInitialCost);
+            state = AStarAlgorithmState.NO_AVAILABLE_SOLUTION;
+            Debug.LogError("No solve in path");
+            return true;
         }
 
         //Staff to do around the node
@@ -576,6 +577,14 @@ public class AStarPathfinding { //By default this is for a quad grid
         else if(GridMap.instance.grid[holdedPositionAndMin.x, holdedPositionAndMin.y].Node.stepsUsed <= maxSteps) //continue
         {
             //Add to heap
+            if(GridMap.instance.grid[endNodePos.x, endNodePos.y].Node.AvaibleAdjacentNodes == 0 && (Mathf.Abs(endNodePos.x - holdedPositionAndMin.x) <= 1 && Mathf.Abs(endNodePos.y - holdedPositionAndMin.y) <= 1))
+                //final node is in an invalid cell, soo we stay in the closest cell, and we resolved as a limitated by steps case
+            {
+                state = AStarAlgorithmState.LIMITED_BY_STEPS;
+                lastStepPos = new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y);
+                Debug.LogWarning("final node is in a non valid position");
+                return true;
+            }
             Heap.AddFirst(new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y));
             return false;
         }
@@ -584,8 +593,7 @@ public class AStarPathfinding { //By default this is for a quad grid
             lastStepPos = new Vector2Int(holdedPositionAndMin.x, holdedPositionAndMin.y);
             state = AStarAlgorithmState.LIMITED_BY_STEPS;
             return true;
-        }
-        
+        }  
     }
 
     private Vector3Int GetMinimumAroundNode(int x, int y, ref int fromLastInitialNodeCost) 
@@ -593,7 +601,6 @@ public class AStarPathfinding { //By default this is for a quad grid
         #region Stage 2, get minimum and remove cells with 0 adjacents
 
         Vector3Int positionAndMinimum = new Vector3Int(0,0,int.MaxValue);
-
         if (x+1 >= 0 && x+1 <= maxX - 1 && y >= 0 && y <= maxY - 1 && GridMap.instance.grid[x + 1, y].Node.visited != true && GridMap.instance.grid[x + 1, y].Node.AvaibleAdjacentNodes != 0)
         {
             GridMap.instance.grid[x + 1, y].Node.SetFinalCost(normalCost + fromLastInitialNodeCost);

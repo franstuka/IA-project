@@ -30,7 +30,15 @@ public class AStarNode  { //By default this is for a quad grid
     public void ReduceAvaiblesNodes()
     {
         if (AvaibleAdjacentNodes > 0)
+        {
             AvaibleAdjacentNodes--;
+            
+        }
+        else
+        {
+            visited = true;
+        }
+            
     }
 
     public void SetFinalCost()
