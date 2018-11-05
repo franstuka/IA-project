@@ -208,7 +208,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     }
                     else
                     {
-                        Gizmos.color = new Color(n.Node.NodeFinalCost / maxCost, n.Node.NodeFinalCost / maxCost, n.Node.NodeFinalCost / maxCost, 1);
+                        Gizmos.color = new Color((float)n.Node.NodeFinalCost / maxCost, (float)n.Node.NodeFinalCost / maxCost, (float)n.Node.NodeFinalCost / maxCost, 1); ;
                     }
 
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
@@ -216,8 +216,10 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             }
             else if (seePathFromStartCost && enemySelected != null) //PATH INITIAL COST
             {
-                int maxCost = int.MinValue;
-                int minCost = int.MaxValue;
+                int maxCost = 1;
+                int minCost = 1;
+                float factor;
+
                 foreach (Cell n in grid)
                 {
 
@@ -233,6 +235,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         }
                     }
                 }
+                factor = minCost / maxCost ;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromInitialCost == int.MaxValue)
@@ -241,7 +244,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     }
                     else
                     {
-                        Gizmos.color = new Color(n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, n.Node.FromInitialCost / maxCost, 1);
+                        Gizmos.color = new Color((float)n.Node.FromInitialCost / maxCost, (float)n.Node.FromInitialCost / maxCost, (float)n.Node.FromInitialCost / maxCost, 1);
                     }
 
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
@@ -250,7 +253,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             else if (seePathFromEndCost && enemySelected != null) // PATH FROM FINAL COST
             {
                 int maxCost = int.MinValue;
-                int minCost = int.MaxValue;
+                int minCost = 1;
                 foreach (Cell n in grid)
                 {
 
@@ -274,9 +277,9 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     }
                     else
                     {
-                        Gizmos.color = new Color(n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, n.Node.FromFinalCost / maxCost, 1);
+                        Gizmos.color = new Color((float)n.Node.FromFinalCost / maxCost, (float)n.Node.FromFinalCost / maxCost, (float)n.Node.FromFinalCost / maxCost, 1);
                     }
-
+                    
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }
