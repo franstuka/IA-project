@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skeleton : EnemyCombat {
 
-	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, FIRST_SEEKING , DIED, SEEK, CHECK };
+	public enum SkeletonState {ATTACK,CHASE,PATROL,HOLD,PLAYER_LOST,RETURNING_TO_POSITION, FIRST_SEEKING , DIED, SEEK, CHECK , IDLE};
     public enum SkeletonAttacks {SWORD_ATTACK}
     public SkeletonState ActiveState; //only public for debug task
     private AttackList attackList;
@@ -374,7 +374,7 @@ public class Skeleton : EnemyCombat {
 
     private void UpdateAnimator()
     {
-        if (Vector3.Magnitude(nav.GetVelocity()) >= 0.30f)
+        if (Vector3.Magnitude(nav.GetVelocity()) >= 0.50f)
         {
             anim.SetBool("Running", true);
             anim.SetFloat("MovementSpeed", Vector3.Magnitude(nav.GetVelocity()) /2);
