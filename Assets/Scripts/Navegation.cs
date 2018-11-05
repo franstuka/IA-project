@@ -327,4 +327,9 @@ public class Navegation : MonoBehaviour {
     {
         return stopped;
     }
+
+    public LinkedList<Vector2Int> GetSavedPath()
+    {
+        return savedPath;
+    }
 }

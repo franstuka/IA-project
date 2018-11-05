@@ -36,6 +36,8 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
     public bool seePathFromEndCost = false;
     public bool seeVisitedCells = false;
     public bool seeNumberOfAdjacents = false;
+    public bool seeEnemyPath = false;
+    public bool seeAStarChilds = false;
     public Skeleton enemySelected;
 
     [SerializeField] private Vector2 WorldSize;
@@ -235,7 +237,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                         }
                     }
                 }
-                factor = minCost / maxCost ;
+                factor = minCost / maxCost;
                 foreach (Cell n in grid)
                 {
                     if (n.Node.FromInitialCost == int.MaxValue)
@@ -279,7 +281,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     {
                         Gizmos.color = new Color((float)n.Node.FromFinalCost / maxCost, (float)n.Node.FromFinalCost / maxCost, (float)n.Node.FromFinalCost / maxCost, 1);
                     }
-                    
+
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }
@@ -287,7 +289,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             {
                 foreach (Cell n in grid)
                 {
-                    if(n.Node.visited)
+                    if (n.Node.visited)
                     {
                         Gizmos.color = Color.green;
                     }
@@ -302,7 +304,7 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
             {
                 foreach (Cell n in grid)
                 {
-                    switch(n.Node.AvaibleAdjacentNodes)
+                    switch (n.Node.AvaibleAdjacentNodes)
                     {
                         case 0:
                             {
@@ -358,6 +360,49 @@ public class GridMap : MonoBehaviour { //By default this is for a quad grid
                     Gizmos.DrawCube(n.GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
                 }
             }
+            else if (seeEnemyPath && enemySelected != null)
+            {
+                int size = enemySelected.GetSavedPath().Count;
+                LinkedList<Vector2Int> path = enemySelected.GetSavedPath();
+                LinkedListNode<Vector2Int> element = path.First;
+                for (int i = 0; i < size; i++)
+                {
+                    Gizmos.color = new Color((float)i / size, (float)i / size, (float)i / size, 1);
+                    Gizmos.DrawCube(grid[element.Value.x,element.Value.y].GlobalPosition, Vector3.one * (cellDiameter * 19 / 20));
+                    element = element.Next;
+                }
+            }
+            else if (seeAStarChilds && enemySelected != null)
+            {
+                Vector2Int initialPos = new Vector2Int(0,0);
+                bool end = false;
+                for (int x = 0; x < gridSizeX && !end; x++)
+                {
+                    for (int y = 0; y < gridSizeY && !end; y++)
+                    {
+                        if (grid[x,y].Node.FromInitialCost == 0)
+                        {
+                            end = true;
+                            initialPos = new Vector2Int(x, y);
+                        }
+                    }
+                }
+                Gizmos.color = Color.red;
+                PrintBranchRecursive(initialPos.x, initialPos.y);
+            }
+        }
+    }
+
+    private void PrintBranchRecursive(int x, int y)
+    {
+        LinkedList<Vector2Int> childList = grid[x, y].Node.GetChillds();
+        LinkedListNode<Vector2Int> node = childList.First;
+       
+        while (node != null)
+        {
+            Gizmos.DrawLine(grid[node.Value.x, node.Value.y].GlobalPosition, grid[x, y].GlobalPosition);
+            PrintBranchRecursive(node.Value.x, node.Value.y);
+            node = node.Next;
         }
     }
 

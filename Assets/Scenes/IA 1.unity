@@ -382,6 +382,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &26567192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 26567193}
+  m_Layer: 11
+  m_Name: Patrol (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &26567193
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 26567192}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -63.7, y: 0, z: -30.1}
+  m_LocalScale: {x: 0.9999998, y: 0.9999998, z: 0.9999998}
+  m_Children: []
+  m_Father: {fileID: 1945933081}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31998519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,12 +3348,6 @@ MonoBehaviour:
   acceleration: 4
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
---- !u!114 &474847282 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
-    type: 2}
-  m_PrefabInternal: {fileID: 474847271}
-  m_Script: {fileID: 11500000, guid: 08efc3d3f3e1afc45b78cb90903e7be6, type: 3}
 --- !u!1001 &475835833
 Prefab:
   m_ObjectHideFlags: 0
@@ -5124,7 +5146,8 @@ MonoBehaviour:
   seePathFromEndCost: 0
   seeVisitedCells: 0
   seeNumberOfAdjacents: 0
-  enemySelected: {fileID: 474847282}
+  seeEnemyPath: 0
+  enemySelected: {fileID: 1802043910}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
 --- !u!4 &756216475
@@ -10460,7 +10483,7 @@ Prefab:
     - target: {fileID: 114750424378846968, guid: 189f897b469e0314898b31355639735b,
         type: 2}
       propertyPath: waipoints.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114182675879265896, guid: 189f897b469e0314898b31355639735b,
         type: 2}
@@ -10557,6 +10580,11 @@ Prefab:
       propertyPath: ActiveState
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114750424378846968, guid: 189f897b469e0314898b31355639735b,
+        type: 2}
+      propertyPath: waipoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 26567193}
     m_RemovedComponents:
     - {fileID: 195910504244373704, guid: 189f897b469e0314898b31355639735b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 189f897b469e0314898b31355639735b, type: 2}
@@ -10582,6 +10610,12 @@ MonoBehaviour:
   acceleration: 4
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
+--- !u!114 &1802043910 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114696649870195672, guid: 189f897b469e0314898b31355639735b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1802043899}
+  m_Script: {fileID: 11500000, guid: 08efc3d3f3e1afc45b78cb90903e7be6, type: 3}
 --- !u!1001 &1806030713
 Prefab:
   m_ObjectHideFlags: 0
@@ -11415,6 +11449,7 @@ Transform:
   - {fileID: 2050217798}
   - {fileID: 1750992889}
   - {fileID: 543307578}
+  - {fileID: 26567193}
   m_Father: {fileID: 234089803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

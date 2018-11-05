@@ -94,5 +94,10 @@ public class EnemyCombat : CombatStats {
             return watch.FindPlayer(playerFound, detectionAngle);
         }
     }
+
+    public LinkedList<Vector2Int> GetSavedPath()
+    {
+        return nav.GetSavedPath();
+    }
     
 }

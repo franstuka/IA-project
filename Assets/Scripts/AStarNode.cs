@@ -63,6 +63,10 @@ public class AStarNode  { //By default this is for a quad grid
         chillds.AddFirst(new Vector2Int(x, y));
     }
 
+    public LinkedList<Vector2Int> GetChillds()
+    {
+        return chillds;
+    }
     public Vector2Int GetParent()
     {
         if(parent == new Vector2Int(-1,-1))
