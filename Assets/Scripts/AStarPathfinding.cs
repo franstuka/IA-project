@@ -543,8 +543,6 @@ public class AStarPathfinding { //By default this is for a quad grid
             {
                 holdedPositionAndMin = temporalPositionAndMin;
                 fromInitialNodePosition = new Vector2Int(i.Value.x, i.Value.y);
-                
-                
             }
             i = i.Next;
         }
