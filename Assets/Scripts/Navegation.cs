@@ -238,11 +238,9 @@ public class Navegation : MonoBehaviour {
         {
             if (stoppingDistance > new Vector2(transform.position.x - position.x, transform.position.z - position.z).magnitude && savedPath.First.Next == null) //stop
             {
-                Debug.Log("1a");
                 stopSpin = true;
                 if (Mathf.Abs(velX) < setStoppedValue && Mathf.Abs(velZ) < setStoppedValue)
                 {
-                    Debug.Log("2a");
                     rigidbody.velocity.Set(0f, rigidbody.velocity.y, 0f);
                     stopped = true;
                 }
