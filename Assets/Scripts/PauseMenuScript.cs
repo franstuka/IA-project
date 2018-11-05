@@ -101,7 +101,7 @@ public class PauseMenuScript : MonoBehaviour {
     public void GoToMainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("StartScene");
+        SceneManager.LoadScene("IA 1");
     }
 
     public void ApplyAndReturnToMenu()
