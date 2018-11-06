@@ -1504,8 +1504,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!4 &141396378 stripped
@@ -2082,8 +2082,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!4 &211193361 stripped
@@ -3344,8 +3344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!1001 &475835833
@@ -5147,6 +5147,7 @@ MonoBehaviour:
   seeVisitedCells: 0
   seeNumberOfAdjacents: 0
   seeEnemyPath: 0
+  seeAStarChilds: 0
   enemySelected: {fileID: 1802043910}
   WorldSize: {x: 50, y: 50}
   CellRadius: 0.25
@@ -6257,8 +6258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!4 &1010345657 stripped
@@ -7726,8 +7727,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!4 &1215224398 stripped
@@ -8421,7 +8422,7 @@ MeshCollider:
     type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1330686716}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b2e1a1a939784b543887fd4ebde46667, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -9118,7 +9119,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9.39
+      value: 8.65
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -9126,7 +9127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 16.66
+      value: 16.55
       objectReference: {fileID: 0}
     - target: {fileID: 4443795171668198, guid: 189f897b469e0314898b31355639735b, type: 2}
       propertyPath: m_LocalRotation.x
@@ -9229,8 +9230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!1 &1529713631
@@ -10606,8 +10607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 120
-  maxSpeed: 3.5
-  acceleration: 4
+  maxSpeed: 9
+  acceleration: 7
   stoppingDistanceFactor: 0.75
   maxCorrectionAcceleration: 15
 --- !u!114 &1802043910 stripped
