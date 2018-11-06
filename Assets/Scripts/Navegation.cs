@@ -211,7 +211,7 @@ public class Navegation : MonoBehaviour {
         
         if (!stopSpin)
         {
-            /*
+            /* for steering mode
             float invertedSpeed = Mathf.Sqrt(Mathf.Pow(maxSpeed, 2) - Mathf.Min(Mathf.Pow(new Vector2(velX, velZ).magnitude, 2), Mathf.Pow(maxSpeed, 2)));
             float spinDirection = correctionSpin < 0 ? -1 : 1;
             float spin = Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) < correctionSpin ? Mathf.Abs(invertedSpeed * angularSpeed * Time.deltaTime * spinDirection) : correctionSpin * spinDirection * Time.deltaTime;
@@ -220,7 +220,7 @@ public class Navegation : MonoBehaviour {
             */
             transform.LookAt(new Vector3(position.x, transform.position.y, position.z));
         }
-        /*
+        /* for steering mode
         if (correctionSpin > 45f || correctionSpin < -45f || stopMove)
         {
             Debug.Log("3a");
@@ -233,7 +233,7 @@ public class Navegation : MonoBehaviour {
             stopMove = false;
         }
         */
-       
+
         if (!stopMove)
         {
             if (stoppingDistance > new Vector2(transform.position.x - position.x, transform.position.z - position.z).magnitude && savedPath.First.Next == null) //stop
@@ -260,7 +260,9 @@ public class Navegation : MonoBehaviour {
                 Vector2 toSpeed = new Vector2(velX, velZ).normalized;
 
                 float finalAcceleration;
-                float factor = Vector2.Dot(toTarget, toSpeed) * 0.9f;
+
+                /*float factor = Vector2.Dot(toTarget, toSpeed) * 0.9f; //for steering mode
+                 
                 if (factor >= 0)
                 {
                     factor += 0.1f;
@@ -270,22 +272,27 @@ public class Navegation : MonoBehaviour {
                     factor -= 0.1f;
                 }
 
-
                 if (velZ < 0.5 * maxSpeed)
                 {
                     finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration ? Mathf.Max((maxSpeed * factor - velZ) / Time.deltaTime, -acceleration) : acceleration / Time.deltaTime;
-                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                    rigidbody.AddForce(transform.forward * finalAcceleration, ForceMode.Acceleration);
                 }
                 else if (velZ < 0.75 * maxSpeed)
                 {
                     finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 2 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / (Time.deltaTime * 2);
-                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                    rigidbody.AddForce(transform.forward * finalAcceleration, ForceMode.Acceleration);
                 }
                 else
                 {
                     finalAcceleration = Mathf.Abs((maxSpeed * factor - velZ) / Time.deltaTime) < acceleration / 4 ? (maxSpeed * factor - velZ) / Time.deltaTime : acceleration / (Time.deltaTime * 4);
-                    rigidbody.AddRelativeForce(new Vector3(correctionAcceleration, 0f, finalAcceleration), ForceMode.Acceleration);
+                    rigidbody.AddForce(transform.forward * finalAcceleration, ForceMode.Acceleration);
                 }
+                */
+                velZ = rigidbody.velocity.magnitude;
+
+                finalAcceleration = maxSpeed - velZ < acceleration ? maxSpeed - velZ : +acceleration;
+                rigidbody.AddForce(transform.forward * finalAcceleration * Time.deltaTime *1000, ForceMode.Acceleration);
+                //rigidbody.AddForce(transform.right * correctionAcceleration * Time.deltaTime , ForceMode.Acceleration);
             }
         }
     }
